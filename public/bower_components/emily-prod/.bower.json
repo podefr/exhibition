@@ -1,0 +1,14 @@
+{
+  "name": "emily",
+  "main": "Emily.js",
+  "homepage": "https://github.com/flams/bower-emily",
+  "_release": "18d41d556d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "18d41d556d3a0c5ce69353932efcf134ff71238d"
+  },
+  "_source": "git://github.com/flams/bower-emily.git",
+  "_target": "*",
+  "_direct": true
+}
