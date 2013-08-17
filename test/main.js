@@ -12,8 +12,8 @@ requirejs.config({
     baseUrl: '/base/public/js',
 
     paths: {
-    	'chai': '/base/node_modules/chai/chai',
-    	'sinon': '/base/node_modules/sinon/lib/sinon'
+    	'chai': '/base/libs/chai',
+        'sinon': '/base/libs/sinon'
     },
 
     shim: {
