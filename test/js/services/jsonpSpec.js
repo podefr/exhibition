@@ -1,7 +1,7 @@
 define(function (require) {
 
 	var chai = require("chai"),
-		Jsonp = require("services/Jsonp");
+		jsonp = require("services/jsonp");
 
 		require("sinon");
 
@@ -9,28 +9,22 @@ define(function (require) {
 
 	describe('Jsonp', function(){
 
-		var jsonp = null,
-			http = null,
-			jsonCallback = null;
-
-		beforeEach(function () {
-			jsonp = new Jsonp();
-			sinon.mock(jsonp.http);
-			sinon.mock(jsonp.qs);
-			jsonCallback = sinon.spy();
-		});
-
 		it("does a jsonp request", function () {
 			var scope = {},
-				request = "http";
+				request = "http",
+				script = {};
 
-			sinon.stub(jsonp, "createScript");
+			sinon.stub(jsonp, "createScript").returns(script);
+			sinon.stub(jsonp, "appendScript");
 
 			expect(jsonp.get()).to.be.false;
-			expect(jsonp.get(request)).to.be.false;
-			expect(jsonp.get(request, jsonCallback)).to.be.true;
+			expect(jsonp.get(request)).to.be.true;
 
 			expect(jsonp.createScript.calledWith(request));
+			expect(jsonp.appendScript.calledWith(script));
+
+			jsonp.createScript.restore();
+			jsonp.appendScript.restore();
 		});
 
 		it("creates a script that removes itself on load", function () {
@@ -44,6 +38,21 @@ define(function (require) {
 			script.onload();
 
 			expect(jsonp.removeScript.called);
+		});
+
+		it("adds the script to the header", function () {
+			var appendChild = sinon.spy(),
+				script = {};
+
+			sinon.stub(document, "querySelector").returns({
+				appendChild: appendChild
+			});
+
+			jsonp.appendScript({});
+
+			expect(appendChild.calledWith(script));
+
+			document.querySelector.restore();
 		});
 
 		it("can remove a previously added script", function () {

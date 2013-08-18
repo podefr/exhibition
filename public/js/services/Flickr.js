@@ -1,7 +1,8 @@
 define(function (require) {
 
 	var Promise = require("Promise"),
-		Tools = require("Tools");
+		Tools = require("Tools"),
+		jsonp = require("./jsonp");
 
 	return function FlickrConstructor() {
 
