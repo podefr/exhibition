@@ -28,6 +28,17 @@ define(function (require) {
 
 		describe("API calls", function () {
 
+			beforeEach(function () {
+				flickr.setConfig({
+					hostname: "flickr.com",
+					api_key: "123"
+				});
+				sinon.mock(flickr.jsonp);
+			});
+
+			afterEach(function () {
+			});
+
 			it("throws an error if the config is not correctly set", function () {
 				var request = {},
 					callback = sinon.spy();
@@ -54,8 +65,32 @@ define(function (require) {
 				})).to.be.true;
 			});
 
-			it("does a jsonp request", function () {
+			it("builds a url based on the config and the querystring object", function () {
+				var src = flickr.buildSrc();
 
+				expect(src).to.equal("http://flickr.com:80/services/rest/?api_key=123");
+			});
+
+			it("accepts other query strings", function () {
+				var src = flickr.buildSrc({
+					method: "getPhoto"
+				});
+
+				expect(src).to.equal("http://flickr.com:80/services/rest/?api_key=123&method=getPhoto");
+			});
+
+			it("does a jsonp request", function () {
+				sinon.stub(flickr.jsonp, "get");
+				sinon.stub(flickr, "buildSrc").returns("url");
+
+				var request = { method: "getPhotos" };
+
+				flickr.apiCall(request);
+
+				expect(flickr.buildSrc.calledWith(request));
+				expect(flickr.jsonp.get.calledWith("url"));
+
+				flickr.jsonp.get.restore();
 			});
 
 		});
