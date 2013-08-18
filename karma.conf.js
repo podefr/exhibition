@@ -17,6 +17,7 @@ module.exports = function(config) {
       {pattern: 'public/js/**/*.js', included: false},
       {pattern: 'public/bower_components/emily-prod/Emily.js', included: true},
       {pattern: 'public/bower_components/olives-prod/Olives.js', included: true},
+      {pattern: 'public/libs/*.js', included: false},
       {pattern: 'libs/sinon.js', included: false},
       {pattern: 'libs/chai.js', included: false},
       {pattern: 'test/**/*Spec.js', included: false},

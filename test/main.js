@@ -13,7 +13,9 @@ requirejs.config({
 
     paths: {
     	'chai': '/base/libs/chai',
-        'sinon': '/base/libs/sinon'
+        'sinon': '/base/libs/sinon',
+        'http': '/base/public/libs/http',
+        'querystring': '/base/public/libs/querystring'
     },
 
     shim: {

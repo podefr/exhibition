@@ -1,0 +1,1 @@
+window.querystring = require("querystring");

@@ -9,11 +9,29 @@ define(function (require) {
 			_apiKey = "";
 
 		this.setUsername = function setUsername(username) {
-			_username = username;
+			if (typeof username == "string") {
+				_username = username;
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		this.getUsername = function getUsername() {
+			return _username;
 		};
 
 		this.setApiKey = function setApiKey(apiKey) {
-			_apiKey = apiKey;
+			if (typeof apiKey == "string") {
+				_apiKey = apiKey;
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		this.getApiKey = function getApiKey() {
+			return _apiKey;
 		};
 
 		this.init = function init() {

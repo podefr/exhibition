@@ -7,10 +7,7 @@ define(function (require) {
 
 	var expect = chai.expect;
 
-	describe('test', function(){
-	    it('stupid first test', function(){
-	    	expect(true).to.equal(true);
-	    	console.log(sinon.spy);
-	  	});
+	describe('Exhibition', function(){
+
 	});
 });
