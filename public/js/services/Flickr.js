@@ -12,17 +12,12 @@ define(function (require) {
 
 	return function FlickrConstructor() {
 
-		var _config = null;
+		var _config = null,
+
+		_callbacks = [];
 
 		// for testing
 		this.jsonp = jsonp;
-
-		function assertConfig() {
-			if (typeof _config.hostname != "string" ||
-				typeof _config.api_key != "string") {
-				throw new Error("To use Flickr, make sure that the config gets a hostname to the Flickr API and an api_key");
-			}
-		}
 
 		this.setConfig = function setConfig(config) {
 			if (typeof config == "object") {
@@ -37,18 +32,74 @@ define(function (require) {
 			return _config;
 		};
 
-		this.apiCall = function apiCall(payload) {
+		this.apiCall = function apiCall(payload, callback, scope) {
 			assertConfig();
-			var src = this.buildSrc(payload);
+			var src;
+
+			if (typeof callback == "function") {
+				this.useUserCallback(payload, callback, scope);
+			}
+
+			src = this.buildSrc(payload);
 			jsonp.get(src);
+		};
+
+		this.useUserCallback = function useUserCallback(payload, callback, scope) {
+			var randomId = this.generateRandomId();
+			this.addCallbackIdToPayload(payload, randomId);
+			this.wrapCallback(randomId, callback, scope);
 		};
 
 		this.buildSrc = function buildSrc(queryObject) {
 			var withDefault = Tools.mixin(queryObject || {}, {
-				api_key: _config.api_key
+				api_key: _config.api_key,
+				format: "json"
 			});
 			return _addQueryString(_addPath(_addPort(_addHostname(_addProtocol("")))), withDefault);
 		};
+
+		this.generateRandomId = function generateRandomId() {
+			var random = "flickr_cb_" + Math.floor(Math.random() * 999999999) + (Date.now());
+
+			if (this.hasCallback(random)) {
+				return this.randomCallback();
+			} else {
+				return random;
+			}
+		};
+
+		this.hasCallback = function hasCallback(id) {
+			return _callbacks.indexOf(id) >= 0;
+		};
+
+		this.wrapCallback = function wrapCallback(callbackId, callback, scope) {
+			_callbacks.push(callbackId);
+			window[callbackId] = function () {
+				callback.apply(scope, arguments);
+				this.removeRandomCallback(callbackId);
+			}.bind(this);
+		};
+
+		this.addCallbackIdToPayload = function addCallbackIdToPayload(payload, callbackId) {
+			payload.jsoncallback = callbackId;
+		};
+
+		this.removeRandomCallback = function removeRandomCallback(id) {
+			var index = _callbacks.splice(_callbacks.indexOf(id), 1);
+			delete window[id];
+		};
+
+		this.currentCalls = function currentCalls() {
+			return _callbacks.length;
+		};
+
+		// PRIVATE FUNCTIONS
+		function assertConfig() {
+			if (typeof _config.hostname != "string" ||
+				typeof _config.api_key != "string") {
+				throw new Error("To use Flickr, make sure that the config gets a hostname to the Flickr API and an api_key");
+			}
+		}
 
 		function _addProtocol(src) {
 			src += _config.protocol || DEFAULT_PROTOCOL;
@@ -70,6 +121,7 @@ define(function (require) {
 		function _addQueryString(src, queryObject) {
 			return src += "/?" + querystring.stringify(queryObject);
 		}
+
 
 	};
 

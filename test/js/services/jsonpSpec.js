@@ -20,8 +20,8 @@ define(function (require) {
 			expect(jsonp.get()).to.be.false;
 			expect(jsonp.get(request)).to.be.true;
 
-			expect(jsonp.createScript.calledWith(request));
-			expect(jsonp.appendScript.calledWith(script));
+			expect(jsonp.createScript.calledWith(request)).to.be.true;
+			expect(jsonp.appendScript.calledWith(script)).to.be.true;
 
 			jsonp.createScript.restore();
 			jsonp.appendScript.restore();
@@ -37,7 +37,9 @@ define(function (require) {
 
 			script.onload();
 
-			expect(jsonp.removeScript.called);
+			expect(jsonp.removeScript.called).to.be.true;
+
+			jsonp.removeScript.restore();
 		});
 
 		it("adds the script to the header", function () {
@@ -50,7 +52,7 @@ define(function (require) {
 
 			jsonp.appendScript({});
 
-			expect(appendChild.calledWith(script));
+			expect(appendChild.calledWith(script)).to.be.true;
 
 			document.querySelector.restore();
 		});
@@ -64,7 +66,7 @@ define(function (require) {
 
 			jsonp.removeScript(script);
 
-			expect(script.parentElement.removeChild.calledWith(script));
+			expect(script.parentElement.removeChild.calledWith(script)).to.be.true;
 		});
 
 	});
