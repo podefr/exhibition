@@ -11,22 +11,22 @@ define(function (require) {
 
 		var jsonp = null,
 			http = null,
-			globalHandler = null;
+			jsonCallback = null;
 
 		beforeEach(function () {
 			jsonp = new Jsonp();
 			sinon.mock(jsonp.http);
 			sinon.mock(jsonp.qs);
-			globalHandler = sinon.spy();
+			jsonCallback = sinon.spy();
 		});
 
 		it("does a get request", function () {
-			var callback = sinon.spy(),
-				scope = {};
+			var scope = {},
+				request = {};
 
-			jsonp.get({
-
-			}, "", callback, scope);
+			expect(jsonp.get()).to.be.false;
+			expect(jsonp.get(request)).to.be.false;
+			expect(jsonp.get(request, jsonCallback)).to.be.true;
 
 		});
 

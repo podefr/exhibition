@@ -5,55 +5,31 @@ define(function (require) {
 
 	return function FlickrConstructor() {
 
-		var _username = "",
-			_apiKey = "";
+		var _config = null;
 
-		this.setUsername = function setUsername(username) {
-			if (typeof username == "string") {
-				_username = username;
+		function assertConfig() {
+			if (typeof _config.hostname != "string" ||
+				typeof _config.api_key != "string") {
+				throw new Error("To use Flickr, make sure that the config gets a hostname to the Flickr API and an api_key");
+			}
+
+		}
+
+		this.setConfig = function setConfig(config) {
+			if (typeof config == "object") {
+				_config = config;
 				return true;
 			} else {
 				return false;
 			}
 		};
 
-		this.getUsername = function getUsername() {
-			return _username;
-		};
-
-		this.setApiKey = function setApiKey(apiKey) {
-			if (typeof apiKey == "string") {
-				_apiKey = apiKey;
-				return true;
-			} else {
-				return false;
-			}
-		};
-
-		this.getApiKey = function getApiKey() {
-			return _apiKey;
-		};
-
-		this.init = function init() {
-
-			return this.apiCall({
-				method: "flickr.people.findByUsername",
-				username: _username
-			});
+		this.getConfig = function getConfig() {
+			return _config;
 		};
 
 		this.apiCall = function apiCall(payload) {
-			var actual = Tools.mixin({
-				api_key: _apiKey,
-				format: "json"
-			}, payload),
-			promise = new Promise();
-
-			console.log("calling api with payload", actual);
-
-			promise.fulfill({status: "ok"});
-
-			return promise;
+			assertConfig();
 		};
 
 	};

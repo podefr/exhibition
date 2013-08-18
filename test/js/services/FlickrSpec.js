@@ -17,42 +17,44 @@ define(function (require) {
 
 		describe("initialisation", function () {
 
-			it("takes a username", function () {
-				expect(flickr.getUsername()).to.equal("");
-
-				expect(flickr.setUsername()).to.equal(false);
-				expect(flickr.setUsername("podefr")).to.equal(true);
-
-				expect(flickr.getUsername()).to.equal("podefr");
-			});
-
-			it("takes a flickr api key", function () {
-				expect(flickr.getApiKey()).to.equal("");
-
-				expect(flickr.setApiKey()).to.equal(false);
-				expect(flickr.setApiKey("key")).to.equal(true);
-
-				expect(flickr.getApiKey()).to.equal("key");
-			});
-
-			it("gets the user id on init", function () {
-				var promise = {};
-
-				flickr.setUsername("podefr");
-
-				sinon.stub(flickr, "apiCall").returns(promise);
-
-				expect(flickr.init()).to.equal(promise);
-
-				expect(flickr.apiCall.args[0][0].method).to.equal("flickr.people.findByUsername");
-				expect(flickr.apiCall.args[0][0].username).to.equal("podefr");
+			it("takes a config", function () {
+				expect(flickr.setConfig()).to.be.false;
+				expect(flickr.setConfig({})).to.be.true;
 			});
 
 		});
 
 		describe("API calls", function () {
 
-			it("")
+			it("does a jsonp request", function () {
+
+			});
+
+			it("throws an error if the config is not correctly set", function () {
+				var request = {},
+					callback = sinon.spy();
+
+				flickr.setConfig({
+					hostname: "flickr.com"
+				});
+
+				expect(function () {
+					flickr.apiCall({}, callback);
+				}).to.throw(Error, "To use Flickr, make sure that the config gets a hostname to the Flickr API and an api_key");
+
+				flickr.setConfig({
+					api_key: "123"
+				});
+
+				expect(function () {
+					flickr.apiCall({}, callback);
+				}).to.throw(Error, "To use Flickr, make sure that the config gets a hostname to the Flickr API and an api_key");
+
+				expect(flickr.setConfig({
+					hostname: "flickr.com",
+					api_key: "123"
+				})).to.be.true;
+			});
 
 		});
 

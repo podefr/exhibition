@@ -11,8 +11,14 @@ define(function (require) {
 		this.http = http;
 		this.qs = querystring;
 
-		this.get = function get(request, globalHandler, callback, scope) {
+		this.get = function get(request, jsonCallback, scope) {
+			if (typeof request == "object" &&
+					typeof jsonCallback == "function") {
 
+				return true;
+			} else {
+				return false;
+			}
 		};
 
 	};
