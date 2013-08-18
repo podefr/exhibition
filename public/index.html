@@ -10,5 +10,12 @@
 		<script src="bower_components/requirejs/require.js" data-main="main.js"></script>
 		<script src="bower_components/emily-prod/Emily.js"></script>
 		<script src="bower_components/olives-prod/Olives.js"></script>
+		<script>
+			require.config({
+				paths: {
+					"querystring": "libs/querystring"
+				}
+			});
+		</script>
 	</body>
 </html>
