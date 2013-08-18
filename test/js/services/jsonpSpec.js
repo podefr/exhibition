@@ -20,14 +20,42 @@ define(function (require) {
 			jsonCallback = sinon.spy();
 		});
 
-		it("does a get request", function () {
+		it("does a jsonp request", function () {
 			var scope = {},
-				request = {};
+				request = "http";
+
+			sinon.stub(jsonp, "createScript");
 
 			expect(jsonp.get()).to.be.false;
 			expect(jsonp.get(request)).to.be.false;
 			expect(jsonp.get(request, jsonCallback)).to.be.true;
 
+			expect(jsonp.createScript.calledWith(request));
+		});
+
+		it("creates a script that removes itself on load", function () {
+			var script = jsonp.createScript("src");
+
+			expect(script.src.match(/src/));
+			expect(script.nodeName).to.equal("SCRIPT");
+
+			sinon.stub(jsonp, "removeScript");
+
+			script.onload();
+
+			expect(jsonp.removeScript.called);
+		});
+
+		it("can remove a previously added script", function () {
+			var script = {
+				parentElement: {
+					removeChild: sinon.spy()
+				}
+			};
+
+			jsonp.removeScript(script);
+
+			expect(script.parentElement.removeChild.calledWith(script));
 		});
 
 	});

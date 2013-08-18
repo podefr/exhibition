@@ -12,7 +12,6 @@ define(function (require) {
 				typeof _config.api_key != "string") {
 				throw new Error("To use Flickr, make sure that the config gets a hostname to the Flickr API and an api_key");
 			}
-
 		}
 
 		this.setConfig = function setConfig(config) {

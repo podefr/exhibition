@@ -18,17 +18,15 @@ define(function (require) {
 		describe("initialisation", function () {
 
 			it("takes a config", function () {
+				var config = {};
 				expect(flickr.setConfig()).to.be.false;
-				expect(flickr.setConfig({})).to.be.true;
+				expect(flickr.setConfig(config)).to.be.true;
+				expect(flickr.getConfig()).to.equal(config);
 			});
 
 		});
 
 		describe("API calls", function () {
-
-			it("does a jsonp request", function () {
-
-			});
 
 			it("throws an error if the config is not correctly set", function () {
 				var request = {},
@@ -54,6 +52,10 @@ define(function (require) {
 					hostname: "flickr.com",
 					api_key: "123"
 				})).to.be.true;
+			});
+
+			it("does a jsonp request", function () {
+
 			});
 
 		});
