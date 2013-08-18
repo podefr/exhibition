@@ -188,6 +188,23 @@ define(function (require) {
 				expect(flickr.useUserCallback.calledWith(payload, callback, scope)).to.be.true;
 			});
 
+			it("has a promise based api call", function () {
+				sinon.stub(flickr, "apiCall");
+
+				var payload = {},
+					promise;
+
+				promise = flickr.promiseApiCall(payload);
+
+				sinon.stub(promise, "fulfill");
+
+				expect(flickr.apiCall.called).to.be.true;
+
+				flickr.apiCall.args[0][1](1, 2, 3);
+
+				expect(promise.fulfill.calledWith(1, 2, 3)).to.be.true;
+			});
+
 		});
 
 	});

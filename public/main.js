@@ -8,13 +8,6 @@ define(function (require) {
 	var flickr = new Flickr();
 	flickr.setConfig(config.Flickr.host);
 
-	flickr.apiCall({
-		method: "flickr.photoSets.getList",
-		user_id :"99824371@N03"
-	}, function () {
-		console.log(arguments);
-	})
-
 
 	// Init Exhibition
 	var exhibition = new Exhibition();

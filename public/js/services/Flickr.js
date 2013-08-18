@@ -44,6 +44,15 @@ define(function (require) {
 			jsonp.get(src);
 		};
 
+		this.promiseApiCall = function promiseApiCall(payload) {
+			assertConfig();
+			var promise = new Promise();
+			this.apiCall(payload, function () {
+				promise.fulfill.apply(promise, arguments);
+			});
+			return promise;
+		};
+
 		this.useUserCallback = function useUserCallback(payload, callback, scope) {
 			var randomId = this.generateRandomId();
 			this.addCallbackIdToPayload(payload, randomId);
