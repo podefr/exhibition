@@ -1,12 +1,15 @@
 define(function (require) {
 
-	var tools = require("Tools");
+	var tools = require("Tools"),
+		Store = require("Store");
 
 	return function FlickrAdapterConstructor($flickr) {
 
 		var _flickr = $flickr || null,
 
-		_userId = "";
+		_galleries = new Store([]),
+
+		_photos = new Store({});
 
 		this.requests = {
 			getUserId: function getUserId(username) {
@@ -14,8 +17,22 @@ define(function (require) {
 					method: "flickr.people.findByUsername",
 					username: username
 				};
+			},
+
+			getGalleries: function getGalleries(userId) {
+				return {
+					method: "flickr.photosets.getList",
+					user_id: userId
+				}
+			},
+
+			getPhotosForGallery: function getPhotosForGallery(photosetId) {
+				return {
+					method: "flickr.photosets.getPhotos",
+					photoset_id: photosetId
+				}
 			}
-		}
+		};
 
 		this.setFlickr = function setFlickr(flickr) {
 			_flickr = flickr;
@@ -35,16 +52,28 @@ define(function (require) {
 					console.error("Flickr API call ", request, " failed with error ", result);
 					throw new Error("Flickr API call ", request, " failed with error ", result);
 				}
+				return result;
 			});
 		};
 
 		this.init = function init(username) {
-			return this.doApiCall("getUserId", username).then(function (result) {
-				_userId = result.user.id;
+			return this.doApiCall("getUserId", username)
+
+			.then(function getGalleries(result) {
+				return this.doApiCall("getGalleries", result.user.id).then(function (galleries) {
+					_galleries.reset(galleries.photosets.photoset);
+				});
+			}, this);
+
+		};
+
+		this.onAddGallery = function onAddGallery(index, gallery) {
+			this.doApiCall("getPhotosForGallery", gallery.id).then(function (result) {
+				_photos.set(gallery.id, new Store(result.photoset.photo));
 			});
 		};
 
-
+		_galleries.watch("added", this.onAddGallery, this);
 
 	};
 
