@@ -1,16 +1,19 @@
 define(function (require) {
 
-	return function Exhibition() {
+	return function Exhibition($dataProvider) {
 
-		var _dataProvider = null,
-		StateMachine = require("StateMachine");
+		var _dataProvider = $dataProvider;
 
-		this.setDataProvider = function (dataProvider) {
+		this.setDataProvider = function setDataProvider(dataProvider) {
 			_dataProvider = dataProvider;
 		};
 
-		this.start = function () {
+		this.getDataProvider = function getDataProvider() {
+			return _dataProvider;
+		};
 
+		this.start = function () {
+			_dataProvider.init();
 		};
 
 	};

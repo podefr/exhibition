@@ -17,6 +17,8 @@ define(function (require) {
 		beforeEach(function () {
 			flickr = new Flickr();
 			flickrAdapter = new FlickrAdapter();
+			sinon.mock(flickr);
+			flickrAdapter.setFlickr(flickr);
 		});
 
 		it("gets a flickr object for calling its API", function () {
@@ -24,24 +26,15 @@ define(function (require) {
 			expect(flickrAdapter.getFlickr()).to.equal(flickr);
 		});
 
-		it("has an init function that gets the username", function () {
-			var promise = new Promise();
-			sinon.stub(flickr, "promiseApiCall").returns(promise);
-			flickrAdapter.setFlickr(flickr);
+		it("gets the user id given a username", function () {
+			var request = flickrAdapter.requests.getUserId("podefr");
 
-			flickrAdapter.init("podefr");
+			expect(request.method).to.equal("flickr.people.findByUsername");
+			expect(request.username).to.equal("podefr");
+		});
 
-			expect(flickr.promiseApiCall.called).to.be.true;
-			expect(flickr.promiseApiCall.args[0][0].method).to.equal("flickr.people.findByUsername");
-			expect(flickr.promiseApiCall.args[0][0].username).to.equal("podefr");
+		it("has an init function that calls getUserID", function () {
 
-			promise.fulfill({
-				user: {
-					id: "123"
-				}
-			});
-
-			expect(flickrAdapter.getUserId()).to.equal("123");
 		});
 
 	});
