@@ -60,10 +60,12 @@ define(function (require) {
 			return this.doApiCall("getUserId", username)
 
 			.then(function getGalleries(result) {
-				return this.doApiCall("getGalleries", result.user.id).then(function (galleries) {
-					_galleries.reset(galleries.photosets.photoset);
-				});
-			}, this);
+				return this.doApiCall("getGalleries", result.user.id);
+			}, this)
+
+			.then(function (galleries) {
+				_galleries.reset(galleries.photosets.photoset);
+			});
 
 		};
 
