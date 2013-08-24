@@ -1,5 +1,7 @@
 define(function (require) {
 
+	var Galleries = require("js/uis/Galleries");
+
 	return function Exhibition($dataProvider) {
 
 		var _dataProvider = $dataProvider;
@@ -13,8 +15,12 @@ define(function (require) {
 		};
 
 		this.start = function () {
-			_dataProvider.init();
+			this.initGalleries();
 		};
+
+		this.initGalleries = function () {
+			console.log(_dataProvider.getGalleries());
+		}
 
 	};
 
