@@ -70,9 +70,19 @@ define(function (require) {
 		};
 
 		this.onAddGallery = function onAddGallery(index, gallery) {
-			this.doApiCall("getPhotosForGallery", gallery.id).then(function (result) {
+			this.doApiCall("getPhotosForGallery", gallery.id)
+
+			.then(function (result) {
 				_photos.set(gallery.id, new Store(result.photoset.photo));
 			});
+		};
+
+		this.getGalleries = function getGalleries() {
+			return _galleries;
+		};
+
+		this.getGallery = function getGallery(id) {
+			return _photos.get(id);
 		};
 
 		_galleries.watch("added", this.onAddGallery, this);
