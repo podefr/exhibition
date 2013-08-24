@@ -16,7 +16,8 @@ define(function (require) {
 	});
 
 	// Init Exhibition
-	var exhibition = new Exhibition(flickrAdapter);
+	var mainDom = document.querySelector(".main");
+	var exhibition = new Exhibition(flickrAdapter, mainDom);
 
 	// Start exhibition
 	exhibition.start();
