@@ -21,7 +21,7 @@ define(function (require) {
 
 		this.drillin = function drillin(event, dom) {
 			var gallery = viewModel.get(bind.getItemIndex(dom));
-			this.notify("drillin", gallery.id);
+			this.notify("drillin", gallery.galleryId);
 		};
 
 		this.setGalleries = function setGalleries(galleriesStore) {
@@ -34,11 +34,12 @@ define(function (require) {
 				var content = {
 					server: gallery.server,
 					id: gallery.primary,
+					galleryId: gallery.id,
 					secret: gallery.secret,
 					farm: gallery.farm,
 					title: gallery.title._content
 				};
-				content.url = flickrContent.createUrl(content,"z");
+				content.url = flickrContent.createUrl(content, "z");
 				formattedGalleries.push(content);
 			});
 			return formattedGalleries;

@@ -36,7 +36,11 @@ define(function (require) {
 			_galleries.template = document.querySelector(".galleries");
 			_galleries.render();
 			_stack.add(_galleries.dom);
-			_galleries.watch("drillin", navigation.event, navigation);
+			_galleries.watch("drillin", function (galleryId) {
+				_collage.setGallery(_dataProvider.getGallery(galleryId));
+				_stack.hide(_galleries.dom);
+				_stack.show(_collage.dom);
+			}, this);
 		};
 
 		this.initCollage = function initcollage() {
