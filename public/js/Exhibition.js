@@ -1,10 +1,8 @@
 define(function (require) {
 
-	var Galleries = require("./uis/Galleries"),
-		Store = require("Store"),
-		Tools = require("Tools");
+	var Galleries = require("./uis/Galleries");
 
-	return function Exhibition($dataProvider, $dom) {
+	return function Exhibition($dataProvider, $placeAt, $galleriesTemplate) {
 
 		var _dataProvider = $dataProvider,
 			_galleries = null;
@@ -17,30 +15,16 @@ define(function (require) {
 			return _dataProvider;
 		};
 
-		this.start = function () {
+		this.start = function start() {
 			this.initGalleries();
 		};
 
-		this.initGalleries = function () {
-			galleries = new Galleries(this.prepareGalleries());
-			galleries.place($dom);
+		this.initGalleries = function start() {
+			_galleries = new Galleries(_dataProvider.getGalleries());
+			_galleries.template = $galleriesTemplate;
+			_galleries.place($placeAt);
 		};
 
-		this.prepareGalleries = function () {
-			var galleries = _dataProvider.getGalleries(),
-				formattedGalleries = [];
-
-			Tools.loop(galleries, function (gallery) {
-				formattedGalleries.push({
-					server: gallery.server,
-					id: gallery.primary,
-					secret: gallery.secret,
-					farm: gallery.farm,
-					title: gallery.title._content
-				});
-			});
-			return new Store(formattedGalleries);
-		};
 
 	};
 

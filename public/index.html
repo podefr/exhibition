@@ -10,10 +10,10 @@
 
 		</div>
 
-		<div class="galleries">
-			<div class="content">
-				<h1 data-display-content="bind: innerHTML, title"></h1>
-				<img data-display-content="bind: src, url" />
+		<div class="galleries" data-bind="foreach">
+			<div class="content" data-event="listen: click, drillin">
+				<h1 data-bind="bind: innerHTML, title"></h1>
+				<img data-bind="bind: src, url" />
 			</div>
 		</div>
 

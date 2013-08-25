@@ -11,20 +11,19 @@ define(function (require) {
 
 	// Init Flickr adapter
 	var flickrAdapter = new FlickrAdapter(flickr);
-	flickrAdapter.init(config.Flickr.username).then(null, function (err) {
-		console.error("Failed initializing the flickr Adapter.", err)
-	});
 
 	// Init Exhibition
 	var mainDom = document.querySelector(".main");
-	var exhibition = new Exhibition(flickrAdapter, mainDom);
+	var galleriesDom = document.querySelector(".galleries");
+	var exhibition = new Exhibition(flickrAdapter, mainDom, galleriesDom);
 
-	// Start exhibition
-	exhibition.start();
+	flickrAdapter.init(config.Flickr.username).then(function () {
+		// Start exhibition
+		exhibition.start();
+	}, function (err) {
+		console.error("Failed initializing the flickr Adapter.", err)
+	});
 
-	function onError(err) {
-		console.error(err);
-	}
 
 
 });
