@@ -13,9 +13,7 @@ define(function (require) {
 	var flickrAdapter = new FlickrAdapter(flickr);
 
 	// Init Exhibition
-	var mainDom = document.querySelector(".main");
-	var galleriesDom = document.querySelector(".galleries");
-	var exhibition = new Exhibition(flickrAdapter, mainDom, galleriesDom);
+	var exhibition = new Exhibition(flickrAdapter);
 
 	flickrAdapter.init(config.Flickr.username).then(function () {
 		// Start exhibition

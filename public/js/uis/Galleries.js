@@ -31,14 +31,15 @@ define(function (require) {
 		this.getFormattedGalleries = function getFormattedGalleries(galleriesStore) {
 			var formattedGalleries = [];
 			galleriesStore.loop(function (gallery) {
-				formattedGalleries.push({
+				var content = {
 					server: gallery.server,
 					id: gallery.primary,
 					secret: gallery.secret,
 					farm: gallery.farm,
-					title: gallery.title._content,
-					url: flickrContent.createUrl(gallery, "c")
-				});
+					title: gallery.title._content
+				};
+				content.url = flickrContent.createUrl(content,"z");
+				formattedGalleries.push(content);
 			});
 			return formattedGalleries;
 		};

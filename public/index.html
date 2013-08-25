@@ -17,6 +17,15 @@
 			</div>
 		</div>
 
+		<div class="collage" data-bind="foreach">
+			<div class="content">
+				<img data-bind="bind: src, url" />
+			</div>
+		</div>
+
+		<div class="navigation">
+		</div>
+
 		<script src="bower_components/requirejs/require.js" data-main="main.js"></script>
 		<script src="bower_components/emily-prod/Emily.js"></script>
 		<script src="bower_components/olives-prod/Olives.js"></script>
