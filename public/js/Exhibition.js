@@ -2,28 +2,26 @@ define(function (require) {
 
 	var Galleries = require("./uis/Galleries"),
 		Collage = require("./uis/Collage"),
-		//navigation = require("./core/navigation"),
+		LocationRouter = require("LocationRouter"),
 		Stack = require("Stack");
 
-	return function Exhibition($dataProvider, $placeAt, $galleriesTemplate) {
+	return function Exhibition($dataProvider) {
 
 		var _dataProvider = $dataProvider,
+			_locationRouter = new LocationRouter(),
 			_galleries = null,
 			_collage = null,
 			_stack = null;
-
-		this.setDataProvider = function setDataProvider(dataProvider) {
-			_dataProvider = dataProvider;
-		};
-
-		this.getDataProvider = function getDataProvider() {
-			return _dataProvider;
-		};
 
 		this.start = function start() {
 			this.initStack();
 			this.initGalleries();
 			this.initCollage();
+			// We navigate to home first, it's the initial state
+			_locationRouter.navigate("home");
+			// Then we start the router, if a valid route is given in the url
+			// then we navigate to it.
+			_locationRouter.start();
 		};
 
 		this.initStack = function initStack() {
@@ -36,11 +34,9 @@ define(function (require) {
 			_galleries.template = document.querySelector(".galleries");
 			_galleries.render();
 			_stack.add(_galleries.dom);
-			_galleries.watch("drillin", function (galleryId) {
-				_collage.setGallery(_dataProvider.getGallery(galleryId));
-				_stack.hide(_galleries.dom);
-				_stack.show(_collage.dom);
-			}, this);
+			_galleries.watch("drillin", function (id) {
+				_locationRouter.navigate("gallery", id);
+			});
 		};
 
 		this.initCollage = function initcollage() {
@@ -48,8 +44,18 @@ define(function (require) {
 			_collage.template = document.querySelector(".collage");
 			_collage.render();
 			_stack.add(_collage.dom);
-			_stack.hide(_collage.dom);
 		};
+
+		_locationRouter.set("home", function () {
+			_stack.show(_galleries.dom);
+			_stack.hide(_collage.dom);
+		});
+
+		_locationRouter.set("gallery", function (id) {
+			_collage.setGallery(_dataProvider.getGallery(id));
+			_stack.hide(_galleries.dom);
+			_stack.show(_collage.dom);
+		});
 
 
 	};
