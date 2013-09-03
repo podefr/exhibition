@@ -77,7 +77,7 @@ define(function (require) {
 			this.doApiCall("getPhotosForGallery", gallery.id)
 
 			.then(function (result) {
-				_photos.set(gallery.id, store.reset(result.photoset.photo));
+				store.reset(result.photoset.photo);
 			});
 		};
 
