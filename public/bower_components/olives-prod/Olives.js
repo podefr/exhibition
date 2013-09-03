@@ -1,5 +1,5 @@
 /**
- * @license Olives 1.5.1 http://flams.github.com/olives
+ * @license Olives 1.5.2 http://flams.github.com/olives
  * The MIT License (MIT)
  * Copyright (c) 2012-2013 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
  */
@@ -2002,7 +2002,7 @@ function LocationRouter(Router, Tools) {
          * @private
          */
         this.onHashChange  = function onHashChange(event) {
-            var parsedHash = this.parse(event.newUrl.split("#").pop());
+            var parsedHash = this.parse(event.newURL.split("#").pop());
             this.navigate.apply(this, parsedHash);
         };
 
