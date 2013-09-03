@@ -1,5 +1,5 @@
 /**
- * @license Emily 1.7.0 http://flams.github.com/emily
+ * @license Emily 1.8.0 http://flams.github.com/emily
  *
  * The MIT License (MIT)
  *
@@ -19,7 +19,7 @@ define('Tools',[],
  */
 function Tools(){
 
-
+    
 
     /**
      * Get the closest number in an array
@@ -399,7 +399,7 @@ define('Observable',["Tools"],
 */
 function Observable(Tools) {
 
-
+	
 
 	/**
 	 * Defines the Observable
@@ -472,9 +472,7 @@ function Observable(Tools) {
 						if (value) {
 							value[0].apply(value[1] || null, args);
 						}
-					} catch (err) {
-						console.error(err);
-					 }
+					} catch (err) { }
 				});
 				return true;
 			} else {
@@ -531,7 +529,7 @@ define('StateMachine',["Tools"],
  */
 function StateMachine(Tools) {
 
-
+	
 
      /**
      * @param initState {String} the initial state
@@ -786,7 +784,7 @@ define('Promise',["Observable", "StateMachine"],
  */
 function Promise(Observable, StateMachine) {
 
-
+	
 
     return function PromiseConstructor() {
 
@@ -1055,7 +1053,7 @@ define('Store',["Observable", "Tools"],
  */
  function Store(Observable, Tools) {
 
-
+    
 
     /**
      * Defines the Store
@@ -1235,6 +1233,7 @@ define('Store',["Observable", "Tools"],
                 previousData = Tools.clone(_data);
                 apply = this.proxy.apply(this, arguments);
                 _notifyDiffs(previousData);
+                _storeObservable.notify("altered", _data, previousData);
                 return apply;
             } else {
                 return false;
@@ -1336,6 +1335,7 @@ define('Store',["Observable", "Tools"],
                 var previousData = Tools.clone(_data);
                 _data = Tools.clone(data) || {};
                 _notifyDiffs(previousData);
+                _storeObservable.notify("resetted", _data, previousData);
                 return true;
             } else {
                 return false;
@@ -1435,7 +1435,7 @@ define('Transport',[],
  */
 function Transport() {
 
-
+    
 
     /**
      * Create a Transport
@@ -1547,7 +1547,7 @@ define('Router',["Observable", "Store", "Tools"],
  */
 function Router(Observable, Store, Tools) {
 
-
+    
 
     return function RouterConstructor() {
 

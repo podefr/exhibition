@@ -16,7 +16,9 @@ define(function (require) {
 		});
 
 		this.setGallery = function setGallery(galleryStore) {
-			viewModel.reset(this.getFormattedGallery(galleryStore));
+			galleryStore.watch("resetted", function (newData) {
+				viewModel.reset(this.getFormattedGallery(newData));
+			});
 		};
 
 		this.getFormattedGallery = function getFormattedGallery(galleryStore) {

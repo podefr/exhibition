@@ -1,5 +1,5 @@
 /**
- * @license Olives <VERSION> http://flams.github.com/olives
+ * @license Olives 1.5.1 http://flams.github.com/olives
  * The MIT License (MIT)
  * Copyright (c) 2012-2013 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
  */
@@ -1982,6 +1982,7 @@ function LocationRouter(Router, Tools) {
          * While navigating, the hashmark itself will also change to reflect the current route state
          */
         this.start = function start() {
+            this.clearHistory();
             var parsedHash = this.parse(window.location.hash);
             this.navigate.apply(this, parsedHash);
             this.bindOnHashChange();

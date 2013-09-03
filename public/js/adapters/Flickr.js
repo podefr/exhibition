@@ -64,16 +64,20 @@ define(function (require) {
 			}, this)
 
 			.then(function (galleries) {
+				_galleries.watch("added", this.onAddGallery, this);
 				_galleries.reset(galleries.photosets.photoset);
-			});
+			}, this);
 
 		};
 
 		this.onAddGallery = function onAddGallery(index, gallery) {
+			var store = new Store();
+			_photos.set(gallery.id, store);
+
 			this.doApiCall("getPhotosForGallery", gallery.id)
 
 			.then(function (result) {
-				_photos.set(gallery.id, new Store(result.photoset.photo));
+				_photos.set(gallery.id, store.reset(result.photoset.photo));
 			});
 		};
 
@@ -85,7 +89,6 @@ define(function (require) {
 			return _photos.get(id);
 		};
 
-		_galleries.watch("added", this.onAddGallery, this);
 
 	};
 

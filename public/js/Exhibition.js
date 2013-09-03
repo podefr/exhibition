@@ -3,6 +3,7 @@ define(function (require) {
 	var Galleries = require("./uis/Galleries"),
 		Collage = require("./uis/Collage"),
 		LocationRouter = require("LocationRouter"),
+		Navigation = require("./uis/Navigation"),
 		Stack = require("Stack");
 
 	return function Exhibition($dataProvider) {
@@ -17,6 +18,7 @@ define(function (require) {
 			this.initStack();
 			this.initGalleries();
 			this.initCollage();
+			this.initNavigation();
 			// We navigate to home first, it's the initial state
 			_locationRouter.navigate("home");
 			// Then we start the router, if a valid route is given in the url
@@ -44,6 +46,12 @@ define(function (require) {
 			_collage.template = document.querySelector(".collage");
 			_collage.render();
 			_stack.add(_collage.dom);
+		};
+
+		this.initNavigation = function initNavigation() {
+			_navigation = new Navigation(_locationRouter);
+			_navigation.template = document.querySelector(".navigation");
+			_navigation.alive(".navigation");
 		};
 
 		_locationRouter.set("home", function () {

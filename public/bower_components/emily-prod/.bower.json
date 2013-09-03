@@ -1,14 +1,16 @@
 {
   "name": "emily",
+  "version": "1.8.0",
   "main": "Emily.js",
   "homepage": "https://github.com/flams/bower-emily",
-  "_release": "18d41d556d",
+  "_release": "1.8.0",
   "_resolution": {
-    "type": "branch",
-    "branch": "master",
-    "commit": "18d41d556d3a0c5ce69353932efcf134ff71238d"
+    "type": "version",
+    "tag": "1.8.0",
+    "commit": "1ce300a48dd4aee6ed43a817088599fe17ca7e34"
   },
   "_source": "git://github.com/flams/bower-emily.git",
-  "_target": "*",
+  "_target": "~1.8.0",
+  "_originalSource": "emily-prod",
   "_direct": true
 }
