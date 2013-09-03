@@ -18,16 +18,14 @@ define(function (require) {
 		this.setGallery = function setGallery(galleryStore) {
 			galleryStore.watch("resetted", function (newData) {
 				viewModel.reset(this.getFormattedGallery(newData));
-			});
+			}, this);
 		};
 
-		this.getFormattedGallery = function getFormattedGallery(galleryStore) {
-			var formattedGallery = [];
-			galleryStore.loop(function (content) {
+		this.getFormattedGallery = function getFormattedGallery(gallery) {
+			return gallery.map(function (content) {
 				content.url = flickrContent.createUrl(content ,"z");
-				formattedGallery.push(content);
+				return content;
 			});
-			return formattedGallery;
 		};
 
 	}
