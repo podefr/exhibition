@@ -19,11 +19,10 @@ define(function (require) {
 			this.initGalleries();
 			this.initCollage();
 			this.initNavigation();
-			// We navigate to home first, it's the initial state
-			_locationRouter.navigate("home");
 			// Then we start the router, if a valid route is given in the url
 			// then we navigate to it.
-			_locationRouter.start();
+			_stack.hideAll();
+			_locationRouter.start("home");
 		};
 
 		this.initStack = function initStack() {
@@ -55,14 +54,12 @@ define(function (require) {
 		};
 
 		_locationRouter.set("home", function () {
-			_stack.show(_galleries.dom);
-			_stack.hide(_collage.dom);
+			_stack.transit(_galleries.dom);
 		});
 
 		_locationRouter.set("gallery", function (id) {
 			_collage.setGallery(_dataProvider.getGallery(id));
-			_stack.hide(_galleries.dom);
-			_stack.show(_collage.dom);
+			_stack.transit(_collage.dom);
 		});
 
 
