@@ -71,7 +71,7 @@ define(function (require) {
 		};
 
 		this.onAddGallery = function onAddGallery(index, gallery) {
-			var store = new Store();
+			var store = new Store([]);
 			_photos.set(gallery.id, store);
 
 			this.doApiCall("getPhotosForGallery", gallery.id)

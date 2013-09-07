@@ -16,13 +16,14 @@ define(function (require) {
 		});
 
 		this.setGallery = function setGallery(galleryStore) {
+			viewModel.reset(this.getFormattedGallery(galleryStore.dump()));
 			galleryStore.watch("resetted", function (newData) {
 				viewModel.reset(this.getFormattedGallery(newData));
 			}, this);
 		};
 
-		this.getFormattedGallery = function getFormattedGallery(gallery) {
-			return gallery.map(function (content) {
+		this.getFormattedGallery = function getFormattedGallery(data) {
+			return data.map(function (content) {
 				content.url = flickrContent.createUrl(content ,"z");
 				return content;
 			});
