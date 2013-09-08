@@ -66,10 +66,16 @@ define(function (require) {
 		};
 
 		this.init = function init(username) {
+			var userId;
+
 			return this.doApiCall("getUserId", username)
 
-			.then(function getCollections(result) {
-				return this.doApiCall("getCollections", result.user.id);
+			.then(function setUser(result) {
+				userId = result.user.id;
+			})
+
+			.then(function getCollections() {
+				return this.doApiCall("getCollections", userId);
 			}, this)
 
 			.then(function (collections) {
@@ -77,7 +83,7 @@ define(function (require) {
 			}, this)
 
 			.then(function getGalleries(result) {
-				return this.doApiCall("getGalleries", result.user.id);
+				return this.doApiCall("getGalleries", userId);
 			}, this)
 
 			.then(function (galleries) {
