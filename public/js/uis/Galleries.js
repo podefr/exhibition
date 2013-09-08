@@ -29,8 +29,7 @@ define(function (require) {
 		};
 
 		this.getFormattedGalleries = function getFormattedGalleries(galleriesStore) {
-			var formattedGalleries = [];
-			galleriesStore.loop(function (gallery) {
+			return galleriesStore.proxy("map", function (gallery) {
 				var content = {
 					server: gallery.server,
 					id: gallery.primary,
@@ -40,9 +39,8 @@ define(function (require) {
 					title: gallery.title._content
 				};
 				content.url = flickrContent.createUrl(content, "z");
-				formattedGalleries.push(content);
+				return content;
 			});
-			return formattedGalleries;
 		};
 
 	}
