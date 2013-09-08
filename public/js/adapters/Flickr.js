@@ -9,6 +9,8 @@ define(function (require) {
 
 		_galleries = new Store([]),
 
+		_collections = new Store([]),
+
 		_photos = new Store({});
 
 		this.requests = {
@@ -22,6 +24,13 @@ define(function (require) {
 			getGalleries: function getGalleries(userId) {
 				return {
 					method: "flickr.photosets.getList",
+					user_id: userId
+				}
+			},
+
+			getCollections: function getCollections(userId) {
+				return {
+					method: "flickr.collections.getTree",
 					user_id: userId
 				}
 			},
@@ -58,6 +67,14 @@ define(function (require) {
 
 		this.init = function init(username) {
 			return this.doApiCall("getUserId", username)
+
+			.then(function getCollections(result) {
+				return this.doApiCall("getCollections", result.user.id);
+			}, this)
+
+			.then(function (collections) {
+				_collections.reset(collections.collections);
+			}, this)
 
 			.then(function getGalleries(result) {
 				return this.doApiCall("getGalleries", result.user.id);
