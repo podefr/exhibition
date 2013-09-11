@@ -21,7 +21,7 @@ define(function (require) {
 
 		this.drillin = function drillin(event, dom) {
 			var gallery = viewModel.get(bind.getItemIndex(dom));
-			this.notify("drillin", gallery.galleryId);
+			this.notify("drillin", gallery.photoset_id);
 		};
 
 		this.setGalleries = function setGalleries(galleriesStore) {
@@ -29,18 +29,7 @@ define(function (require) {
 		};
 
 		this.getFormattedGalleries = function getFormattedGalleries(galleriesStore) {
-			return galleriesStore.proxy("map", function (gallery) {
-				var content = {
-					server: gallery.server,
-					id: gallery.primary,
-					galleryId: gallery.id,
-					secret: gallery.secret,
-					farm: gallery.farm,
-					title: gallery.title._content
-				};
-				content.url = flickrContent.createUrl(content, "z");
-				return content;
-			});
+			return galleriesStore.proxy("map");
 		};
 
 	}
@@ -49,7 +38,6 @@ define(function (require) {
 		Tools.mixin(new OObject, GalleriesConstructor.prototype);
 		Tools.mixin(new Observable, GalleriesConstructor.prototype);
 		var galleries = new GalleriesConstructor();
-		galleries.setGalleries($galleries);
 		return galleries;
 	}
 

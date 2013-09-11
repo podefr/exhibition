@@ -7,7 +7,7 @@ define(function (require) {
 
 		var _flickr = $flickr || null,
 
-		_galleries = new Store([]),
+		_photosets = new Store([]),
 
 		_collections = new Store([]),
 
@@ -21,7 +21,7 @@ define(function (require) {
 				};
 			},
 
-			getGalleries: function getGalleries(userId) {
+			getPhotosets: function getPhotosets(userId) {
 				return {
 					method: "flickr.photosets.getList",
 					user_id: userId
@@ -35,7 +35,7 @@ define(function (require) {
 				}
 			},
 
-			getPhotosForGallery: function getPhotosForGallery(photosetId) {
+			getPhotosForPhotoset: function getPhotosForPhotoset(photosetId) {
 				return {
 					method: "flickr.photosets.getPhotos",
 					photoset_id: photosetId
@@ -66,11 +66,11 @@ define(function (require) {
 		};
 
 		this.init = function init(username) {
-			var userId;
+			var userId = "";
 
 			return this.doApiCall("getUserId", username)
 
-			.then(function setUser(result) {
+			.then(function setUserId(result) {
 				userId = result.user.id;
 			})
 
@@ -79,37 +79,105 @@ define(function (require) {
 			}, this)
 
 			.then(function (collections) {
-				_collections.reset(collections.collections);
+				_collections.reset(collections.collections.collection);
 			}, this)
 
-			.then(function getGalleries(result) {
-				return this.doApiCall("getGalleries", userId);
+			.then(function getPhotosets() {
+				return this.doApiCall("getPhotosets", userId);
 			}, this)
 
-			.then(function (galleries) {
-				_galleries.watch("added", this.onAddGallery, this);
-				_galleries.reset(galleries.photosets.photoset);
+			.then(function (photoset) {
+				_photosets.watch("added", this.onAddPhotoset, this);
+				_photosets.reset(photoset.photosets.photoset);
 			}, this);
 
 		};
 
-		this.onAddGallery = function onAddGallery(index, gallery) {
+		this.onAddPhotoset = function onAddPhotoset(index, photoset) {
 			var store = new Store([]);
-			_photos.set(gallery.id, store);
+			_photos.set(photoset.id, store);
 
-			this.doApiCall("getPhotosForGallery", gallery.id)
+			this.doApiCall("getPhotosForPhotoset", photoset.id)
 
 			.then(function (result) {
 				store.reset(result.photoset.photo);
 			});
 		};
 
-		this.getGalleries = function getGalleries() {
-			return _galleries;
+		this.getPhotosets = function getPhotosets() {
+			return _photosets.proxy("map", function (photoset) {
+				return {
+					server: photoset.server,
+					id: photoset.primary,
+					photoset_id: photoset.id,
+					secret: photoset.secret,
+					farm: photoset.farm,
+					title: photoset.title._content
+				};
+			});
 		};
 
-		this.getGallery = function getGallery(id) {
-			return _photos.get(id);
+		this.getPhotoset = function getPhotoset(index) {
+			return _photosets.get(index).map(function (photo) {
+				return {
+					server: photo.server,
+					id: photo.primary,
+					photoset_id: photo.id,
+					secret: photo.secret,
+					farm: photo.farm,
+					title: photo.title._content
+				};
+			});
+		};
+
+		this.getPhotosetById = function getPhotosetById(id) {
+			var returnPhotoset;
+
+			_photosets.proxy("some", function (photoset) {
+				if (photoset.id == id) {
+					returnPhotoset = photoset;
+					return true;
+				}
+			});
+
+			return returnPhotoset;
+		};
+
+		this.getCollections = function getCollections() {
+			return _collections.proxy("map", function (collection) {
+				var photosetId = collection.set[0].id,
+					photo = this.getPhotosetById(photosetId);
+				return {
+					collection_id: collection.id,
+					server: photo.server,
+					id: photo.id,
+					secret: photo.secret,
+					farm: photo.farm,
+					title: collection.title._content,
+					description: collection.description,
+					iconlarge: collection.iconlarge,
+					iconesmall: collection.iconsmall
+				}
+			}, this);
+		};
+
+		this.getPhotosetsForCollection = function getPhotosetsForCollection(collectionId) {
+			var collection;
+
+			_collections.proxy("some", function (coll) {
+				if (coll.id == collectionId) {
+					collection = coll;
+					return true;
+				}
+			})
+
+			if (!collection) {
+				return false;
+			} else {
+				return collection.set.map(function (photoset) {
+					return this.getPhotosetById(photoset.id);
+				}, this);
+			}
 		};
 
 

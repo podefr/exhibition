@@ -1,6 +1,7 @@
 define(function (require) {
 
-	var Galleries = require("./uis/Galleries"),
+	var Collections = require("./uis/Collections"),
+		Galleries = require("./uis/Galleries"),
 		Collage = require("./uis/Collage"),
 		LocationRouter = require("LocationRouter"),
 		Navigation = require("./uis/Navigation"),
@@ -10,19 +11,19 @@ define(function (require) {
 
 		var _dataProvider = $dataProvider,
 			_locationRouter = new LocationRouter(),
+			_collections = null,
 			_galleries = null,
 			_collage = null,
 			_stack = null;
 
 		this.start = function start() {
 			this.initStack();
-			this.initGalleries();
-			this.initCollage();
-			this.initNavigation();
-			// Then we start the router, if a valid route is given in the url
-			// then we navigate to it.
-			_stack.hideAll();
-			_locationRouter.start("home");
+			this.initCollections();
+			//this.initGalleries();
+			//this.initCollage();
+			//this.initNavigation();
+			//_stack.hideAll();
+			//_locationRouter.start("home");
 		};
 
 		this.initStack = function initStack() {
@@ -30,8 +31,18 @@ define(function (require) {
 			_stack.place(document.querySelector(".main"));
 		};
 
+		this.initCollections = function initCollections() {
+			_collections = new Collections(_dataProvider.getCollections());
+			_collections.template = document.querySelector(".collections");
+			_collections.render();
+			_stack.add(_collections.dom);
+			_collections.watch("drillin", function (id) {
+				_locationRouter.navigate("collection", id);
+			});
+		};
+
 		this.initGalleries = function initGalleries() {
-			_galleries = new Galleries(_dataProvider.getGalleries());
+			_galleries = new Galleries();
 			_galleries.template = document.querySelector(".galleries");
 			_galleries.render();
 			_stack.add(_galleries.dom);
@@ -54,6 +65,11 @@ define(function (require) {
 		};
 
 		_locationRouter.set("home", function () {
+			_stack.transit(_collections.dom);
+		});
+
+		_locationRouter.set("collection", function () {
+			_collections
 			_stack.transit(_galleries.dom);
 		});
 
