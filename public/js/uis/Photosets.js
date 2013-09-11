@@ -21,7 +21,7 @@ define(function (require) {
 
 		viewModel.watch("added", function (index, photoset) {
 			photoset.url = flickrContent.createUrl(photoset, "z");
-			this.set(index, {});
+			this.set(index, photoset);
 		}, viewModel);
 
 		this.drillin = function drillin(event, dom) {
