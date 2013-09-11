@@ -175,7 +175,15 @@ define(function (require) {
 				return false;
 			} else {
 				return collection.set.map(function (photoset) {
-					return this.getPhotosetById(photoset.id);
+					var photoset = this.getPhotosetById(photoset.id);
+					return {
+						collection_id: collection.id,
+						server: photoset.server,
+						id: photoset.primary,
+						secret: photoset.secret,
+						farm: photoset.farm,
+						title: photoset.title._content,
+					}
 				}, this);
 			}
 		};

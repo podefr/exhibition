@@ -25,12 +25,8 @@ define(function (require) {
 		});
 
 		this.drillin = function drillin(event, dom) {
-			//var gallery = viewModel.get(bind.getItemIndex(dom));
-			//this.notify("drillin", gallery.galleryId);
-		};
-
-		this.setCollections = function setCollections(collectionsStore) {
-			viewModel.reset(this.getFormattedCollections(collectionsStore));
+			var collection = viewModel.get(bind.getItemIndex(dom));
+			this.notify("drillin", collection.collection_id);
 		};
 
 	}

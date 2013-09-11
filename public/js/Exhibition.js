@@ -1,7 +1,7 @@
 define(function (require) {
 
 	var Collections = require("./uis/Collections"),
-		Galleries = require("./uis/Galleries"),
+		Photosets = require("./uis/Photosets"),
 		Collage = require("./uis/Collage"),
 		LocationRouter = require("LocationRouter"),
 		Navigation = require("./uis/Navigation"),
@@ -12,18 +12,18 @@ define(function (require) {
 		var _dataProvider = $dataProvider,
 			_locationRouter = new LocationRouter(),
 			_collections = null,
-			_galleries = null,
+			_photosets = null,
 			_collage = null,
 			_stack = null;
 
 		this.start = function start() {
 			this.initStack();
 			this.initCollections();
-			//this.initGalleries();
+			this.initPhotosets();
 			//this.initCollage();
 			//this.initNavigation();
-			//_stack.hideAll();
-			//_locationRouter.start("home");
+			_stack.hideAll();
+			_locationRouter.start("home");
 		};
 
 		this.initStack = function initStack() {
@@ -37,17 +37,17 @@ define(function (require) {
 			_collections.render();
 			_stack.add(_collections.dom);
 			_collections.watch("drillin", function (id) {
-				_locationRouter.navigate("collection", id);
+				_locationRouter.navigate("photosets", id);
 			});
 		};
 
-		this.initGalleries = function initGalleries() {
-			_galleries = new Galleries();
-			_galleries.template = document.querySelector(".galleries");
-			_galleries.render();
-			_stack.add(_galleries.dom);
-			_galleries.watch("drillin", function (id) {
-				_locationRouter.navigate("gallery", id);
+		this.initPhotosets = function initPhotosets() {
+			_photosets = new Photosets();
+			_photosets.template = document.querySelector(".photosets");
+			_photosets.render();
+			_stack.add(_photosets.dom);
+			_photosets.watch("drillin", function (id) {
+				_locationRouter.navigate("photoset", id);
 			});
 		};
 
@@ -68,12 +68,12 @@ define(function (require) {
 			_stack.transit(_collections.dom);
 		});
 
-		_locationRouter.set("collection", function () {
-			_collections
-			_stack.transit(_galleries.dom);
+		_locationRouter.set("photosets", function (id) {
+			_photosets.setPhotosets(_dataProvider.getPhotosetsForCollection(id));
+			_stack.transit(_photosets.dom);
 		});
 
-		_locationRouter.set("gallery", function (id) {
+		_locationRouter.set("photoset", function (id) {
 			_collage.setGallery(_dataProvider.getGallery(id));
 			_stack.transit(_collage.dom);
 		});
