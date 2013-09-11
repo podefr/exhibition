@@ -46,9 +46,6 @@ define(function (require) {
 			_photosets.template = document.querySelector(".photosets");
 			_photosets.render();
 			_stack.add(_photosets.dom);
-			_photosets.watch("drillin", function (id) {
-				_locationRouter.navigate("photoset", id);
-			});
 		};
 
 		this.initCollage = function initcollage() {
@@ -73,9 +70,8 @@ define(function (require) {
 			_stack.transit(_photosets.dom);
 		});
 
-		_locationRouter.set("photoset", function (id) {
-			_collage.setGallery(_dataProvider.getGallery(id));
-			_stack.transit(_collage.dom);
+		_locationRouter.watch(function () {
+			window.scrollTo(document.querySelector(".main"));
 		});
 
 
