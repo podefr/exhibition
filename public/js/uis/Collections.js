@@ -19,6 +19,11 @@ define(function (require) {
 			"event": eventPlugin
 		});
 
+		viewModel.alter("map", function (collection) {
+			collection.url = flickrContent.createUrl(collection, "z");
+			return collection;
+		});
+
 		this.drillin = function drillin(event, dom) {
 			//var gallery = viewModel.get(bind.getItemIndex(dom));
 			//this.notify("drillin", gallery.galleryId);

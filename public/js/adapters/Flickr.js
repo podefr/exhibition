@@ -150,10 +150,10 @@ define(function (require) {
 				return {
 					collection_id: collection.id,
 					server: photo.server,
-					id: photo.id,
+					id: photo.primary,
 					secret: photo.secret,
 					farm: photo.farm,
-					title: collection.title._content,
+					title: collection.title,
 					description: collection.description,
 					iconlarge: collection.iconlarge,
 					iconesmall: collection.iconsmall
