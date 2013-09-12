@@ -3,34 +3,31 @@ define(function (require) {
 	var OObject = require("OObject"),
 		Bind = require("Bind.plugin"),
 		Events = require("Event.plugin"),
-		Store = require("Store"),
+		Observable = require("Observable"),
 		Tools = require("Tools");
 
-	function NavigationConstructor($router) {
+	function NavigationConstructor() {
 
-		var viewModel = new Store(),
-			bind = new Bind(viewModel),
-			events = new Events(this);
-			router = $router;
+		var events = new Events(this);
 
 		this.plugins.addAll({
-			"bind": bind,
 			"events": events
 		});
 
 		this.back = function back() {
-			router.back();
+			this.notify("back");
 		};
 
-		this.forward = function forward() {
-			router.forward();
+		this.home = function home() {
+			this.notify("home");
 		};
 
 	}
 
-	return function NavigationFactory(router) {
+	return function NavigationFactory() {
 		Tools.mixin(new OObject, NavigationConstructor.prototype);
-		return new NavigationConstructor(router);
+		Tools.mixin(new Observable, NavigationConstructor.prototype);
+		return new NavigationConstructor();
 	}
 
 });

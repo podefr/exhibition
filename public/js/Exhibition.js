@@ -18,10 +18,10 @@ define(function (require) {
 
 		this.start = function start() {
 			this.initStack();
+			this.initNavigation();
 			this.initCollections();
 			this.initPhotosets();
 			this.initCollage();
-			//this.initNavigation();
 			_stack.hideAll();
 			_locationRouter.start("home");
 		};
@@ -60,22 +60,29 @@ define(function (require) {
 
 		this.initNavigation = function initNavigation() {
 			_navigation = new Navigation(_locationRouter);
-			_navigation.template = document.querySelector(".navigation");
-			_navigation.alive(".navigation");
+			_navigation.alive(document.querySelector(".navigation"));
+			_navigation.watch("back", _locationRouter.back, _locationRouter);
+			_navigation.watch("home", function () {
+				_locationRouter.navigate("home");
+			});
+			_stack.add(_navigation.dom);
 		};
 
 		_locationRouter.set("home", function () {
 			_stack.transit(_collections.dom);
+			_stack.hide(_navigation.dom);
 		});
 
 		_locationRouter.set("photosets", function (id) {
 			_photosets.setPhotosets(_dataProvider.getPhotosetsForCollection(id));
 			_stack.transit(_photosets.dom);
+			_stack.show(_navigation.dom);
 		});
 
 		_locationRouter.set("photoset", function (id) {
 			_collage.setPhotoset(_dataProvider.getPhotosFromPhotoset(id));
 			_stack.transit(_collage.dom);
+			_stack.show(_navigation.dom);
 		});
 
 		_locationRouter.watch(function () {
