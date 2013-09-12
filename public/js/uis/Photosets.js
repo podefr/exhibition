@@ -19,17 +19,16 @@ define(function (require) {
 			"event": eventPlugin
 		});
 
-		viewModel.watch("added", function (index, photoset) {
-			photoset.url = flickrContent.createUrl(photoset, "z");
-			this.set(index, photoset);
-		}, viewModel);
-
 		this.drillin = function drillin(event, dom) {
-
+			var photoset = viewModel.get(bind.getItemIndex(dom));
+			this.notify("drillin", photoset.photoset_id);
 		};
 
 		this.setPhotosets = function setPhotosets(photosets) {
-			viewModel.reset(photosets);
+			viewModel.reset(photosets.map(function (photoset) {
+				photoset.url = flickrContent.createUrl(photoset, "z");
+				return photoset;
+			}));
 		};
 
 	}

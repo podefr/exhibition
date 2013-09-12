@@ -15,22 +15,11 @@ define(function (require) {
 			"bind": bind
 		});
 
-		this.setGallery = function setGallery(galleryStore) {
-			this.resetViewModel(galleryStore);
-			galleryStore.watch("resetted", function (newData) {
-				this.resetViewModel(galleryStore);
-			}, this);
-		};
-
-		this.resetViewModel = function (store) {
-			viewModel.reset(this.getFormattedGallery(store));
-		};
-
-		this.getFormattedGallery = function getFormattedGallery(data) {
-			return data.proxy("map", function (content) {
-				content.url = flickrContent.createUrl(content ,"z");
-				return content;
-			});
+		this.setPhotoset = function setPhotoset(photoset) {
+			viewModel.reset(photoset.map(function (photo) {
+				photo.url = flickrContent.createUrl(photo ,"z");
+				return photo;
+			}));
 		};
 
 	}

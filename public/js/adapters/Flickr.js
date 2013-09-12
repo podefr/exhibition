@@ -94,13 +94,10 @@ define(function (require) {
 		};
 
 		this.onAddPhotoset = function onAddPhotoset(index, photoset) {
-			var store = new Store([]);
-			_photos.set(photoset.id, store);
-
 			this.doApiCall("getPhotosForPhotoset", photoset.id)
 
 			.then(function (result) {
-				store.reset(result.photoset.photo);
+				_photos.set(photoset.id, result.photoset.photo);
 			});
 		};
 
@@ -115,6 +112,10 @@ define(function (require) {
 					title: photoset.title._content
 				};
 			});
+		};
+
+		this.getPhotosFromPhotoset = function getPhotosFromPhotoset(photosetId) {
+			return _photos.get(photosetId);
 		};
 
 		this.getPhotoset = function getPhotoset(index) {
@@ -178,6 +179,7 @@ define(function (require) {
 					var photoset = this.getPhotosetById(photoset.id);
 					return {
 						collection_id: collection.id,
+						photoset_id: photoset.id,
 						server: photoset.server,
 						id: photoset.primary,
 						secret: photoset.secret,

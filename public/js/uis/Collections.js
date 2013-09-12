@@ -10,18 +10,16 @@ define(function (require) {
 
 	function CollectionsConstructor($collections) {
 
-		var viewModel = new Store($collections),
+		var viewModel = new Store($collections.map(function (collection) {
+				collection.url = flickrContent.createUrl(collection, "z");
+				return collection;
+			})),
 			bind = new Bind(viewModel),
 			eventPlugin = new Event(this);
 
 		this.plugins.addAll({
 			"bind": bind,
 			"event": eventPlugin
-		});
-
-		viewModel.alter("map", function (collection) {
-			collection.url = flickrContent.createUrl(collection, "z");
-			return collection;
 		});
 
 		this.drillin = function drillin(event, dom) {

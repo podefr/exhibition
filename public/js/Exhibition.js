@@ -20,7 +20,7 @@ define(function (require) {
 			this.initStack();
 			this.initCollections();
 			this.initPhotosets();
-			//this.initCollage();
+			this.initCollage();
 			//this.initNavigation();
 			_stack.hideAll();
 			_locationRouter.start("home");
@@ -46,6 +46,9 @@ define(function (require) {
 			_photosets.template = document.querySelector(".photosets");
 			_photosets.render();
 			_stack.add(_photosets.dom);
+			_photosets.watch("drillin", function (id) {
+				_locationRouter.navigate("photoset", id);
+			});
 		};
 
 		this.initCollage = function initcollage() {
@@ -68,6 +71,11 @@ define(function (require) {
 		_locationRouter.set("photosets", function (id) {
 			_photosets.setPhotosets(_dataProvider.getPhotosetsForCollection(id));
 			_stack.transit(_photosets.dom);
+		});
+
+		_locationRouter.set("photoset", function (id) {
+			_collage.setPhotoset(_dataProvider.getPhotosFromPhotoset(id));
+			_stack.transit(_collage.dom);
 		});
 
 		_locationRouter.watch(function () {
