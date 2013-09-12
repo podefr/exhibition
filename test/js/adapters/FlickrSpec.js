@@ -59,14 +59,21 @@ define(function (require) {
 		});
 
 		it("gets all the photosets given a userId", function () {
-			var request = flickrAdapter.requests.getGalleries("123");
+			var request = flickrAdapter.requests.getPhotosets("123");
 
 			expect(request.method).to.equal("flickr.photosets.getList");
 			expect(request.user_id).to.equal("123");
 		});
 
+		it("gets the collections tree", function () {
+			var request = flickrAdapter.requests.getCollections("123");
+
+			expect(request.method).to.equal("flickr.collections.getTree");
+			expect(request.user_id).to.equal("123");
+		});
+
 		it("gets all the photos in a gallery", function () {
-			var request = flickrAdapter.requests.getPhotosForGallery("gallery123");
+			var request = flickrAdapter.requests.getPhotosForPhotoset("gallery123");
 
 			expect(request.method).to.equal("flickr.photosets.getPhotos");
 			expect(request.photoset_id).to.equal("gallery123");
