@@ -16,6 +16,7 @@ define(function (require) {
 		});
 
 		this.setPhotoset = function setPhotoset(photoset) {
+			if (!photoset) { return false; }
 			viewModel.reset(photoset.map(function (photo) {
 				photo.url = flickrContent.createUrl(photo ,"z");
 				return photo;

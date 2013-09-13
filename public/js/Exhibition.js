@@ -14,7 +14,8 @@ define(function (require) {
 			_collections = null,
 			_photosets = null,
 			_collage = null,
-			_stack = null;
+			_stack = null,
+			_photosetUpdateHandle = null;
 
 		this.start = function start() {
 			this.initStack();
@@ -80,7 +81,11 @@ define(function (require) {
 		});
 
 		_locationRouter.set("photoset", function (id) {
+			_dataProvider.unsubscribeToPhotosetChanges(_photosetUpdateHandle);
 			_collage.setPhotoset(_dataProvider.getPhotosFromPhotoset(id));
+			_photosetUpdateHandle = _dataProvider.subscribeToPhotosetChanges(id, function (newValue) {
+				_collage.setPhotoset(newValue);
+			});
 			_stack.transit(_collage.dom);
 			_stack.show(_navigation.dom);
 		});

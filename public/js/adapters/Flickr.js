@@ -118,6 +118,14 @@ define(function (require) {
 			return _photos.get(photosetId);
 		};
 
+		this.subscribeToPhotosetChanges = function subscribeToPhotosetChanges(id, func, scope) {
+			return _photos.watchValue(id, func, scope);
+		};
+
+		this.unsubscribeToPhotosetChanges = function unsubscribeToPhotosetChanges(handle) {
+			return handle && _photos.unwatchValue(handle);
+		};
+
 		this.getPhotoset = function getPhotoset(index) {
 			return _photosets.get(index).map(function (photo) {
 				return {
