@@ -39,9 +39,16 @@
 			</div>
 		</div>
 
-		<div class="collage" data-bind="foreach">
-			<div class="content">
-				<img data-bind="bind: src, url" />
+		<div class="collage">
+			<div data-collage="foreach" data-slideshow="bind: hide, display">
+				<div class="content">
+					<img data-collage="bind: src, url" data-events="listen: click, startSlideShow" />
+				</div>
+			</div>
+			<div data-slideshow="bind: show, display">
+				<img data-slideshow="bind: src, previous" data-events="listen: click, previous" />
+				<img data-slideshow="bind: src, main" />
+				<img data-slideshow="bind: src, next" data-events="listen: click, next" />
 			</div>
 		</div>
 
