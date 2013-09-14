@@ -5,3 +5,72 @@
 body {
 	background: $standard-black;
 }
+
+.main,
+.collections {
+	position: absolute;;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.content {
+	display: inline-block;
+	width: 25%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	vertical-align: top;
+
+	h1 {
+		@include box-sizing( border-box );
+		@include text-shadow( 0 0 5px $heading-glow);
+		position: absolute;
+		top: 50%;
+		width: 100%;
+		padding: $top-margin $standard-margin;
+		font-family: Headliner, arial;
+		font-size: $cat-heading-font-size;
+		line-height: $cat-heading-font-size;
+		font-weight: normal;
+		text-transform: uppercase;
+		color: $standard-white;
+		margin-top: - ( $top-margin + ($cat-heading-font-size / 2) );
+	}
+}
+
+.logo-container {
+	width: 285px;
+	height: 74px;
+	background: url('../images/eyeswitch-logo.png') left top no-repeat;
+	position: absolute;
+	left: $standard-margin;
+	bottom: $standard-margin;
+	z-index: 100;
+}
+
+.contact-info {
+	width: 250px;
+	height:20px;
+	text-align: right;
+	position: absolute;
+	right: $standard-margin;
+	bottom: $standard-margin;
+	font-family: Garmond, Georgia;
+	font-size: 16px; 
+	z-index: 100;
+
+	.contact-caption,
+	.contact-link {
+		color: $standard-white;
+		display: inline-block;
+	}
+
+	.contact-link {
+		text-decoration: none;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

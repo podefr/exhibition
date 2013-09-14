@@ -1,1 +1,28 @@
 $standard-black: #000;
+$standard-white: #FFF;
+
+$top-margin: 18px;
+$cat-heading-font-size: 48px;
+$heading-glow: rgba(0,0,0,0.75);
+$standard-margin: 30px;
+
+
+@font-face {
+	font-family: BasicTitle;
+	src: url('../fonts/BasicTitle.ttf'), url('../fonts/BasicTitle.eot'); 
+}
+
+@font-face {
+	font-family: Byron;
+	src: url('../fonts/Byron.ttf'), url('../fonts/Byron.eot'); 
+}
+
+@font-face {
+	font-family: Headliner;
+	src: url('../fonts/Headliner.ttf'), url('../fonts/Headliner.eot'); 
+}
+
+@font-face {
+	font-family: Garmond;
+	src: url('../fonts/AGaramondPro-Italic.otf');
+}

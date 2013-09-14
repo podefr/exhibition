@@ -63,7 +63,103 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
+@font-face {
+  font-family: BasicTitle;
+  src: url("../fonts/BasicTitle.ttf"), url("../fonts/BasicTitle.eot");
+}
+
+@font-face {
+  font-family: Byron;
+  src: url("../fonts/Byron.ttf"), url("../fonts/Byron.eot");
+}
+
+@font-face {
+  font-family: Headliner;
+  src: url("../fonts/Headliner.ttf"), url("../fonts/Headliner.eot");
+}
+
+@font-face {
+  font-family: Garmond;
+  src: url("../fonts/AGaramondPro-Italic.otf");
+}
+
 /* line 5, ../SCSS/main.scss */
 body {
   background: black;
+}
+
+/* line 10, ../SCSS/main.scss */
+.main,
+.collections {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* line 18, ../SCSS/main.scss */
+.content {
+  display: inline-block;
+  width: 25%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  vertical-align: top;
+}
+/* line 26, ../SCSS/main.scss */
+.content h1 {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  padding: 18px 30px;
+  font-family: Headliner, arial;
+  font-size: 48px;
+  line-height: 48px;
+  font-weight: normal;
+  text-transform: uppercase;
+  color: white;
+  margin-top: -42px;
+}
+
+/* line 43, ../SCSS/main.scss */
+.logo-container {
+  width: 285px;
+  height: 74px;
+  background: url("../images/eyeswitch-logo.png") left top no-repeat;
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
+  z-index: 100;
+}
+
+/* line 53, ../SCSS/main.scss */
+.contact-info {
+  width: 250px;
+  height: 20px;
+  text-align: right;
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  font-family: Garmond, Georgia;
+  font-size: 16px;
+  z-index: 100;
+}
+/* line 65, ../SCSS/main.scss */
+.contact-info .contact-caption,
+.contact-info .contact-link {
+  color: white;
+  display: inline-block;
+}
+/* line 70, ../SCSS/main.scss */
+.contact-info .contact-link {
+  text-decoration: none;
+}
+/* line 72, ../SCSS/main.scss */
+.contact-info .contact-link:hover {
+  text-decoration: underline;
 }
