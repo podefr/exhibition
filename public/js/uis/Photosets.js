@@ -6,12 +6,13 @@ define(function (require) {
 		flickrContent = require("../services/flickrContent"),
 		Store = require("Store"),
 		Observable = require("Observable"),
-		Tools = require("Tools");
+		Tools = require("Tools"),
+		helpers = require("../adapters/helpers");
 
 	function PhotosetsConstructor() {
 
 		var viewModel = new Store(),
-			bind = new Bind(viewModel),
+			bind = new Bind(viewModel, helpers),
 			eventPlugin = new Event(this);
 
 		this.plugins.addAll({

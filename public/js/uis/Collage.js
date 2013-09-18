@@ -5,24 +5,15 @@ define(function (require) {
 		Events = require("Event.plugin"),
 		flickrContent = require("../services/flickrContent"),
 		Store = require("Store"),
-		Tools = require("Tools");
-
-	var hideShow = {
-		hide: function (dom) {
-			dom.style.display = "none";
-		},
-
-		show: function () {
-			dom.style.display = "";
-		}
-	}
+		Tools = require("Tools"),
+		helpers = require("../adapters/helpers");
 
 	function CollageConstructor() {
 
 		var collageModel = new Store([]),
 			slideShowModel = new Store({}),
-			collage = new Bind(collageModel, hideShow),
-			slideShow = new Bind(slideShowModel, hideShow),
+			collage = new Bind(collageModel, helpers),
+			slideShow = new Bind(slideShowModel, helpers),
 			events = new Events(this);
 
 		this.plugins.addAll({

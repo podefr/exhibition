@@ -26,23 +26,20 @@
 		</div>
 
 		<div class="collections" data-bind="foreach">
-			<div class="content" data-event="listen: click, drillin">
+			<div class="content" data-event="listen: click, drillin" data-bind="bind: background, url">
 				<h1 data-bind="bind: innerHTML, title"></h1>
-				<img data-bind="bind: src, url" />
 			</div>
 		</div>
 
 		<div class="photosets" data-bind="foreach">
-			<div class="content" data-event="listen: click, drillin">
+			<div class="content" data-event="listen: click, drillin" data-bind="bind: background, url">
 				<h1 data-bind="bind: innerHTML, title"></h1>
-				<img data-bind="bind: src, url" />
 			</div>
 		</div>
 
 		<div class="collage">
 			<div data-collage="foreach" data-slideshow="bind: hide, display">
-				<div class="content">
-					<img data-collage="bind: src, url" data-events="listen: click, startSlideShow" />
+				<div class="content" data-collage="bind: background, url" data-events="listen: click, startSlideShow">
 				</div>
 			</div>
 			<div data-slideshow="bind: show, display">

@@ -6,7 +6,8 @@ define(function (require) {
 		flickrContent = require("../services/flickrContent"),
 		Store = require("Store"),
 		Observable = require("Observable"),
-		Tools = require("Tools");
+		Tools = require("Tools"),
+		helpers = require("../adapters/helpers");
 
 	function CollectionsConstructor($collections) {
 
@@ -14,7 +15,7 @@ define(function (require) {
 				collection.url = flickrContent.createUrl(collection, "z");
 				return collection;
 			})),
-			bind = new Bind(viewModel),
+			bind = new Bind(viewModel, helpers),
 			eventPlugin = new Event(this);
 
 		this.plugins.addAll({
