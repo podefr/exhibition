@@ -27,13 +27,13 @@
 
 		<div class="collections" data-bind="foreach">
 			<div class="content" data-event="listen: click, drillin" data-bind="bind: background, url">
-				<h1 data-bind="bind: innerHTML, title"></h1>
+				<h1><span data-bind="bind: getId"></span> <span data-bind="bind: innerHTML, title"></span></h1>
 			</div>
 		</div>
 
 		<div class="photosets" data-bind="foreach">
 			<div class="content" data-event="listen: click, drillin" data-bind="bind: background, url">
-				<h1 data-bind="bind: innerHTML, title"></h1>
+				<h1><span data-bind="bind: innerHTML, title"></span></h1>
 			</div>
 		</div>
 

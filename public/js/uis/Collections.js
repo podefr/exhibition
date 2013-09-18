@@ -15,7 +15,12 @@ define(function (require) {
 				collection.url = flickrContent.createUrl(collection, "z");
 				return collection;
 			})),
-			bind = new Bind(viewModel, helpers),
+			bind = new Bind(viewModel, Tools.mixin({
+				getId: function (item) {
+					var index = viewModel.proxy("indexOf", item) +1 +"";
+					this.innerHTML = index.length == 1 ? "0" + index  : index;
+				}
+			}, helpers)),
 			eventPlugin = new Event(this);
 
 		this.plugins.addAll({
