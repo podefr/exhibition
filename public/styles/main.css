@@ -1,4 +1,4 @@
-/* line 17, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -100,14 +100,22 @@ body {
 
 /* line 18, ../SCSS/main.scss */
 .content {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   display: inline-block;
   width: 25%;
   height: 100%;
   overflow: hidden;
   position: relative;
   vertical-align: top;
+  border: 1px solid black;
+  border-bottom: none;
+  border-left: none;
+  background-size: cover;
+  background-position: center center;
 }
-/* line 26, ../SCSS/main.scss */
+/* line 32, ../SCSS/main.scss */
 .content h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -125,8 +133,16 @@ body {
   color: white;
   margin-top: -42px;
 }
+/* line 47, ../SCSS/main.scss */
+.content h1 span:first-child {
+  display: block;
+  font-size: 118px;
+  font-family: BasicTitle, Arial;
+  line-height: 0.6em;
+  text-indent: -8px;
+}
 
-/* line 43, ../SCSS/main.scss */
+/* line 57, ../SCSS/main.scss */
 .logo-container {
   width: 285px;
   height: 74px;
@@ -137,7 +153,7 @@ body {
   z-index: 100;
 }
 
-/* line 53, ../SCSS/main.scss */
+/* line 67, ../SCSS/main.scss */
 .contact-info {
   width: 250px;
   height: 20px;
@@ -149,17 +165,17 @@ body {
   font-size: 16px;
   z-index: 100;
 }
-/* line 65, ../SCSS/main.scss */
+/* line 79, ../SCSS/main.scss */
 .contact-info .contact-caption,
 .contact-info .contact-link {
   color: white;
   display: inline-block;
 }
-/* line 70, ../SCSS/main.scss */
+/* line 84, ../SCSS/main.scss */
 .contact-info .contact-link {
   text-decoration: none;
 }
-/* line 72, ../SCSS/main.scss */
+/* line 86, ../SCSS/main.scss */
 .contact-info .contact-link:hover {
   text-decoration: underline;
 }

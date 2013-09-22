@@ -16,12 +16,18 @@ body {
 }
 
 .content {
+	@include box-sizing( border-box );
 	display: inline-block;
 	width: 25%;
 	height: 100%;
 	overflow: hidden;
 	position: relative;
 	vertical-align: top;
+	border: 1px solid $standard-black;
+	border-bottom: none;
+	border-left: none;
+	background-size: cover;
+	background-position: center center;
 
 	h1 {
 		@include box-sizing( border-box );
@@ -37,6 +43,14 @@ body {
 		text-transform: uppercase;
 		color: $standard-white;
 		margin-top: - ( $top-margin + ($cat-heading-font-size / 2) );
+
+		span:first-child {
+			display: block;
+			font-size: 118px;
+			font-family: BasicTitle, Arial;
+			line-height: 0.6em;
+			text-indent: -8px;
+		}
 	}
 }
 
