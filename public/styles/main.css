@@ -90,7 +90,9 @@ body {
 
 /* line 10, ../SCSS/main.scss */
 .main,
-.collections {
+.collections,
+.photosets,
+.collage {
   position: absolute;
   top: 0;
   right: 0;

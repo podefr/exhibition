@@ -7,7 +7,9 @@ body {
 }
 
 .main,
-.collections {
+.collections,
+.photosets,
+.collage {
 	position: absolute;;
 	top: 0;
 	right: 0;
@@ -72,7 +74,7 @@ body {
 	right: $standard-margin;
 	bottom: $standard-margin;
 	font-family: Garmond, Georgia;
-	font-size: 16px; 
+	font-size: 16px;
 	z-index: 100;
 
 	.contact-caption,
