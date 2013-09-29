@@ -16,6 +16,10 @@ body {
 	bottom: 0;
 	left: 0;
 }
+.photosets,
+.collage  {
+	height: 50%; 
+}
 
 .content {
 	@include box-sizing( border-box );
@@ -30,6 +34,7 @@ body {
 	border-left: none;
 	background-size: cover;
 	background-position: center center;
+	cursor: pointer;
 
 	h1 {
 		@include box-sizing( border-box );
@@ -54,13 +59,16 @@ body {
 			text-indent: -8px;
 		}
 	}
+	&:hover {
+		opacity: 0.9;
+	}
 }
 
 .logo-container {
 	width: 285px;
 	height: 74px;
 	background: url('../images/eyeswitch-logo.png') left top no-repeat;
-	position: absolute;
+	position: fixed;
 	left: $standard-margin;
 	bottom: $standard-margin;
 	z-index: 100;
@@ -70,7 +78,7 @@ body {
 	width: 250px;
 	height:20px;
 	text-align: right;
-	position: absolute;
+	position: fixed;
 	right: $standard-margin;
 	bottom: $standard-margin;
 	font-family: Garmond, Georgia;
@@ -88,5 +96,36 @@ body {
 		&:hover {
 			text-decoration: underline;
 		}
+	}
+}
+
+.navigation {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 30px;
+	z-index: 100;
+	height: $navigation-item;
+
+	button {
+		width: $navigation-item;
+		height: $navigation-item;
+		padding: 0;
+		margin: 0;
+		border-radius: 50%;
+		border: 3px solid $standard-white;
+		background: transparent;
+		color: $standard-white;
+		cursor: pointer;
+		font-family: Garmond, Georgia;
+		font-size: 12px;
+		position: absolute;
+	}
+	.home-btn {
+		left: 30px;
+	}
+	.back-btn {
+		left: 50%;
+		margin-left: - ( $navigation-item / 2 );
 	}
 }

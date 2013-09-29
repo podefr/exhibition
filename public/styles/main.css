@@ -88,7 +88,7 @@ body {
   background: black;
 }
 
-/* line 10, ../SCSS/main.scss */
+/* line 12, ../SCSS/main.scss */
 .main,
 .collections,
 .photosets,
@@ -100,7 +100,13 @@ body {
   left: 0;
 }
 
-/* line 18, ../SCSS/main.scss */
+/* line 20, ../SCSS/main.scss */
+.photosets,
+.collage {
+  height: 50%;
+}
+
+/* line 24, ../SCSS/main.scss */
 .content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -116,8 +122,9 @@ body {
   border-left: none;
   background-size: cover;
   background-position: center center;
+  cursor: pointer;
 }
-/* line 32, ../SCSS/main.scss */
+/* line 39, ../SCSS/main.scss */
 .content h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -135,7 +142,7 @@ body {
   color: white;
   margin-top: -42px;
 }
-/* line 47, ../SCSS/main.scss */
+/* line 54, ../SCSS/main.scss */
 .content h1 span:first-child {
   display: block;
   font-size: 118px;
@@ -143,41 +150,79 @@ body {
   line-height: 0.6em;
   text-indent: -8px;
 }
+/* line 62, ../SCSS/main.scss */
+.content:hover {
+  opacity: 0.9;
+}
 
-/* line 57, ../SCSS/main.scss */
+/* line 67, ../SCSS/main.scss */
 .logo-container {
   width: 285px;
   height: 74px;
   background: url("../images/eyeswitch-logo.png") left top no-repeat;
-  position: absolute;
+  position: fixed;
   left: 30px;
   bottom: 30px;
   z-index: 100;
 }
 
-/* line 67, ../SCSS/main.scss */
+/* line 77, ../SCSS/main.scss */
 .contact-info {
   width: 250px;
   height: 20px;
   text-align: right;
-  position: absolute;
+  position: fixed;
   right: 30px;
   bottom: 30px;
   font-family: Garmond, Georgia;
   font-size: 16px;
   z-index: 100;
 }
-/* line 79, ../SCSS/main.scss */
+/* line 89, ../SCSS/main.scss */
 .contact-info .contact-caption,
 .contact-info .contact-link {
   color: white;
   display: inline-block;
 }
-/* line 84, ../SCSS/main.scss */
+/* line 94, ../SCSS/main.scss */
 .contact-info .contact-link {
   text-decoration: none;
 }
-/* line 86, ../SCSS/main.scss */
+/* line 96, ../SCSS/main.scss */
 .contact-info .contact-link:hover {
   text-decoration: underline;
+}
+
+/* line 102, ../SCSS/main.scss */
+.navigation {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  z-index: 100;
+  height: 74px;
+}
+/* line 110, ../SCSS/main.scss */
+.navigation button {
+  width: 74px;
+  height: 74px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  border: 3px solid white;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-family: Garmond, Georgia;
+  font-size: 12px;
+  position: absolute;
+}
+/* line 124, ../SCSS/main.scss */
+.navigation .home-btn {
+  left: 30px;
+}
+/* line 127, ../SCSS/main.scss */
+.navigation .back-btn {
+  left: 50%;
+  margin-left: -37px;
 }
