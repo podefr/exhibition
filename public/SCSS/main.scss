@@ -18,9 +18,11 @@ body {
 }
 .photosets,
 .collage  {
-	height: 50%; 
+	height: 50%;
 }
-
+.collage .repeat {
+	height: inherit;
+}
 .content {
 	@include box-sizing( border-box );
 	display: inline-block;
