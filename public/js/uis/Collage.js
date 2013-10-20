@@ -18,7 +18,7 @@ define(function (require) {
 
 		this.plugins.addAll({
 			"collage": collage,
-			"slideShow": slideShow,
+			"slideshow": slideShow,
 			"events": events
 		});
 
