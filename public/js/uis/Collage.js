@@ -23,29 +23,38 @@ define(function (require) {
 		});
 
 		slideShowModel.watchValue("main", function (photo) {
-			var index = collageModel.proxy("indexOf", photo);
-			slideShowModel.set("previous", collageModel.get(index -1));
-			slideShowModel.set("next", collageModel.get(index +1));
+			var index = collageModel.proxy("indexOf", photo),
+				previous = collageModel.get(index -1),
+				next = collageModel.get(index +1);
+
+			if (previous) {
+				slideShowModel.set("previous", previous.url);
+			}
+
+			if (next) {
+				slideShowModel.set("next", next.url);
+			}
+
 			slideShowModel.set("currentMain", index);
 		});
 
 		this.startSlideShow = function startSlideShow(ev, dom) {
 			var photo = collageModel.get(collage.getItemIndex(dom));
-			slideShowModel.set("main", photo);
+			slideShowModel.set("main", photo.url);
 			slideShowModel.set("display", true);
 		};
 
 		this.next = function next() {
 			var newMainPhoto = collageModel.get(slideShowModel.get("currentMain") +1);
 			if (newMainPhoto) {
-				slideShowModel.set("main", newMainPhoto);
+				slideShowModel.set("main", newMainPhoto.url);
 			}
 		};
 
 		this.previous = function previous() {
 			var newMainPhoto = collageModel.get(slideShowModel.get("currentMain") -1);
 			if (newMainPhoto) {
-				slideShowModel.set("main", newMainPhoto);
+				slideShowModel.set("main", newMainPhoto.url);
 			}
 		};
 
