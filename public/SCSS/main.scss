@@ -4,6 +4,15 @@
 
 body {
 	background: $standard-black;
+
+	&[data-route="home"] { 
+		.logo-container {
+			display: block;
+		}
+		.home-btn {
+			display: none;
+		}
+	}
 }
 
 a {
@@ -39,6 +48,8 @@ a {
 	height: 100%;
 	display: inline-block;
 	margin-right: -0.25em;
+	background-size: cover;
+	background-position: center center;
 }
 
 .left-image,
@@ -134,7 +145,16 @@ a {
 		text-transform: none;
 		margin-top: -100px;
 	}
+
+	&.left-pane {
+		background-image: url('http://farm4.staticflickr.com/3810/11254683905_a864b0bcee_b.jpg');
+	}
+
+	&.right-pane {
+		background-image: url('http://farm8.staticflickr.com/7398/9695806688_14e02c05e7_b.jpg');
+	}
 }
+
 
 .logo-container-main {
 	width: 90px;
@@ -155,6 +175,7 @@ a {
 	left: $standard-margin;
 	bottom: $standard-margin;
 	z-index: 100;
+	display: none;
 }
 
 
@@ -173,6 +194,7 @@ a {
 	.contact-link {
 		color: $standard-white;
 		display: inline-block;
+		@include text-shadow( 0 0 5px $heading-glow);
 	}
 
 	.contact-link {
@@ -211,9 +233,12 @@ a {
 		font-size: 12px;
 		position: absolute;
 	}
+	
 	.home-btn {
 		left: 30px;
+		background: url('../images/eyeswitch-logo-main.png') center -2px no-repeat;
 	}
+
 	.back-btn {
 		left: 50%;
 		margin-left: - ( $navigation-item / 2 );

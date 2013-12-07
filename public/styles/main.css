@@ -87,13 +87,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 body {
   background: black;
 }
-
 /* line 9, ../SCSS/main.scss */
+body[data-route="home"] .logo-container {
+  display: block;
+}
+/* line 12, ../SCSS/main.scss */
+body[data-route="home"] .home-btn {
+  display: none;
+}
+
+/* line 18, ../SCSS/main.scss */
 a {
   outline: none;
 }
 
-/* line 17, ../SCSS/main.scss */
+/* line 26, ../SCSS/main.scss */
 .main,
 .collections,
 .photosets,
@@ -106,18 +114,18 @@ a {
   left: 0;
 }
 
-/* line 26, ../SCSS/main.scss */
+/* line 35, ../SCSS/main.scss */
 .photosets,
 .collage {
   height: 50%;
 }
 
-/* line 30, ../SCSS/main.scss */
+/* line 39, ../SCSS/main.scss */
 .collage .repeat {
   height: inherit;
 }
 
-/* line 36, ../SCSS/main.scss */
+/* line 45, ../SCSS/main.scss */
 .left-image,
 .right-image,
 .center-image {
@@ -128,9 +136,11 @@ a {
   height: 100%;
   display: inline-block;
   margin-right: -0.25em;
+  background-size: cover;
+  background-position: center center;
 }
 
-/* line 45, ../SCSS/main.scss */
+/* line 56, ../SCSS/main.scss */
 .left-image,
 .right-image {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
@@ -138,12 +148,12 @@ a {
   width: 30%;
 }
 
-/* line 50, ../SCSS/main.scss */
+/* line 61, ../SCSS/main.scss */
 .center-image {
   width: 40%;
 }
 
-/* line 54, ../SCSS/main.scss */
+/* line 65, ../SCSS/main.scss */
 .slideshow-btn {
   width: 50px;
   margin: 0 25px;
@@ -154,25 +164,25 @@ a {
   opacity: 0.75;
   z-index: 10;
 }
-/* line 63, ../SCSS/main.scss */
+/* line 74, ../SCSS/main.scss */
 .slideshow-btn:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
 
-/* line 69, ../SCSS/main.scss */
+/* line 80, ../SCSS/main.scss */
 .left-btn {
   left: 0;
   background: url("../images/left-btn.png") center center no-repeat;
 }
 
-/* line 74, ../SCSS/main.scss */
+/* line 85, ../SCSS/main.scss */
 .right-btn {
   right: 0;
   background: url("../images/right-btn.png") center center no-repeat;
 }
 
-/* line 79, ../SCSS/main.scss */
+/* line 90, ../SCSS/main.scss */
 .content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -190,7 +200,7 @@ a {
   background-position: center center;
   cursor: pointer;
 }
-/* line 94, ../SCSS/main.scss */
+/* line 105, ../SCSS/main.scss */
 .content h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -208,7 +218,7 @@ a {
   color: white;
   margin-top: -42px;
 }
-/* line 109, ../SCSS/main.scss */
+/* line 120, ../SCSS/main.scss */
 .content h1 span:first-child {
   display: block;
   font-size: 118px;
@@ -216,18 +226,18 @@ a {
   line-height: 0.6em;
   text-indent: -8px;
 }
-/* line 118, ../SCSS/main.scss */
+/* line 129, ../SCSS/main.scss */
 .content:hover {
   opacity: 0.9;
 }
 
-/* line 123, ../SCSS/main.scss */
+/* line 134, ../SCSS/main.scss */
 .content-main {
   width: 50%;
   border: none;
   margin-right: -0.25em;
 }
-/* line 128, ../SCSS/main.scss */
+/* line 139, ../SCSS/main.scss */
 .content-main h1 {
   font-family: Byron, arial;
   font-size: 30px;
@@ -237,8 +247,16 @@ a {
   text-transform: none;
   margin-top: -100px;
 }
+/* line 149, ../SCSS/main.scss */
+.content-main.left-pane {
+  background-image: url("http://farm4.staticflickr.com/3810/11254683905_a864b0bcee_b.jpg");
+}
+/* line 153, ../SCSS/main.scss */
+.content-main.right-pane {
+  background-image: url("http://farm8.staticflickr.com/7398/9695806688_14e02c05e7_b.jpg");
+}
 
-/* line 139, ../SCSS/main.scss */
+/* line 159, ../SCSS/main.scss */
 .logo-container-main {
   width: 90px;
   height: 108px;
@@ -250,7 +268,7 @@ a {
   z-index: 1;
 }
 
-/* line 150, ../SCSS/main.scss */
+/* line 170, ../SCSS/main.scss */
 .logo-container {
   width: 285px;
   height: 74px;
@@ -259,9 +277,10 @@ a {
   left: 30px;
   bottom: 30px;
   z-index: 100;
+  display: none;
 }
 
-/* line 161, ../SCSS/main.scss */
+/* line 182, ../SCSS/main.scss */
 .contact-info {
   height: 20px;
   text-align: right;
@@ -273,29 +292,30 @@ a {
   z-index: 100;
   white-space: nowrap;
 }
-/* line 173, ../SCSS/main.scss */
+/* line 194, ../SCSS/main.scss */
 .contact-info .contact-caption,
 .contact-info .contact-link {
   color: white;
   display: inline-block;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
 }
-/* line 178, ../SCSS/main.scss */
+/* line 200, ../SCSS/main.scss */
 .contact-info .contact-link {
   text-decoration: none;
 }
-/* line 180, ../SCSS/main.scss */
+/* line 202, ../SCSS/main.scss */
 .contact-info .contact-link:hover {
   text-decoration: underline;
 }
 
-/* line 186, ../SCSS/main.scss */
+/* line 208, ../SCSS/main.scss */
 .contact-info-main {
   right: auto;
   left: 50%;
   margin-left: -90px;
 }
 
-/* line 192, ../SCSS/main.scss */
+/* line 214, ../SCSS/main.scss */
 .navigation {
   position: fixed;
   left: 0;
@@ -304,7 +324,7 @@ a {
   z-index: 100;
   height: 74px;
 }
-/* line 200, ../SCSS/main.scss */
+/* line 222, ../SCSS/main.scss */
 .navigation button {
   width: 74px;
   height: 74px;
@@ -319,11 +339,12 @@ a {
   font-size: 12px;
   position: absolute;
 }
-/* line 214, ../SCSS/main.scss */
+/* line 237, ../SCSS/main.scss */
 .navigation .home-btn {
   left: 30px;
+  background: url("../images/eyeswitch-logo-main.png") center -2px no-repeat;
 }
-/* line 217, ../SCSS/main.scss */
+/* line 242, ../SCSS/main.scss */
 .navigation .back-btn {
   left: 50%;
   margin-left: -37px;
