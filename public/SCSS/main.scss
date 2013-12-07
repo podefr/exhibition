@@ -13,19 +13,67 @@ a {
 .main,
 .collections,
 .photosets,
-.collage {
+.collage,
+.slideshow-container {
 	position: absolute;;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
 }
+
 .photosets,
 .collage  {
 	height: 50%;
 }
+
 .collage .repeat {
 	height: inherit;
+}
+
+.left-image,
+.right-image,
+.center-image {
+	@include box-sizing( border-box );
+	border-right: 1px solid $standard-black;
+	height: 100%;
+	display: inline-block;
+	margin-right: -0.25em;
+}
+
+.left-image,
+.right-image {
+	@include opacity( 0.5 );
+	width: 30%;
+}
+
+.center-image {
+	width: 40%;
+}
+
+.slideshow-btn {
+	width: 50px;
+	margin: 0 25px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	@include opacity( 0.75 );
+	z-index: 10;
+
+	&:hover {
+		@include opacity( 1 ); 
+	}
+}
+
+
+.left-btn {
+	left: 0;
+	background: url('../images/left-btn.png') center center no-repeat;
+}
+
+.right-btn {
+	right: 0;
+	background: url('../images/right-btn.png') center center no-repeat;
 }
 
 .content {
