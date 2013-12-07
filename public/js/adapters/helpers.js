@@ -2,12 +2,20 @@ define(function (require) {
 
 	return {
 
-		hide: function () {
-			this.style.display = "none";
+		hide: function (value) {
+			if (value) {
+				this.style.display = "none";
+			} else {
+				this.style.display = "";
+			}
 		},
 
-		show: function () {
-			this.style.display = "";
+		show: function (value) {
+			if (!value) {
+				this.style.display = "none";
+			} else {
+				this.style.display = "";
+			}
 		},
 
 		background: function (url) {

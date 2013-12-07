@@ -11,7 +11,7 @@ define(function (require) {
 	function CollageConstructor() {
 
 		var collageModel = new Store([]),
-			slideShowModel = new Store({}),
+			slideShowModel = new Store({ display: false }),
 			collage = new Bind(collageModel, helpers),
 			slideShow = new Bind(slideShowModel, helpers),
 			events = new Events(this);
