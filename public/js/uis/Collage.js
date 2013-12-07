@@ -27,34 +27,38 @@ define(function (require) {
 				previous = collageModel.get(index -1),
 				next = collageModel.get(index +1);
 
+			slideShowModel.set("hasPrevious", !!previous);
 			if (previous) {
 				slideShowModel.set("previous", previous.url);
 			}
 
+			slideShowModel.set("hasNext", !!next);
 			if (next) {
 				slideShowModel.set("next", next.url);
 			}
 
 			slideShowModel.set("currentMain", index);
+			slideShowModel.set("current", photo.url);
+
 		});
 
 		this.startSlideShow = function startSlideShow(ev, dom) {
 			var photo = collageModel.get(collage.getItemIndex(dom));
-			slideShowModel.set("main", photo.url);
+			slideShowModel.set("main", photo);
 			slideShowModel.set("display", true);
 		};
 
 		this.next = function next() {
 			var newMainPhoto = collageModel.get(slideShowModel.get("currentMain") +1);
 			if (newMainPhoto) {
-				slideShowModel.set("main", newMainPhoto.url);
+				slideShowModel.set("main", newMainPhoto);
 			}
 		};
 
 		this.previous = function previous() {
 			var newMainPhoto = collageModel.get(slideShowModel.get("currentMain") -1);
 			if (newMainPhoto) {
-				slideShowModel.set("main", newMainPhoto.url);
+				slideShowModel.set("main", newMainPhoto);
 			}
 		};
 
