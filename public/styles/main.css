@@ -93,11 +93,12 @@ a {
   outline: none;
 }
 
-/* line 16, ../SCSS/main.scss */
+/* line 17, ../SCSS/main.scss */
 .main,
 .collections,
 .photosets,
-.collage {
+.collage,
+.slideshow-container {
   position: absolute;
   top: 0;
   right: 0;
@@ -105,18 +106,73 @@ a {
   left: 0;
 }
 
-/* line 24, ../SCSS/main.scss */
+/* line 26, ../SCSS/main.scss */
 .photosets,
 .collage {
   height: 50%;
 }
 
-/* line 27, ../SCSS/main.scss */
+/* line 30, ../SCSS/main.scss */
 .collage .repeat {
   height: inherit;
 }
 
-/* line 31, ../SCSS/main.scss */
+/* line 36, ../SCSS/main.scss */
+.left-image,
+.right-image,
+.center-image {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-right: 1px solid black;
+  height: 100%;
+  display: inline-block;
+  margin-right: -0.25em;
+}
+
+/* line 45, ../SCSS/main.scss */
+.left-image,
+.right-image {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  opacity: 0.5;
+  width: 30%;
+}
+
+/* line 50, ../SCSS/main.scss */
+.center-image {
+  width: 40%;
+}
+
+/* line 54, ../SCSS/main.scss */
+.slideshow-btn {
+  width: 50px;
+  margin: 0 25px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
+  opacity: 0.75;
+  z-index: 10;
+}
+/* line 63, ../SCSS/main.scss */
+.slideshow-btn:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+/* line 69, ../SCSS/main.scss */
+.left-btn {
+  left: 0;
+  background: url("../images/left-btn.png") center center no-repeat;
+}
+
+/* line 74, ../SCSS/main.scss */
+.right-btn {
+  right: 0;
+  background: url("../images/right-btn.png") center center no-repeat;
+}
+
+/* line 79, ../SCSS/main.scss */
 .content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -134,7 +190,7 @@ a {
   background-position: center center;
   cursor: pointer;
 }
-/* line 46, ../SCSS/main.scss */
+/* line 94, ../SCSS/main.scss */
 .content h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -152,7 +208,7 @@ a {
   color: white;
   margin-top: -42px;
 }
-/* line 61, ../SCSS/main.scss */
+/* line 109, ../SCSS/main.scss */
 .content h1 span:first-child {
   display: block;
   font-size: 118px;
@@ -160,18 +216,18 @@ a {
   line-height: 0.6em;
   text-indent: -8px;
 }
-/* line 70, ../SCSS/main.scss */
+/* line 118, ../SCSS/main.scss */
 .content:hover {
   opacity: 0.9;
 }
 
-/* line 75, ../SCSS/main.scss */
+/* line 123, ../SCSS/main.scss */
 .content-main {
   width: 50%;
   border: none;
   margin-right: -0.25em;
 }
-/* line 80, ../SCSS/main.scss */
+/* line 128, ../SCSS/main.scss */
 .content-main h1 {
   font-family: Byron, arial;
   font-size: 30px;
@@ -182,7 +238,7 @@ a {
   margin-top: -100px;
 }
 
-/* line 91, ../SCSS/main.scss */
+/* line 139, ../SCSS/main.scss */
 .logo-container-main {
   width: 90px;
   height: 108px;
@@ -194,7 +250,7 @@ a {
   z-index: 1;
 }
 
-/* line 102, ../SCSS/main.scss */
+/* line 150, ../SCSS/main.scss */
 .logo-container {
   width: 285px;
   height: 74px;
@@ -205,7 +261,7 @@ a {
   z-index: 100;
 }
 
-/* line 113, ../SCSS/main.scss */
+/* line 161, ../SCSS/main.scss */
 .contact-info {
   height: 20px;
   text-align: right;
@@ -217,29 +273,29 @@ a {
   z-index: 100;
   white-space: nowrap;
 }
-/* line 125, ../SCSS/main.scss */
+/* line 173, ../SCSS/main.scss */
 .contact-info .contact-caption,
 .contact-info .contact-link {
   color: white;
   display: inline-block;
 }
-/* line 130, ../SCSS/main.scss */
+/* line 178, ../SCSS/main.scss */
 .contact-info .contact-link {
   text-decoration: none;
 }
-/* line 132, ../SCSS/main.scss */
+/* line 180, ../SCSS/main.scss */
 .contact-info .contact-link:hover {
   text-decoration: underline;
 }
 
-/* line 138, ../SCSS/main.scss */
+/* line 186, ../SCSS/main.scss */
 .contact-info-main {
   right: auto;
   left: 50%;
   margin-left: -90px;
 }
 
-/* line 144, ../SCSS/main.scss */
+/* line 192, ../SCSS/main.scss */
 .navigation {
   position: fixed;
   left: 0;
@@ -248,7 +304,7 @@ a {
   z-index: 100;
   height: 74px;
 }
-/* line 152, ../SCSS/main.scss */
+/* line 200, ../SCSS/main.scss */
 .navigation button {
   width: 74px;
   height: 74px;
@@ -263,11 +319,11 @@ a {
   font-size: 12px;
   position: absolute;
 }
-/* line 166, ../SCSS/main.scss */
+/* line 214, ../SCSS/main.scss */
 .navigation .home-btn {
   left: 30px;
 }
-/* line 169, ../SCSS/main.scss */
+/* line 217, ../SCSS/main.scss */
 .navigation .back-btn {
   left: 50%;
   margin-left: -37px;
