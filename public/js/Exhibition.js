@@ -90,10 +90,10 @@ define(function (require) {
 			_stack.show(_navigation.dom);
 		});
 
-		_locationRouter.watch(function () {
+		_locationRouter.watch(function (route) {
 			var main = document.querySelector(".main");
-            window.scrollTo(main);
             main.dataset.route = route;
+            window.scrollTo(0, 0);
 		});
 
 
