@@ -6,6 +6,10 @@ body {
 	background: $standard-black;
 }
 
+a {
+	outline: none;
+}
+
 .main,
 .collections,
 .photosets,
@@ -23,6 +27,7 @@ body {
 .collage .repeat {
 	height: inherit;
 }
+
 .content {
 	@include box-sizing( border-box );
 	display: inline-block;
@@ -61,9 +66,37 @@ body {
 			text-indent: -8px;
 		}
 	}
+	
 	&:hover {
 		opacity: 0.9;
 	}
+}
+
+.content-main {
+	width: 50%;
+	border: none;
+	margin-right: -0.25em;
+
+	h1 {
+		font-family: Byron, arial;
+		font-size: 30px;
+		line-height: 1em;
+		display: block;
+		text-align: center;
+		text-transform: none;
+		margin-top: -100px;
+	}
+}
+
+.logo-container-main {
+	width: 90px;
+	height: 108px;
+	background: url('../images/eyeswitch-logo-main.png') left top no-repeat;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin: -104px 0 0 -45px;
+	z-index: 1;
 }
 
 .logo-container {
@@ -76,8 +109,8 @@ body {
 	z-index: 100;
 }
 
+
 .contact-info {
-	width: 250px;
 	height:20px;
 	text-align: right;
 	position: fixed;
@@ -86,6 +119,7 @@ body {
 	font-family: Garmond, Georgia;
 	font-size: 16px;
 	z-index: 100;
+	white-space: nowrap;
 
 	.contact-caption,
 	.contact-link {
@@ -99,6 +133,12 @@ body {
 			text-decoration: underline;
 		}
 	}
+}
+
+.contact-info-main {
+	right: auto;
+	left: 50%;
+	margin-left: -90px;
 }
 
 .navigation {

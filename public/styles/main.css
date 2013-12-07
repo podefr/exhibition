@@ -1,4 +1,4 @@
-/* line 17, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,45 +20,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -88,7 +88,12 @@ body {
   background: black;
 }
 
-/* line 12, ../SCSS/main.scss */
+/* line 9, ../SCSS/main.scss */
+a {
+  outline: none;
+}
+
+/* line 16, ../SCSS/main.scss */
 .main,
 .collections,
 .photosets,
@@ -100,18 +105,18 @@ body {
   left: 0;
 }
 
-/* line 20, ../SCSS/main.scss */
+/* line 24, ../SCSS/main.scss */
 .photosets,
 .collage {
   height: 50%;
 }
 
-/* line 23, ../SCSS/main.scss */
+/* line 27, ../SCSS/main.scss */
 .collage .repeat {
   height: inherit;
 }
 
-/* line 26, ../SCSS/main.scss */
+/* line 31, ../SCSS/main.scss */
 .content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -129,7 +134,7 @@ body {
   background-position: center center;
   cursor: pointer;
 }
-/* line 41, ../SCSS/main.scss */
+/* line 46, ../SCSS/main.scss */
 .content h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -147,7 +152,7 @@ body {
   color: white;
   margin-top: -42px;
 }
-/* line 56, ../SCSS/main.scss */
+/* line 61, ../SCSS/main.scss */
 .content h1 span:first-child {
   display: block;
   font-size: 118px;
@@ -155,12 +160,41 @@ body {
   line-height: 0.6em;
   text-indent: -8px;
 }
-/* line 64, ../SCSS/main.scss */
+/* line 70, ../SCSS/main.scss */
 .content:hover {
   opacity: 0.9;
 }
 
-/* line 69, ../SCSS/main.scss */
+/* line 75, ../SCSS/main.scss */
+.content-main {
+  width: 50%;
+  border: none;
+  margin-right: -0.25em;
+}
+/* line 80, ../SCSS/main.scss */
+.content-main h1 {
+  font-family: Byron, arial;
+  font-size: 30px;
+  line-height: 1em;
+  display: block;
+  text-align: center;
+  text-transform: none;
+  margin-top: -100px;
+}
+
+/* line 91, ../SCSS/main.scss */
+.logo-container-main {
+  width: 90px;
+  height: 108px;
+  background: url("../images/eyeswitch-logo-main.png") left top no-repeat;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -104px 0 0 -45px;
+  z-index: 1;
+}
+
+/* line 102, ../SCSS/main.scss */
 .logo-container {
   width: 285px;
   height: 74px;
@@ -171,9 +205,8 @@ body {
   z-index: 100;
 }
 
-/* line 79, ../SCSS/main.scss */
+/* line 113, ../SCSS/main.scss */
 .contact-info {
-  width: 250px;
   height: 20px;
   text-align: right;
   position: fixed;
@@ -182,23 +215,31 @@ body {
   font-family: Garmond, Georgia;
   font-size: 16px;
   z-index: 100;
+  white-space: nowrap;
 }
-/* line 91, ../SCSS/main.scss */
+/* line 125, ../SCSS/main.scss */
 .contact-info .contact-caption,
 .contact-info .contact-link {
   color: white;
   display: inline-block;
 }
-/* line 96, ../SCSS/main.scss */
+/* line 130, ../SCSS/main.scss */
 .contact-info .contact-link {
   text-decoration: none;
 }
-/* line 98, ../SCSS/main.scss */
+/* line 132, ../SCSS/main.scss */
 .contact-info .contact-link:hover {
   text-decoration: underline;
 }
 
-/* line 104, ../SCSS/main.scss */
+/* line 138, ../SCSS/main.scss */
+.contact-info-main {
+  right: auto;
+  left: 50%;
+  margin-left: -90px;
+}
+
+/* line 144, ../SCSS/main.scss */
 .navigation {
   position: fixed;
   left: 0;
@@ -207,7 +248,7 @@ body {
   z-index: 100;
   height: 74px;
 }
-/* line 112, ../SCSS/main.scss */
+/* line 152, ../SCSS/main.scss */
 .navigation button {
   width: 74px;
   height: 74px;
@@ -222,11 +263,11 @@ body {
   font-size: 12px;
   position: absolute;
 }
-/* line 126, ../SCSS/main.scss */
+/* line 166, ../SCSS/main.scss */
 .navigation .home-btn {
   left: 30px;
 }
-/* line 129, ../SCSS/main.scss */
+/* line 169, ../SCSS/main.scss */
 .navigation .back-btn {
   left: 50%;
   margin-left: -37px;
