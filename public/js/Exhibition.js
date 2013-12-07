@@ -91,8 +91,8 @@ define(function (require) {
 		});
 
 		_locationRouter.watch(function (route) {
-			var main = document.querySelector(".main");
-            main.dataset.route = route;
+			var body = document.querySelector("body");
+            body.dataset.route = route;
             window.scrollTo(0, 0);
 		});
 
