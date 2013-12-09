@@ -67,7 +67,7 @@ define(function (require) {
 
 		this.initSlideshow = function initSlideshow() {
 			_slideshow = new Slideshow();
-			_slideshow.template = document.querySelector(".slideshow-container");
+			_slideshow.template = document.querySelector(".slideshow");
 			_slideshow.render();
 			_stack.add(_slideshow.dom);
 		};

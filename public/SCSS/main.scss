@@ -5,7 +5,7 @@
 body {
 	background: $standard-black;
 
-	&[data-route="home"] { 
+	&[data-route="home"] {
 		.logo-container {
 			display: block;
 		}
@@ -24,7 +24,7 @@ a {
 .collections,
 .photosets,
 .collage,
-.slideshow-container {
+.slideshow {
 	position: absolute;;
 	top: 0;
 	right: 0;
@@ -73,7 +73,7 @@ a {
 	z-index: 10;
 
 	&:hover {
-		@include opacity( 1 ); 
+		@include opacity( 1 );
 	}
 }
 
@@ -126,7 +126,7 @@ a {
 			text-indent: -8px;
 		}
 	}
-	
+
 	&:hover {
 		opacity: 0.9;
 	}
@@ -234,7 +234,7 @@ a {
 		font-size: 12px;
 		position: absolute;
 	}
-	
+
 	.home-btn {
 		left: 30px;
 		background: url('../images/eyeswitch-logo-main.png') center -2px no-repeat;
