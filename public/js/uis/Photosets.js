@@ -37,8 +37,7 @@ define(function (require) {
 	return function PhotosetsFactory() {
 		Tools.mixin(new OObject, PhotosetsConstructor.prototype);
 		Tools.mixin(new Observable, PhotosetsConstructor.prototype);
-		var photosets = new PhotosetsConstructor();
-		return photosets;
+		return new PhotosetsConstructor();
 	}
 
 });

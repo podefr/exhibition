@@ -3,6 +3,7 @@ define(function (require) {
 	var Collections = require("./uis/Collections"),
 		Photosets = require("./uis/Photosets"),
 		Collage = require("./uis/Collage"),
+		Slideshow = require("./uis/Slideshow"),
 		LocationRouter = require("LocationRouter"),
 		Navigation = require("./uis/Navigation"),
 		Stack = require("Stack");
@@ -14,6 +15,7 @@ define(function (require) {
 			_collections = null,
 			_photosets = null,
 			_collage = null,
+			_slideshow = null,
 			_stack = null,
 			_photosetUpdateHandle = null;
 
@@ -23,6 +25,7 @@ define(function (require) {
 			this.initCollections();
 			this.initPhotosets();
 			this.initCollage();
+			this.initSlideshow();
 			_stack.hideAll();
 			_locationRouter.start("home");
 		};
@@ -56,7 +59,17 @@ define(function (require) {
 			_collage = new Collage();
 			_collage.template = document.querySelector(".collage");
 			_collage.render();
+			_collage.watch("startSlideshow", function (photoset, photo) {
+				_locationRouter.navigate("slideshow", photoset, photo)
+			});
 			_stack.add(_collage.dom);
+		};
+
+		this.initSlideshow = function initSlideshow() {
+			_slideshow = new Slideshow();
+			_slideshow.template = document.querySelector(".slideshow-container");
+			_slideshow.render();
+			_stack.add(_slideshow.dom);
 		};
 
 		this.initNavigation = function initNavigation() {
@@ -87,6 +100,12 @@ define(function (require) {
 				_collage.setPhotoset(newValue);
 			});
 			_stack.transit(_collage.dom);
+			_stack.show(_navigation.dom);
+		});
+
+		_locationRouter.set("slideshow", function (photoset, photo) {
+			_slideshow.init(photoset, photo);
+			_stack.transit(_slideshow.dom);
 			_stack.show(_navigation.dom);
 		});
 
