@@ -21,14 +21,13 @@ define(function (require) {
 		});
 
 		this.startSlideshow = function startSlideshow(ev, dom) {
-			var photo = collageModel.get(collage.getItemIndex(dom));
-			this.notify("startSlideshow", collageModel.dump(), photo);
+			this.notify("startSlideshow", collage.getItemIndex(dom));
 		};
 
 		this.setPhotoset = function setPhotoset(photoset) {
 			if (!photoset) { return false; }
 			collageModel.reset(photoset.map(function (photo) {
-				photo.url = flickrContent.createUrl(photo ,"z");
+				photo.url = flickrContent.createUrl(photo, "z");
 				return photo;
 			}));
 		};

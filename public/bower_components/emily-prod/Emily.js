@@ -19,7 +19,7 @@ define('Tools',[],
  */
 function Tools(){
 
-    
+
 
     /**
      * Get the closest number in an array
@@ -399,7 +399,7 @@ define('Observable',["Tools"],
 */
 function Observable(Tools) {
 
-	
+
 
 	/**
 	 * Defines the Observable
@@ -472,7 +472,9 @@ function Observable(Tools) {
 						if (value) {
 							value[0].apply(value[1] || null, args);
 						}
-					} catch (err) { }
+					} catch (err) {
+						console.error(err);
+					}
 				});
 				return true;
 			} else {
@@ -529,7 +531,7 @@ define('StateMachine',["Tools"],
  */
 function StateMachine(Tools) {
 
-	
+
 
      /**
      * @param initState {String} the initial state
@@ -784,7 +786,7 @@ define('Promise',["Observable", "StateMachine"],
  */
 function Promise(Observable, StateMachine) {
 
-	
+
 
     return function PromiseConstructor() {
 
@@ -1053,7 +1055,7 @@ define('Store',["Observable", "Tools"],
  */
  function Store(Observable, Tools) {
 
-    
+
 
     /**
      * Defines the Store
@@ -1435,7 +1437,7 @@ define('Transport',[],
  */
 function Transport() {
 
-    
+
 
     /**
      * Create a Transport
@@ -1547,7 +1549,7 @@ define('Router',["Observable", "Store", "Tools"],
  */
 function Router(Observable, Store, Tools) {
 
-    
+
 
     return function RouterConstructor() {
 

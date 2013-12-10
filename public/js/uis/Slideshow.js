@@ -58,8 +58,17 @@ define(function (require) {
 			//slideShowModel.set("display", false);
 		};
 
-		this.init = function init(photoset, photo) {
-			photosetModel.reset(photoset);
+		this.setPhotoset = function setPhotoset(photoset) {
+			if (!photoset) { return false; }
+			photosetModel.reset(photoset.map(function (photo) {
+				photo.url = flickrContent.createUrl(photo, "z");
+				return photo;
+			}));
+		};
+
+		this.setPhotoIndex = function setPhotoIndex(photoIndex) {
+			var photo = photosetModel.get(photoIndex);
+			if (!photo) { return false; }
 			slideShowModel.set("main", photo);
 		};
 

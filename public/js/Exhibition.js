@@ -17,7 +17,10 @@ define(function (require) {
 			_collage = null,
 			_slideshow = null,
 			_stack = null,
-			_photosetUpdateHandle = null;
+			_currentPhotosetId = "",
+			_currentPhotoIndex = 0,
+			_photosetUpdateHandle = null,
+			_slideShowUpdateHandle = null;
 
 		this.start = function start() {
 			this.initStack();
@@ -59,8 +62,8 @@ define(function (require) {
 			_collage = new Collage();
 			_collage.template = document.querySelector(".collage");
 			_collage.render();
-			_collage.watch("startSlideshow", function (photoset, photo) {
-				_locationRouter.navigate("slideshow", photoset, photo)
+			_collage.watch("startSlideshow", function (photoIndex) {
+				_locationRouter.navigate("slideshow", _currentPhotosetId, photoIndex);
 			});
 			_stack.add(_collage.dom);
 		};
@@ -94,6 +97,7 @@ define(function (require) {
 		});
 
 		_locationRouter.set("photoset", function (id) {
+			_currentPhotosetId = id;
 			_dataProvider.unsubscribeToPhotosetChanges(_photosetUpdateHandle);
 			_collage.setPhotoset(_dataProvider.getPhotosFromPhotoset(id));
 			_photosetUpdateHandle = _dataProvider.subscribeToPhotosetChanges(id, function (newValue) {
@@ -103,8 +107,16 @@ define(function (require) {
 			_stack.show(_navigation.dom);
 		});
 
-		_locationRouter.set("slideshow", function (photoset, photo) {
-			_slideshow.init(photoset, photo);
+		_locationRouter.set("slideshow", function (photosetId, photoIndex) {
+			_currentPhotosetId = photosetId;
+			_currentPhotoIndex = +photoIndex;
+			_dataProvider.unsubscribeToPhotosetChanges(_slideShowUpdateHandle);
+			_slideshow.setPhotoset(_dataProvider.getPhotosFromPhotoset(_currentPhotosetId));
+			_slideshow.setPhotoIndex(_currentPhotoIndex);
+			_slideShowUpdateHandle = _dataProvider.subscribeToPhotosetChanges(photosetId, function (newValue) {
+				_slideshow.setPhotoset(newValue);
+				_slideshow.setPhotoIndex(_currentPhotoIndex);
+			});
 			_stack.transit(_slideshow.dom);
 			_stack.show(_navigation.dom);
 		});
