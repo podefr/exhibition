@@ -261,7 +261,7 @@ a {
 .logo-container-main {
   width: 90px;
   height: 108px;
-  background: url("../images/eyeswitch-logo-main.png") left top no-repeat;
+  background: url("../images/logo-main.png") left top no-repeat;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -273,7 +273,7 @@ a {
 .logo-container {
   width: 285px;
   height: 74px;
-  background: url("../images/eyeswitch-logo.png") left top no-repeat;
+  background: url("../images/logo.png") left top no-repeat;
   position: fixed;
   left: 30px;
   bottom: 30px;
@@ -343,7 +343,7 @@ a {
 /* line 238, ../SCSS/main.scss */
 .navigation .home-btn {
   left: 30px;
-  background: url("../images/eyeswitch-logo-main.png") center -2px no-repeat;
+  background: url("../images/logo-main.png") center -2px no-repeat;
 }
 /* line 243, ../SCSS/main.scss */
 .navigation .back-btn {

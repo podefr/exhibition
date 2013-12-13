@@ -15,6 +15,14 @@ define(function (require) {
 	// Init Exhibition
 	var exhibition = new Exhibition(flickrAdapter);
 
+	// Setup
+	var contact = document.querySelector(".contact-link");
+	contact.innerHTML = config.Exhibition.mail.text;
+	contact.href = "mailto:" + config.Exhibition.mail.address;
+	if (config.Exhibition.title) {
+		document.title = config.Exhibition.title;
+	}
+
 	flickrAdapter.init(config.Flickr.username).then(function () {
 		// Start exhibition
 		exhibition.start();
