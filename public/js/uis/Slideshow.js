@@ -5,7 +5,6 @@ define(function (require) {
 		Events = require("Event.plugin"),
 		flickrContent = require("../services/flickrContent"),
 		Store = require("Store"),
-		Observable = require("Observable"),
 		Tools = require("Tools"),
 		helpers = require("../adapters/helpers");
 
@@ -73,7 +72,6 @@ define(function (require) {
 
 	return function SlideshowFactory() {
 		Tools.mixin(new OObject, SlideshowConstructor.prototype);
-		Tools.mixin(new Observable, SlideshowConstructor.prototype);
 		return new SlideshowConstructor();
 	}
 
