@@ -43,10 +43,10 @@
 		</div>
 
 		<div class="slideshow">
-			<a class="slideshow-btn left-btn" data-slideshow="bind: show, hasPrevious"></a>
-			<a class="slideshow-btn right-btn" data-slideshow="bind: show, hasNext"></a>
+			<a class="slideshow-btn left-btn" data-slideshow="bind: show, hasPrevious" data-events="listen: click, previous"></a>
+			<a class="slideshow-btn right-btn" data-slideshow="bind: show, hasNext" data-events="listen: click, next"></a>
 			<div class="left-image" data-slideshow="bind: background, previous; bind: show, hasPrevious" data-events="listen: click, previous"></div>
-			<div class="center-image" data-slideshow="bind: background, current" data-events="listen: click, exitSlideShow"></div>
+			<div class="center-image" data-slideshow="bind: background, current"></div>
 			<div class="right-image" data-slideshow="bind: background, next; bind: show, hasNext" data-events="listen: click, next"></div>
 		</div>
 

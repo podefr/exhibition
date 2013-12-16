@@ -32,6 +32,12 @@ a {
 	left: 0;
 }
 
+.slideshow {
+	[data-events] {
+		cursor: pointer;
+	}
+}
+
 .photosets,
 .collage  {
 	height: 50%;

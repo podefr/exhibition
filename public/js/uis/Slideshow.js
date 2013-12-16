@@ -5,6 +5,7 @@ define(function (require) {
 		Events = require("Event.plugin"),
 		flickrContent = require("../services/flickrContent"),
 		Store = require("Store"),
+		Observable = require("Observable"),
 		Tools = require("Tools"),
 		helpers = require("../adapters/helpers");
 
@@ -54,10 +55,6 @@ define(function (require) {
 			}
 		};
 
-		this.exitSlideShow = function exitSlideShow() {
-			//slideShowModel.set("display", false);
-		};
-
 		this.setPhotoset = function setPhotoset(photoset) {
 			if (!photoset) { return false; }
 			photosetModel.reset(photoset.map(function (photo) {
@@ -76,6 +73,7 @@ define(function (require) {
 
 	return function SlideshowFactory() {
 		Tools.mixin(new OObject, SlideshowConstructor.prototype);
+		Tools.mixin(new Observable, SlideshowConstructor.prototype);
 		return new SlideshowConstructor();
 	}
 

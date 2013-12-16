@@ -116,17 +116,22 @@ a {
 }
 
 /* line 36, ../SCSS/main.scss */
+.slideshow [data-events] {
+  cursor: pointer;
+}
+
+/* line 42, ../SCSS/main.scss */
 .photosets,
 .collage {
   height: 50%;
 }
 
-/* line 40, ../SCSS/main.scss */
+/* line 46, ../SCSS/main.scss */
 .collage .repeat {
   height: inherit;
 }
 
-/* line 46, ../SCSS/main.scss */
+/* line 52, ../SCSS/main.scss */
 .left-image,
 .right-image,
 .center-image {
@@ -141,7 +146,7 @@ a {
   background-position: center center;
 }
 
-/* line 57, ../SCSS/main.scss */
+/* line 63, ../SCSS/main.scss */
 .left-image,
 .right-image {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
@@ -149,12 +154,12 @@ a {
   width: 30%;
 }
 
-/* line 62, ../SCSS/main.scss */
+/* line 68, ../SCSS/main.scss */
 .center-image {
   width: 40%;
 }
 
-/* line 66, ../SCSS/main.scss */
+/* line 72, ../SCSS/main.scss */
 .slideshow-btn {
   width: 50px;
   margin: 0 25px;
@@ -165,25 +170,25 @@ a {
   opacity: 0.75;
   z-index: 10;
 }
-/* line 75, ../SCSS/main.scss */
+/* line 81, ../SCSS/main.scss */
 .slideshow-btn:hover {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
 
-/* line 81, ../SCSS/main.scss */
+/* line 87, ../SCSS/main.scss */
 .left-btn {
   left: 0;
   background: url("../images/left-btn.png") center center no-repeat;
 }
 
-/* line 86, ../SCSS/main.scss */
+/* line 92, ../SCSS/main.scss */
 .right-btn {
   right: 0;
   background: url("../images/right-btn.png") center center no-repeat;
 }
 
-/* line 91, ../SCSS/main.scss */
+/* line 97, ../SCSS/main.scss */
 .content {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -201,7 +206,7 @@ a {
   background-position: center center;
   cursor: pointer;
 }
-/* line 106, ../SCSS/main.scss */
+/* line 112, ../SCSS/main.scss */
 .content h1 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -219,7 +224,7 @@ a {
   color: white;
   margin-top: -42px;
 }
-/* line 121, ../SCSS/main.scss */
+/* line 127, ../SCSS/main.scss */
 .content h1 span:first-child {
   display: block;
   font-size: 118px;
@@ -227,18 +232,18 @@ a {
   line-height: 0.6em;
   text-indent: -8px;
 }
-/* line 130, ../SCSS/main.scss */
+/* line 136, ../SCSS/main.scss */
 .content:hover {
   opacity: 0.9;
 }
 
-/* line 135, ../SCSS/main.scss */
+/* line 141, ../SCSS/main.scss */
 .content-main {
   width: 50%;
   border: none;
   margin-right: -0.25em;
 }
-/* line 140, ../SCSS/main.scss */
+/* line 146, ../SCSS/main.scss */
 .content-main h1 {
   font-family: Byron, arial;
   font-size: 30px;
@@ -248,16 +253,16 @@ a {
   text-transform: none;
   margin-top: -100px;
 }
-/* line 150, ../SCSS/main.scss */
+/* line 156, ../SCSS/main.scss */
 .content-main.left-pane {
   background-image: url("http://farm4.staticflickr.com/3810/11254683905_a864b0bcee_b.jpg");
 }
-/* line 154, ../SCSS/main.scss */
+/* line 160, ../SCSS/main.scss */
 .content-main.right-pane {
   background-image: url("http://farm8.staticflickr.com/7398/9695806688_14e02c05e7_b.jpg");
 }
 
-/* line 160, ../SCSS/main.scss */
+/* line 166, ../SCSS/main.scss */
 .logo-container-main {
   width: 90px;
   height: 108px;
@@ -269,7 +274,7 @@ a {
   z-index: 1;
 }
 
-/* line 171, ../SCSS/main.scss */
+/* line 177, ../SCSS/main.scss */
 .logo-container {
   width: 285px;
   height: 74px;
@@ -281,7 +286,7 @@ a {
   display: none;
 }
 
-/* line 183, ../SCSS/main.scss */
+/* line 189, ../SCSS/main.scss */
 .contact-info {
   height: 20px;
   text-align: right;
@@ -293,30 +298,30 @@ a {
   z-index: 100;
   white-space: nowrap;
 }
-/* line 195, ../SCSS/main.scss */
+/* line 201, ../SCSS/main.scss */
 .contact-info .contact-caption,
 .contact-info .contact-link {
   color: white;
   display: inline-block;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
 }
-/* line 201, ../SCSS/main.scss */
+/* line 207, ../SCSS/main.scss */
 .contact-info .contact-link {
   text-decoration: none;
 }
-/* line 203, ../SCSS/main.scss */
+/* line 209, ../SCSS/main.scss */
 .contact-info .contact-link:hover {
   text-decoration: underline;
 }
 
-/* line 209, ../SCSS/main.scss */
+/* line 215, ../SCSS/main.scss */
 .contact-info-main {
   right: auto;
   left: 50%;
   margin-left: -90px;
 }
 
-/* line 215, ../SCSS/main.scss */
+/* line 221, ../SCSS/main.scss */
 .navigation {
   position: fixed;
   left: 0;
@@ -325,7 +330,7 @@ a {
   z-index: 100;
   height: 74px;
 }
-/* line 223, ../SCSS/main.scss */
+/* line 229, ../SCSS/main.scss */
 .navigation button {
   width: 74px;
   height: 74px;
@@ -340,12 +345,12 @@ a {
   font-size: 12px;
   position: absolute;
 }
-/* line 238, ../SCSS/main.scss */
+/* line 244, ../SCSS/main.scss */
 .navigation .home-btn {
   left: 30px;
   background: url("../images/logo-main.png") center -2px no-repeat;
 }
-/* line 243, ../SCSS/main.scss */
+/* line 249, ../SCSS/main.scss */
 .navigation .back-btn {
   left: 50%;
   margin-left: -37px;
