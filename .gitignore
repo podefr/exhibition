@@ -1,4 +1,4 @@
-publi/config.json
-public/.sass-cache/
-Flickr.sublime-project
-Flickr.sublime-workspace
+.sass-cache/
+podefr.config.js
+public/config.js
+**/.DS_Store
