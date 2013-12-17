@@ -1,5 +1,5 @@
 /**
- * @license Emily 1.8.0 http://flams.github.com/emily
+ * @license Emily 1.8.1 http://flams.github.com/emily
  *
  * The MIT License (MIT)
  *
@@ -19,7 +19,7 @@ define('Tools',[],
  */
 function Tools(){
 
-
+    
 
     /**
      * Get the closest number in an array
@@ -399,7 +399,7 @@ define('Observable',["Tools"],
 */
 function Observable(Tools) {
 
-
+	
 
 	/**
 	 * Defines the Observable
@@ -432,6 +432,21 @@ function Observable(Tools) {
 			} else {
 				return false;
 			}
+		};
+
+		/**
+		 * Listen to an event just once before removing the handler
+		 * @param {String} topic the topic to observe
+		 * @param {Function} callback the callback to execute
+		 * @param {Object} scope the scope in which to execute the callback
+		 * @returns handle
+		 */
+		this.once = function once(topic, callback, scope) {
+			var handle = this.watch(topic, function () {
+				callback.apply(scope, arguments);
+				this.unwatch(handle);
+			}, this);
+			return handle;
 		};
 
 		/**
@@ -472,15 +487,13 @@ function Observable(Tools) {
 						if (value) {
 							value[0].apply(value[1] || null, args);
 						}
-					} catch (err) {
-						console.error(err);
-					}
+					} catch (err) { }
 				});
 				return true;
 			} else {
 				return false;
 			}
-		},
+		};
 
 		/**
 		 * Check if topic has the described observer
@@ -531,7 +544,7 @@ define('StateMachine',["Tools"],
  */
 function StateMachine(Tools) {
 
-
+	
 
      /**
      * @param initState {String} the initial state
@@ -786,7 +799,7 @@ define('Promise',["Observable", "StateMachine"],
  */
 function Promise(Observable, StateMachine) {
 
-
+	
 
     return function PromiseConstructor() {
 
@@ -1055,7 +1068,7 @@ define('Store',["Observable", "Tools"],
  */
  function Store(Observable, Tools) {
 
-
+    
 
     /**
      * Defines the Store
@@ -1437,7 +1450,7 @@ define('Transport',[],
  */
 function Transport() {
 
-
+    
 
     /**
      * Create a Transport
@@ -1549,7 +1562,7 @@ define('Router',["Observable", "Store", "Tools"],
  */
 function Router(Observable, Store, Tools) {
 
-
+    
 
     return function RouterConstructor() {
 
