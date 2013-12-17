@@ -138,42 +138,6 @@ a {
 	}
 }
 
-.content-main {
-	width: 50%;
-	border: none;
-	margin-right: -0.25em;
-
-	h1 {
-		font-family: Byron, arial;
-		font-size: 30px;
-		line-height: 1em;
-		display: block;
-		text-align: center;
-		text-transform: none;
-		margin-top: -100px;
-	}
-
-	&.left-pane {
-		background-image: url('http://farm4.staticflickr.com/3810/11254683905_a864b0bcee_b.jpg');
-	}
-
-	&.right-pane {
-		background-image: url('http://farm8.staticflickr.com/7398/9695806688_14e02c05e7_b.jpg');
-	}
-}
-
-
-.logo-container-main {
-	width: 90px;
-	height: 108px;
-	background: url('../images/logo-main.png') left top no-repeat;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	margin: -104px 0 0 -45px;
-	z-index: 1;
-}
-
 .logo-container {
 	width: 285px;
 	height: 74px;
@@ -210,12 +174,6 @@ a {
 			text-decoration: underline;
 		}
 	}
-}
-
-.contact-info-main {
-	right: auto;
-	left: 50%;
-	margin-left: -90px;
 }
 
 .navigation {
