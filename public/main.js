@@ -1,16 +1,12 @@
 define(function (require) {
 
 	var config = require("./config.js"),
-		Flickr = require("js/services/Flickr"),
+		flickr = require("jsonp-flickr"),
 		FlickrAdapter = require("js/adapters/Flickr"),
 		Exhibition = require("js/Exhibition");
 
-	// Init Flickr
-	var flickr = new Flickr();
-	flickr.setConfig(config.Flickr.host);
-
 	// Init Flickr adapter
-	var flickrAdapter = new FlickrAdapter(flickr);
+	var flickrAdapter = new FlickrAdapter(flickr, config.Flickr.api_key);
 
 	// Init Exhibition
 	var exhibition = new Exhibition(flickrAdapter);

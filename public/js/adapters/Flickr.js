@@ -3,7 +3,7 @@ define(function (require) {
 	var tools = require("Tools"),
 		Store = require("Store");
 
-	return function FlickrAdapterConstructor($flickr) {
+	return function FlickrAdapterConstructor($flickr, $apiKey) {
 
 		var _flickr = $flickr || null,
 
@@ -11,34 +11,44 @@ define(function (require) {
 
 		_collections = new Store([]),
 
-		_photos = new Store({});
+		_photos = new Store({}),
+
+		_apiKey = $apiKey || "";
 
 		this.requests = {
 			getUserId: function getUserId(username) {
 				return {
 					method: "flickr.people.findByUsername",
-					username: username
+					username: username,
+					format: "json",
+					api_key: _apiKey
 				};
 			},
 
 			getPhotosets: function getPhotosets(userId) {
 				return {
 					method: "flickr.photosets.getList",
-					user_id: userId
+					user_id: userId,
+					format: "json",
+					api_key: _apiKey
 				}
 			},
 
 			getCollections: function getCollections(userId) {
 				return {
 					method: "flickr.collections.getTree",
-					user_id: userId
+					user_id: userId,
+					format: "json",
+					api_key: _apiKey
 				}
 			},
 
 			getPhotosForPhotoset: function getPhotosForPhotoset(photosetId) {
 				return {
 					method: "flickr.photosets.getPhotos",
-					photoset_id: photosetId
+					photoset_id: photosetId,
+					format: "json",
+					api_key: _apiKey
 				}
 			}
 		};
@@ -49,6 +59,14 @@ define(function (require) {
 
 		this.getFlickr = function getFlickr() {
 			return _flickr;
+		};
+
+		this.setApiKey = function setApiKey(apiKey) {
+			_apiKey = apiKey;
+		};
+
+		this.getApiKey = function getApiKey() {
+			return _apiKey;
 		};
 
 		this.doApiCall = function doApiCall() {
