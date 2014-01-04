@@ -16,6 +16,10 @@
     "olives": ">=2.0.0-beta",
     "jsonp-flickr": ">=0.0.1"
  },
+ "devDependencies": {
+    "chai": ">=1.8.1",
+    "sinon": ">=1.7.3"
+ },
  "keywords": ["Flickr", "gallery"],
  "repository": {
   "type": "git",
