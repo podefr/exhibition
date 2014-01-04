@@ -4,8 +4,8 @@ define(function (require) {
 		Bind = require("Bind.plugin"),
 		Events = require("Event.plugin"),
 		flickrContent = require("../services/flickrContent"),
-		Store = require("Store"),
-		Tools = require("Tools"),
+		Store = require("emily").Store,
+		Tools = require("emily").Tools,
 		helpers = require("../adapters/helpers");
 
 	function SlideshowConstructor() {

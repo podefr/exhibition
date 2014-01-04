@@ -1,7 +1,7 @@
 define(function (require) {
 
-	var tools = require("Tools"),
-		Store = require("Store");
+	var tools = require("emily").Tools,
+		Store = require("emily").Store;
 
 	return function FlickrAdapterConstructor($flickr, $apiKey) {
 
@@ -215,8 +215,5 @@ define(function (require) {
 				}, this);
 			}
 		};
-
-
 	};
-
 });

@@ -4,9 +4,9 @@ define(function (require) {
 		Bind = require("Bind.plugin"),
 		Event = require("Event.plugin"),
 		flickrContent = require("../services/flickrContent"),
-		Store = require("Store"),
-		Observable = require("Observable"),
-		Tools = require("Tools"),
+		Store = require("emily").Store,
+		Observable = require("emily").Observable,
+		Tools = require("emily").Tools,
 		helpers = require("../adapters/helpers");
 
 	function CollectionsConstructor($collections) {

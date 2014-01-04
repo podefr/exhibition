@@ -1,7 +1,9 @@
+var global_require = require;
+
 define(function (require) {
 
 	var config = require("./config.js"),
-		flickr = require("jsonp-flickr"),
+		flickr = global_require("jsonp-flickr"),
 		FlickrAdapter = require("js/adapters/Flickr"),
 		Exhibition = require("js/Exhibition");
 

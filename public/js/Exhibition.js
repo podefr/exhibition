@@ -6,7 +6,7 @@ define(function (require) {
 		Slideshow = require("./uis/Slideshow"),
 		LocationRouter = require("LocationRouter"),
 		Navigation = require("./uis/Navigation"),
-		Stack = require("Stack");
+		Stack = require("emily").Stack;
 
 	return function Exhibition($dataProvider) {
 

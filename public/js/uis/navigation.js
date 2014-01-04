@@ -3,8 +3,8 @@ define(function (require) {
 	var OObject = require("OObject"),
 		Bind = require("Bind.plugin"),
 		Events = require("Event.plugin"),
-		Observable = require("Observable"),
-		Tools = require("Tools");
+		Observable = require("emily").Observable,
+		Tools = require("emily").Tools;
 
 	function NavigationConstructor() {
 
