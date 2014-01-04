@@ -4,3 +4,4 @@ public/config.js
 **/.DS_Store
 Flickr.sublime-project
 Flickr.sublime-workspace
+node_modules/

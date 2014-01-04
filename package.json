@@ -1,0 +1,27 @@
+{
+ "name": "exhibition",
+ "description": "Create a gallery with your pictures and videos hosted on Flickr. Doesn't use any backend so you can host this gallery wherever you want.",
+ "version": "0.0.1-alpha",
+ "homepage": "http://podefr.github.com/exhibition/",
+ "licenses": [{
+  "type":"MIT",
+  "url":"https://raw.github.com/podefr/exhibition/master/LICENSE"
+ }],
+ "files": [
+    "LICENSE"
+ ],
+ "author": "Olivier Scherrer <pode.fr@gmail.com>",
+ "dependencies": {
+    "emily": ">=2.0.0-beta",
+    "olives": ">=2.0.0-beta",
+    "jsonp-flickr": ">=0.0.1"
+ },
+ "keywords": ["Flickr", "gallery"],
+ "repository": {
+  "type": "git",
+  "url": "git@github.com:podefr/exhibition.git"
+ },
+ "bugs": {
+  "url": "https://github.com/podefr/exhibition/issues"
+ }
+}
