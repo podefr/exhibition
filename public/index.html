@@ -51,9 +51,29 @@
 			<div class="right-image" data-slideshow="bind: background, next; bind: show, hasNext" data-events="listen: click, next"></div>
 		</div>
 
-		<script src="libs/jsonp-flickr-browser.min.js"></script>
-		<script src="libs/emily.min.js"></script>
-		<script src="bower_components/requirejs/require.js" data-main="main.js"></script>
-		<script src="bower_components/olives-prod/Olives.js"></script>
+		<script src="js/exhibition.js"></script>
+		<script>
+			var exhibition = require("exhibition");
+
+			exhibition.init({
+				"Flickr": {
+					"username": "eyeswitch",
+
+					// collection or photosets. Use collection if you want nested galleries
+					// or use photosets if you want to only one layer of navigation.
+					"mode": "collection",
+
+					"api_key": "ebbfb6d3cec5ece759284bf5bc7fd5d8"
+				},
+
+				"Exhibition": {
+					"mail": {
+						"address": "rob@eyeswitch.com",
+						"text": "rob@eyeswitch.com"
+					},
+					"title": ":: Productions ::"
+				}
+			});
+		</script>
 	</body>
 </html>

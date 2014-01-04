@@ -70,7 +70,7 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
     this.doApiCall = function doApiCall() {
         var request = this.requests[arguments[0]].apply(null, tools.toArray(arguments).splice(1));
 
-        return _flickr.promiseApiCall(request)
+        return _flickr.get(request)
 
         .then(function assertResult(result) {
             if (result.stat == "fail") {

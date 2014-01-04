@@ -1,6 +1,6 @@
-var OObject = require("OObject"),
-    Bind = require("Bind.plugin"),
-    Events = require("Event.plugin"),
+var OObject = require("olives").OObject,
+    Bind = require("olives")["Bind.plugin"],
+    Events = require("olives")["Event.plugin"],
     Observable = require("emily").Observable,
     Tools = require("emily").Tools;
 

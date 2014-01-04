@@ -2,9 +2,9 @@ var Collections = require("./uis/Collections"),
     Photosets = require("./uis/Photosets"),
     Collage = require("./uis/Collage"),
     Slideshow = require("./uis/Slideshow"),
-    LocationRouter = require("LocationRouter"),
+    LocationRouter = require("olives").LocationRouter,
     Navigation = require("./uis/Navigation"),
-    Stack = require("emily").Stack;
+    Stack = require("olives").Stack;
 
 module.exports = function Exhibition($dataProvider) {
 
