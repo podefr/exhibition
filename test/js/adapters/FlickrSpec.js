@@ -1,87 +1,84 @@
-define(function (require) {
+var chai = require("chai"),
+    FlickrAdapter = require("adapters/Flickr"),
+    Flickr = require("services/Flickr"),
+    Promise = require("Promise");
 
-	var chai = require("chai"),
-		FlickrAdapter = require("adapters/Flickr"),
-		Flickr = require("services/Flickr"),
-		Promise = require("Promise");
+    require("sinon");
 
-		require("sinon");
+var expect = chai.expect;
 
-	var expect = chai.expect;
+describe('Flickr adapter', function(){
 
-	describe('Flickr adapter', function(){
+    var flickrAdapter = null,
+        flickr = null,
+        promise = null;
 
-		var flickrAdapter = null,
-			flickr = null,
-			promise = null;
+    beforeEach(function () {
+        flickr = new Flickr();
+        flickrAdapter = new FlickrAdapter();
+        sinon.mock(flickr);
+        flickrAdapter.setFlickr(flickr);
+        promise = new Promise();
+    });
 
-		beforeEach(function () {
-			flickr = new Flickr();
-			flickrAdapter = new FlickrAdapter();
-			sinon.mock(flickr);
-			flickrAdapter.setFlickr(flickr);
-			promise = new Promise();
-		});
+    it("gets a flickr object for calling its API", function () {
+        flickrAdapter.setFlickr(flickr);
+        expect(flickrAdapter.getFlickr()).to.equal(flickr);
+    });
 
-		it("gets a flickr object for calling its API", function () {
-			flickrAdapter.setFlickr(flickr);
-			expect(flickrAdapter.getFlickr()).to.equal(flickr);
-		});
+    it("can do an API call", function () {
+        flickrAdapter.requests.myMethod = sinon.spy();
+        sinon.stub(promise, "then");
+        sinon.stub(flickr, "promiseApiCall").returns(promise);
 
-		it("can do an API call", function () {
-			flickrAdapter.requests.myMethod = sinon.spy();
-			sinon.stub(promise, "then");
-			sinon.stub(flickr, "promiseApiCall").returns(promise);
+        flickrAdapter.doApiCall("myMethod", 1, 2, 3);
 
-			flickrAdapter.doApiCall("myMethod", 1, 2, 3);
+        expect(flickrAdapter.requests.myMethod.calledWith(1, 2, 3)).to.be.true;
 
-			expect(flickrAdapter.requests.myMethod.calledWith(1, 2, 3)).to.be.true;
+        var then = promise.then.args[0][0];
 
-			var then = promise.then.args[0][0];
+        expect(function () {
+            then({
+                stat: "fail"
+            });
+        }).to.throw(/Flickr API call/);
 
-			expect(function () {
-				then({
-					stat: "fail"
-				});
-			}).to.throw(/Flickr API call/);
+        var resultOk = {};
 
-			var resultOk = {};
+        expect(then(resultOk)).to.equal(resultOk);
 
-			expect(then(resultOk)).to.equal(resultOk);
+    });
 
-		});
+    it("gets the user id given a username", function () {
+        var request = flickrAdapter.requests.getUserId("podefr");
 
-		it("gets the user id given a username", function () {
-			var request = flickrAdapter.requests.getUserId("podefr");
+        expect(request.method).to.equal("flickr.people.findByUsername");
+        expect(request.username).to.equal("podefr");
+    });
 
-			expect(request.method).to.equal("flickr.people.findByUsername");
-			expect(request.username).to.equal("podefr");
-		});
+    it("gets all the photosets given a userId", function () {
+        var request = flickrAdapter.requests.getPhotosets("123");
 
-		it("gets all the photosets given a userId", function () {
-			var request = flickrAdapter.requests.getPhotosets("123");
+        expect(request.method).to.equal("flickr.photosets.getList");
+        expect(request.user_id).to.equal("123");
+    });
 
-			expect(request.method).to.equal("flickr.photosets.getList");
-			expect(request.user_id).to.equal("123");
-		});
+    it("gets the collections tree", function () {
+        var request = flickrAdapter.requests.getCollections("123");
 
-		it("gets the collections tree", function () {
-			var request = flickrAdapter.requests.getCollections("123");
+        expect(request.method).to.equal("flickr.collections.getTree");
+        expect(request.user_id).to.equal("123");
+    });
 
-			expect(request.method).to.equal("flickr.collections.getTree");
-			expect(request.user_id).to.equal("123");
-		});
+    it("gets all the photos in a gallery", function () {
+        var request = flickrAdapter.requests.getPhotosForPhotoset("gallery123");
 
-		it("gets all the photos in a gallery", function () {
-			var request = flickrAdapter.requests.getPhotosForPhotoset("gallery123");
+        expect(request.method).to.equal("flickr.photosets.getPhotos");
+        expect(request.photoset_id).to.equal("gallery123");
+    });
 
-			expect(request.method).to.equal("flickr.photosets.getPhotos");
-			expect(request.photoset_id).to.equal("gallery123");
-		});
+    it("has an init function that calls getUserID", function () {
 
-		it("has an init function that calls getUserID", function () {
+    });
 
-		});
-
-	});
 });

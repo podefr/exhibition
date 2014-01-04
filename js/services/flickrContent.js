@@ -1,25 +1,20 @@
-define(function (require) {
+module.exports = {
 
-	return {
+    createUrl: function createUrl(content, size) {
+        if (content) {
+            var url = "http://farm" + content.farm +
+                ".staticflickr.com/" + content.server +
+                "/" + content.id +
+                "_" + content.secret;
 
-		createUrl: function createUrl(content, size) {
-			if (content) {
-				var url = "http://farm" + content.farm +
-					".staticflickr.com/" + content.server +
-					"/" + content.id +
-					"_" + content.secret;
+            if (size) {
+                url += "_" + size;
+            }
 
-				if (size) {
-					url += "_" + size;
-				}
+            return url + ".jpg";
+        } else {
+            return false;
+        }
+    }
 
-				return url + ".jpg";
-			} else {
-				return false;
-			}
-		}
-
-	}
-
-
-});
+};

@@ -1,13 +1,10 @@
-define(function (require) {
+var chai = require("chai"),
+    Exhibition = require("Exhibition");
 
-	var chai = require("chai"),
-		Exhibition = require("Exhibition");
+    require("sinon");
 
-		require("sinon");
+var expect = chai.expect;
 
-	var expect = chai.expect;
+describe('Exhibition', function(){
 
-	describe('Exhibition', function(){
-
-	});
 });

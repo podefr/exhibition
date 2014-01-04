@@ -1,27 +1,23 @@
-define(function (require) {
+module.exports = {
 
-	return {
+    hide: function (value) {
+        if (value) {
+            this.style.display = "none";
+        } else {
+            this.style.display = "";
+        }
+    },
 
-		hide: function (value) {
-			if (value) {
-				this.style.display = "none";
-			} else {
-				this.style.display = "";
-			}
-		},
+    show: function (value) {
+        if (!value) {
+            this.style.display = "none";
+        } else {
+            this.style.display = "";
+        }
+    },
 
-		show: function (value) {
-			if (!value) {
-				this.style.display = "none";
-			} else {
-				this.style.display = "";
-			}
-		},
+    background: function (url) {
+        this.style.backgroundImage = "url(" + url + ")";
+    }
 
-		background: function (url) {
-			this.style.backgroundImage = "url(" + url + ")";
-		}
-
-	};
-
-});
+};
