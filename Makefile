@@ -1,3 +1,5 @@
+build: clean public/js/exhibition.min.js
+
 styles:
 	compass compile
 
@@ -9,8 +11,6 @@ public/js/exhibition.js:
 
 public/js/exhibition.min.js: public/js/exhibition.js
 	uglifyjs public/js/exhibition.js -o public/js/exhibition.min.js
-
-build: public/js/exhibition.min.js
 
 clean:
 	rm -f public/js/exhibition.*js
