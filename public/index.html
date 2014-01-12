@@ -47,11 +47,25 @@
 			<a class="slideshow-btn left-btn" data-slideshow="bind: show, hasPrevious" data-events="listen: click, previous"></a>
 			<a class="slideshow-btn right-btn" data-slideshow="bind: show, hasNext" data-events="listen: click, next"></a>
 			<div class="left-image" data-slideshow="bind: background, previous; bind: show, hasPrevious" data-events="listen: click, previous"></div>
-			<div class="center-image" data-slideshow="bind: background, current"></div>
+			<div class="center-image" data-slideshow="bind: background, current" data-events="listen: click, displayVideoContainer">
+
+			</div>
 			<div class="right-image" data-slideshow="bind: background, next; bind: show, hasNext" data-events="listen: click, next"></div>
 		</div>
 
-		<script src="js/exhibition.min.js"></script>
+		<div class="videoContainer">
+			<a class="close-btn">X</a>
+			<object type="application/x-shockwave-flash" width="100" height="100">
+				<param name="flashvars" value="flickr_show_info_box=true"></param>
+				<param name="movie" value=""></param>
+				<param name="allowFullScreen" value="true"></param>
+				<embed type="application/x-shockwave-flash"
+				width="100" height="100" src=""	allowfullscreen="true"
+				flashvars="flickr_show_info_box=true"></embed>
+			</object>
+		</div>
+
+		<script src="js/exhibition.js"></script>
 		<script>
 			var exhibition = require("exhibition");
 
@@ -59,9 +73,7 @@
 				"Flickr": {
 					"username": "eyeswitch",
 
-					// collection or photosets. Use collection if you want nested galleries
-					// or use photosets if you want to only one layer of navigation.
-					"mode": "collection",
+					//"collection": "id",
 
 					"api_key": "ebbfb6d3cec5ece759284bf5bc7fd5d8"
 				},

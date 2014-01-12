@@ -29,7 +29,7 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
                 user_id: userId,
                 format: "json",
                 api_key: _apiKey
-            }
+            };
         },
 
         getCollections: function getCollections(userId) {
@@ -38,7 +38,7 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
                 user_id: userId,
                 format: "json",
                 api_key: _apiKey
-            }
+            };
         },
 
         getPhotosForPhotoset: function getPhotosForPhotoset(photosetId) {
@@ -47,7 +47,16 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
                 photoset_id: photosetId,
                 format: "json",
                 api_key: _apiKey
-            }
+            };
+        },
+
+        getSizes: function getSizes(id) {
+        	return {
+        		method: "flickr.photos.getSizes",
+        		photo_id: id,
+        		format: "json",
+        		api_key: _apiKey
+        	};
         }
     };
 
@@ -128,6 +137,10 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
                 title: photoset.title._content
             };
         });
+    };
+
+    this.getSizes = function getSizes(id) {
+    	return this.doApiCall("getSizes", id);
     };
 
     this.getPhotosFromPhotoset = function getPhotosFromPhotoset(photosetId) {

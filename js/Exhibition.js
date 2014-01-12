@@ -4,7 +4,8 @@ var Collections = require("./uis/Collections"),
     Slideshow = require("./uis/Slideshow"),
     LocationRouter = require("olives").LocationRouter,
     Navigation = require("./uis/Navigation"),
-    Stack = require("olives").Stack;
+    Stack = require("olives").Stack,
+    VideoContainer = require("./uis/VideoContainer");
 
 module.exports = function Exhibition($dataProvider) {
 
@@ -15,6 +16,7 @@ module.exports = function Exhibition($dataProvider) {
         _collage = null,
         _slideshow = null,
         _stack = null,
+        _videoContainer = null,
         _currentPhotosetId = "",
         _currentPhotoIndex = 0,
         _photosetUpdateHandle = null,
@@ -27,6 +29,7 @@ module.exports = function Exhibition($dataProvider) {
         this.initPhotosets();
         this.initCollage();
         this.initSlideshow();
+        this.initVideoContainer();
         _stack.hideAll();
         _locationRouter.start("home");
     };
@@ -67,9 +70,12 @@ module.exports = function Exhibition($dataProvider) {
     };
 
     this.initSlideshow = function initSlideshow() {
-        _slideshow = new Slideshow();
+        _slideshow = new Slideshow(_dataProvider);
         _slideshow.template = document.querySelector(".slideshow");
         _slideshow.render();
+        _slideshow.watch("showVideo", function (video) {
+        	_videoContainer.show(video);
+        });
         _stack.add(_slideshow.dom);
     };
 
@@ -81,6 +87,10 @@ module.exports = function Exhibition($dataProvider) {
             _locationRouter.navigate("home");
         });
         _stack.add(_navigation.dom);
+    };
+
+    this.initVideoContainer = function initVideoContainer() {
+    	_videoContainer = new VideoContainer(document.querySelector(".videoContainer"));
     };
 
     _locationRouter.set("home", function () {

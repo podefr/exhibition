@@ -2,11 +2,12 @@ var OObject = require("olives").OObject,
     Bind = require("olives")["Bind.plugin"],
     Events = require("olives")["Event.plugin"],
     flickrContent = require("../services/flickrContent"),
+    Observable = require("emily").Observable,
     Store = require("emily").Store,
     Tools = require("emily").Tools,
     helpers = require("../adapters/helpers");
 
-function SlideshowConstructor() {
+function SlideshowConstructor(provider) {
 
     var slideShowModel = new Store({}),
         photosetModel = new Store([]),
@@ -38,6 +39,25 @@ function SlideshowConstructor() {
 
     });
 
+    slideShowModel.watchValue("main", function (photo) {
+        provider.getSizes(photo.id).then(function (sizesObj) {
+            sizesObj.sizes.size.some(function (size) {
+                var isVideo = size.label === "Video Player";
+                slideShowModel.set("isVideo", isVideo);
+                if (isVideo) {
+                    slideShowModel.set("video", size);
+                }
+                return isVideo;
+            });
+        });
+    });
+
+    this.displayVideoContainer = function displayVideoContainer() {
+        if (slideShowModel.get("isVideo")) {
+            this.notify("showVideo", slideShowModel.get("video"));
+        }
+    };
+
     this.next = function next() {
         var newMainPhoto = photosetModel.get(slideShowModel.get("currentMain") +1);
         if (newMainPhoto) {
@@ -68,7 +88,8 @@ function SlideshowConstructor() {
 
 }
 
-module.exports = function SlideshowFactory() {
+module.exports = function SlideshowFactory(dataProvider) {
     Tools.mixin(new OObject, SlideshowConstructor.prototype);
-    return new SlideshowConstructor();
+    Tools.mixin(new Observable, SlideshowConstructor.prototype);
+    return new SlideshowConstructor(dataProvider);
 };
