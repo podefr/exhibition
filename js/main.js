@@ -6,7 +6,7 @@ module.exports = {
 	init: function init(config) {
 
 		// Init Flickr adapter
-		var flickrAdapter = new FlickrAdapter(flickr, config.Flickr.api_key);
+		var flickrAdapter = new FlickrAdapter(flickr, config.Flickr.api_key, config.Flickr.collection);
 
 		// Init Exhibition
 		var exhibition = new Exhibition(flickrAdapter);

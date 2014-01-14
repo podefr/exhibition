@@ -1,7 +1,7 @@
 var tools = require("emily").Tools,
     Store = require("emily").Store;
 
-module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
+module.exports = function FlickrAdapterConstructor($flickr, $apiKey, $optionalCollectionId) {
 
     var _flickr = $flickr || null,
 
@@ -33,12 +33,18 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
         },
 
         getCollections: function getCollections(userId) {
-            return {
+            var req = {
                 method: "flickr.collections.getTree",
                 user_id: userId,
                 format: "json",
                 api_key: _apiKey
             };
+
+            if ($optionalCollectionId) {
+            	req.collection_id = $optionalCollectionId;
+            }
+
+            return req;
         },
 
         getPhotosForPhotoset: function getPhotosForPhotoset(photosetId) {
@@ -104,7 +110,7 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey) {
         }, this)
 
         .then(function (collections) {
-            _collections.reset(collections.collections.collection);
+            _collections.reset(collections.collections.collection[0].collection);
         }, this)
 
         .then(function getPhotosets() {
