@@ -17,7 +17,11 @@ module.exports = {
     },
 
     background: function (url) {
-        this.style.backgroundImage = "url(" + url + ")";
+    	if (url) {
+	        this.style.backgroundImage = "url(" + url + ")";
+    	} else {
+    		this.style.backgroundImage = "";
+    	}
     }
 
 };

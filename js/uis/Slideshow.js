@@ -27,11 +27,15 @@ function SlideshowConstructor(provider) {
         slideShowModel.set("hasPrevious", !!previous);
         if (previous) {
             slideShowModel.set("previous", previous.url);
+        } else {
+        	slideShowModel.del("previous");
         }
 
         slideShowModel.set("hasNext", !!next);
         if (next) {
             slideShowModel.set("next", next.url);
+        } else {
+        	slideShowModel.del("next");
         }
 
         slideShowModel.set("currentMain", index);
