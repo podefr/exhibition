@@ -19,6 +19,8 @@ module.exports = {
 		    document.title = config.Exhibition.title;
 		}
 
+		var hompeage = document.querySelector(".logo-container").href = config.Exhibition.homepage.
+
 		flickrAdapter.init(config.Flickr.username).then(function () {
 		    // Start exhibition
 		    exhibition.start();
