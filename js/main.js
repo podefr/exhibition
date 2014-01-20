@@ -1,6 +1,7 @@
 var flickr = require("jsonp-flickr"),
     FlickrAdapter = require("./adapters/Flickr"),
-    Exhibition = require("./Exhibition");
+    Exhibition = require("./Exhibition"),
+    Tools = require("Emily").Tools;
 
 module.exports = {
 	init: function init(config) {
@@ -19,7 +20,9 @@ module.exports = {
 		    document.title = config.Exhibition.title;
 		}
 
-		var hompeage = document.querySelector(".logo-container").href = config.Exhibition.homepage.
+		Tools.toArray(document.querySelectorAll(".logo-container, .home-btn")).forEach(function (link) {
+			link.href = config.Exhibition.homepage;
+		});
 
 		flickrAdapter.init(config.Flickr.username).then(function () {
 		    // Start exhibition

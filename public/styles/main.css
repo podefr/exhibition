@@ -287,7 +287,7 @@ a {
   height: 74px;
 }
 /* line 187, ../../SCSS/main.scss */
-.navigation button {
+.navigation button, .navigation a {
   width: 74px;
   height: 74px;
   padding: 0;
@@ -304,9 +304,10 @@ a {
 /* line 202, ../../SCSS/main.scss */
 .navigation .home-btn {
   left: 30px;
-  background: url("../images/logo-main.png") center -2px no-repeat;
+  background: url("../images/logo-main.png") center 0 no-repeat;
+  border: 0;
 }
-/* line 207, ../../SCSS/main.scss */
+/* line 208, ../../SCSS/main.scss */
 .navigation .back-btn {
   left: 50%;
   margin-left: -37px;

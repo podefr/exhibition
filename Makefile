@@ -4,7 +4,8 @@ styles:
 	compass compile
 
 watch:
-	watchify -r ./js/main.js:exhibition -o public/js/exhibition.js
+	watchify -r ./js/main.js:exhibition -o public/js/exhibition.js &
+	compass watch
 
 public/js/exhibition.js:
 	browserify -r ./js/main.js:exhibition -o public/js/exhibition.js

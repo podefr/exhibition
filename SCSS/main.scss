@@ -184,7 +184,7 @@ a {
 	z-index: 100;
 	height: $navigation-item;
 
-	button {
+	button, a {
 		width: $navigation-item;
 		height: $navigation-item;
 		padding: 0;
@@ -201,7 +201,8 @@ a {
 
 	.home-btn {
 		left: 30px;
-		background: url('../images/logo-main.png') center -2px no-repeat;
+		background: url('../images/logo-main.png') center 0 no-repeat;
+		border: 0;
 	}
 
 	.back-btn {
