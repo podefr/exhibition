@@ -67,6 +67,25 @@ a {
 
 .center-image {
 	width: 40%;
+
+	button {
+		border-radius: 50%;
+		border: 3px solid $standard-white;
+		width: 150px;
+		height: 150px;
+		background-color: rgba(0,0,0,.5);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -75px;
+		margin-top: -75px;
+
+		div {
+			background: url('../images/right-btn.png') center center no-repeat;
+			width: 100%;
+			height: 100%;
+		}
+	}
 }
 
 .slideshow-btn {
@@ -208,5 +227,23 @@ a {
 	.back-btn {
 		left: 50%;
 		margin-left: - ( $navigation-item / 2 );
+	}
+}
+
+.video-container {
+	display: none;
+	position: absolute;
+	background-color: rgba(0,0,0,.5);
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	z-index: 200;
+
+	object {
+		position: absolute;
+		top: 50%;
+		left: 50%;
 	}
 }

@@ -41,16 +41,31 @@ function SlideshowConstructor(provider) {
 
     slideShowModel.watchValue("main", function (photo) {
         provider.getSizes(photo.id).then(function (sizesObj) {
-            sizesObj.sizes.size.some(function (size) {
-                var isVideo = size.label === "Video Player";
-                slideShowModel.set("isVideo", isVideo);
-                if (isVideo) {
-                    slideShowModel.set("video", size);
-                }
-                return isVideo;
-            });
+        	var hasVideo = getSize(sizesObj, "Video Player"),
+        		hdVideo = getSize(sizesObj, "HD MP4");
+
+        	slideShowModel.set("isVideo", !!hasVideo);
+        	if (hasVideo) {
+				slideShowModel.set("video", hasVideo);
+        	}
+
+        	if (hdVideo) {
+        		hasVideo.width = hdVideo.width;
+        		hasVideo.height = hdVideo.height;
+        	}
         });
     });
+
+    function getSize(sizesObj, desiredSize) {
+    	var foundSize = null;
+    	sizesObj.sizes.size.some(function (size) {
+            if (size.label === desiredSize) {
+            	foundSize = size;
+            	return true;
+            }
+        });
+        return foundSize;
+    }
 
     this.displayVideoContainer = function displayVideoContainer() {
         if (slideShowModel.get("isVideo")) {

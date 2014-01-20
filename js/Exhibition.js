@@ -90,7 +90,7 @@ module.exports = function Exhibition($dataProvider) {
     };
 
     this.initVideoContainer = function initVideoContainer() {
-    	_videoContainer = new VideoContainer(document.querySelector(".videoContainer"));
+    	_videoContainer = new VideoContainer(document.querySelector(".video-container"));
     };
 
     _locationRouter.set("home", function () {

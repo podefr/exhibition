@@ -91,7 +91,7 @@ module.exports = function Exhibition($dataProvider) {
     };
 
     this.initVideoContainer = function initVideoContainer() {
-    	_videoContainer = new VideoContainer(document.querySelector(".videoContainer"));
+    	_videoContainer = new VideoContainer(document.querySelector(".video-container"));
     };
 
     _locationRouter.set("home", function () {
@@ -653,16 +653,31 @@ function SlideshowConstructor(provider) {
 
     slideShowModel.watchValue("main", function (photo) {
         provider.getSizes(photo.id).then(function (sizesObj) {
-            sizesObj.sizes.size.some(function (size) {
-                var isVideo = size.label === "Video Player";
-                slideShowModel.set("isVideo", isVideo);
-                if (isVideo) {
-                    slideShowModel.set("video", size);
-                }
-                return isVideo;
-            });
+        	var hasVideo = getSize(sizesObj, "Video Player"),
+        		hdVideo = getSize(sizesObj, "HD MP4");
+
+        	slideShowModel.set("isVideo", !!hasVideo);
+        	if (hasVideo) {
+				slideShowModel.set("video", hasVideo);
+        	}
+
+        	if (hdVideo) {
+        		hasVideo.width = hdVideo.width;
+        		hasVideo.height = hdVideo.height;
+        	}
         });
     });
+
+    function getSize(sizesObj, desiredSize) {
+    	var foundSize = null;
+    	sizesObj.sizes.size.some(function (size) {
+            if (size.label === desiredSize) {
+            	foundSize = size;
+            	return true;
+            }
+        });
+        return foundSize;
+    }
 
     this.displayVideoContainer = function displayVideoContainer() {
         if (slideShowModel.get("isVideo")) {
@@ -711,7 +726,7 @@ module.exports = function VideoContainer(dom) {
 	var videoNode = dom.querySelector("object");
 	videoNode.parentElement.removeChild(videoNode);
 
-	dom.querySelector(".close-btn").addEventListener("click", function () {
+	dom.addEventListener("click", function () {
 		dom.style.display = "none";
 		dom.removeChild(dom.querySelector("object"));
 	}, false);
@@ -729,6 +744,9 @@ module.exports = function VideoContainer(dom) {
 		embed.width = width;
 		embed.height = height;
 		embed.src = url;
+
+		embed.parentElement.style["margin-left"] = "-" + Math.floor(width / 2) + "px";
+		embed.parentElement.style["margin-top"] = "-" + Math.floor(height / 2) + "px";
 
 		return newVideo;
 	}
