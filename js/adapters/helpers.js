@@ -4,7 +4,7 @@ module.exports = {
         if (value) {
             this.style.display = "none";
         } else {
-            this.style.display = "";
+            this.style.display = "block";
         }
     },
 
@@ -12,7 +12,7 @@ module.exports = {
         if (!value) {
             this.style.display = "none";
         } else {
-            this.style.display = "";
+            this.style.display = "block";
         }
     },
 
