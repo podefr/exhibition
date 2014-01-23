@@ -16,6 +16,14 @@ module.exports = {
         }
     },
 
+    addClass: function (value, className) {
+    	if (value) {
+    		this.classList.add(className);
+    	} else {
+    		this.classList.remove(className);
+    	}
+    },
+
     background: function (url) {
     	if (url) {
 	        this.style.backgroundImage = "url(" + url + ")";

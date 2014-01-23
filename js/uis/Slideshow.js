@@ -28,14 +28,14 @@ function SlideshowConstructor(provider) {
         if (previous) {
             slideShowModel.set("previous", previous.url);
         } else {
-        	slideShowModel.del("previous");
+            slideShowModel.del("previous");
         }
 
         slideShowModel.set("hasNext", !!next);
         if (next) {
             slideShowModel.set("next", next.url);
         } else {
-        	slideShowModel.del("next");
+            slideShowModel.del("next");
         }
 
         slideShowModel.set("currentMain", index);
@@ -45,27 +45,34 @@ function SlideshowConstructor(provider) {
 
     slideShowModel.watchValue("main", function (photo) {
         provider.getSizes(photo.id).then(function (sizesObj) {
-        	var hasVideo = getSize(sizesObj, "Video Player"),
-        		hdVideo = getSize(sizesObj, "HD MP4");
+            var hasVideo = getSize(sizesObj, "Video Player"),
+                hdVideo = getSize(sizesObj, "HD MP4"),
+                original = getSize(sizesObj, "Original");
 
-        	slideShowModel.set("isVideo", !!hasVideo);
-        	if (hasVideo) {
-				slideShowModel.set("video", hasVideo);
-        	}
+            slideShowModel.set("isVideo", !!hasVideo);
+            if (hasVideo) {
+                slideShowModel.set("video", hasVideo);
+            }
 
-        	if (hdVideo) {
-        		hasVideo.width = hdVideo.width;
-        		hasVideo.height = hdVideo.height;
-        	}
+            slideShowModel.set("isLandscape", testIsLandscape(original));
+
+            if (hdVideo) {
+                hasVideo.width = hdVideo.width;
+                hasVideo.height = hdVideo.height;
+            }
         });
     });
 
+    function testIsLandscape(size) {
+        return size.width > size.height;
+    }
+
     function getSize(sizesObj, desiredSize) {
-    	var foundSize = null;
-    	sizesObj.sizes.size.some(function (size) {
+        var foundSize = null;
+        sizesObj.sizes.size.some(function (size) {
             if (size.label === desiredSize) {
-            	foundSize = size;
-            	return true;
+                foundSize = size;
+                return true;
             }
         });
         return foundSize;
