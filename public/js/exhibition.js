@@ -46,7 +46,12 @@ module.exports = function Exhibition($dataProvider) {
         _collections.render();
         _stack.add(_collections.dom);
         _collections.watch("drillin", function (id) {
-            _locationRouter.navigate("photosets", id);
+        	var sets = _dataProvider.getPhotosetsForCollection(id);
+        	if (sets.length > 1) {
+            	_locationRouter.navigate("photosets", id);
+        	} else {
+        		_locationRouter.navigate("photoset", sets[0].photoset_id);
+        	}
         });
     };
 
