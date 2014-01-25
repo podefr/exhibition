@@ -68,7 +68,7 @@ a {
 	margin-right: -0.25em;
 	background-size: cover;
 	background-position: center center;
- @include transition-property(width);
+ 	@include transition-property(width);
   	@include transition-duration(0.5s);
   	@include transition-timing-function(ease-in);
 }
@@ -131,7 +131,6 @@ a {
 .content {
 	@include box-sizing( border-box );
 	display: inline-block;
-	width: 25%;
 	height: 100%;
 	overflow: hidden;
 	position: relative;
@@ -169,6 +168,14 @@ a {
 
 	&:hover {
 		opacity: 0.9;
+	}
+}
+
+.collections {
+	display: flex;
+
+	.content {
+		flex: auto;
 	}
 }
 
