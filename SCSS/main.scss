@@ -20,7 +20,7 @@ a {
 	outline: none;
 }
 
-.main,
+.main, 
 .collections,
 .photosets,
 .collage,
@@ -40,6 +40,7 @@ a {
 	&.landscape {
 		.center-image {
 			width: 70%;
+			background-size: contain;
 		}
 
 		.left-image,
@@ -68,6 +69,7 @@ a {
 	margin-right: -0.25em;
 	background-size: cover;
 	background-position: center center;
+	background-repeat: no-repeat;
  	@include transition-property(width);
   	@include transition-duration(0.5s);
   	@include transition-timing-function(ease-in);
@@ -75,7 +77,7 @@ a {
 
 .left-image,
 .right-image {
-	@include opacity( 0.5 );
+	@include opacity( 0.25 );
 	width: 30%;
 }
 
@@ -183,12 +185,19 @@ a {
 .logo-container {
 	width: 285px;
 	height: 74px;
-	background: url('../images/logo.png') left top no-repeat;
 	position: fixed;
 	left: $standard-margin;
 	bottom: $standard-margin;
 	z-index: 100;
-	display: none;
+	display: none; 
+
+	&.productions {
+		background: url('../images/logo-productions.png') left top no-repeat;
+	}
+
+	&.designs {
+		background: url('../images/logo-designs.png') left top no-repeat;
+	}
 }
 
 
