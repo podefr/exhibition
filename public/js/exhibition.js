@@ -143,7 +143,7 @@ module.exports = function Exhibition($dataProvider) {
 
 
 };
-},{"./uis/Collage":7,"./uis/Collections":8,"./uis/Navigation":9,"./uis/Photosets":10,"./uis/Slideshow":11,"./uis/VideoContainer":12,"olives":35}],2:[function(require,module,exports){
+},{"./uis/Collage":7,"./uis/Collections":8,"./uis/Navigation":9,"./uis/Photosets":10,"./uis/Slideshow":11,"./uis/VideoContainer":12,"olives":107}],2:[function(require,module,exports){
 var tools = require("emily").Tools,
     Store = require("emily").Store;
 
@@ -379,7 +379,7 @@ module.exports = function FlickrAdapterConstructor($flickr, $apiKey, $optionalCo
         }
     };
 };
-},{"emily":28}],3:[function(require,module,exports){
+},{"emily":57}],3:[function(require,module,exports){
 module.exports = {
 
     hide: function (value) {
@@ -451,7 +451,7 @@ module.exports = {
 
 	}
 };
-},{"./Exhibition":1,"./adapters/Flickr":2,"Emily":20,"jsonp-flickr":29}],"exhibition":[function(require,module,exports){
+},{"./Exhibition":1,"./adapters/Flickr":2,"Emily":34,"jsonp-flickr":59}],"exhibition":[function(require,module,exports){
 module.exports=require('8g7Ub6');
 },{}],6:[function(require,module,exports){
 module.exports = {
@@ -514,7 +514,7 @@ module.exports = function CollageFactory() {
     Tools.mixin(new Observable, CollageConstructor.prototype);
     return new CollageConstructor();
 };
-},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":28,"olives":35}],8:[function(require,module,exports){
+},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":57,"olives":107}],8:[function(require,module,exports){
 var OObject = require("olives").OObject,
     Bind = require("olives")["Bind.plugin"],
     Event = require("olives")["Event.plugin"],
@@ -556,7 +556,7 @@ module.exports = function CollectionsFactory($collections) {
     var collections = new CollectionsConstructor($collections);
     return collections;
 };
-},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":28,"olives":35}],9:[function(require,module,exports){
+},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":57,"olives":107}],9:[function(require,module,exports){
 var OObject = require("olives").OObject,
     Bind = require("olives")["Bind.plugin"],
     Events = require("olives")["Event.plugin"],
@@ -586,7 +586,7 @@ module.exports = function NavigationFactory() {
     Tools.mixin(new Observable, NavigationConstructor.prototype);
     return new NavigationConstructor();
 };
-},{"emily":28,"olives":35}],10:[function(require,module,exports){
+},{"emily":57,"olives":107}],10:[function(require,module,exports){
 var OObject = require("olives").OObject,
     Bind = require("olives")["Bind.plugin"],
     Event = require("olives")["Event.plugin"],
@@ -626,7 +626,7 @@ module.exports = function PhotosetsFactory() {
     Tools.mixin(new Observable, PhotosetsConstructor.prototype);
     return new PhotosetsConstructor();
 }
-},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":28,"olives":35}],11:[function(require,module,exports){
+},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":57,"olives":107}],11:[function(require,module,exports){
 var OObject = require("olives").OObject,
     Bind = require("olives")["Bind.plugin"],
     Events = require("olives")["Event.plugin"],
@@ -748,7 +748,7 @@ module.exports = function SlideshowFactory(dataProvider) {
     Tools.mixin(new Observable, SlideshowConstructor.prototype);
     return new SlideshowConstructor(dataProvider);
 };
-},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":28,"olives":35}],12:[function(require,module,exports){
+},{"../adapters/helpers":3,"../services/flickrContent":6,"emily":57,"olives":107}],12:[function(require,module,exports){
 module.exports = function VideoContainer(dom) {
 
 	var videoNode = dom.querySelector("object");
@@ -786,415 +786,184 @@ module.exports = function VideoContainer(dom) {
 };
 },{}],13:[function(require,module,exports){
 /**
- * Emily.js - http://flams.github.com/emily/
- * Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
- * MIT Licensed
+* @license compare-numbers https://github.com/cosmosio/compare-numbers
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
  */
 "use strict";
 
-var Tools = require("./Tools");
 /**
-* @class
-* Observable is an implementation of the Observer design pattern,
-* which is also known as publish/subscribe.
-*
-* This service creates an Observable to which you can add subscribers.
-*
-* @returns {Observable}
-*/
-module.exports = function ObservableConstructor() {
+ * Compares two numbers and tells if the first one is bigger (1), smaller (-1) or equal (0)
+ * @param {Number} number1 the first number
+ * @param {Number} number2 the second number
+ * @returns 1 if number1>number2, -1 if number2>number1, 0 if equal
+ */
+function compareNumbers(number1, number2) {
+      if (number1 > number2) {
+        return 1;
+      } else if (number1 < number2) {
+        return -1;
+      } else {
+         return 0;
+      }
+}
+
+module.exports = {
+
+  /**
+   * Compares two numbers and tells if the first one is bigger (1), smaller (-1) or equal (0)
+   * @param {Number} number1 the first number
+   * @param {Number} number2 the second number
+   * @returns 1 if number1 > number2, -1 if number2 > number1, 0 if equal
+   */
+    "asc": compareNumbers,
 
     /**
-     * The list of topics
-     * @private
+     * Compares two numbers and tells if the first one is bigger (1), smaller (-1) or equal (0)
+     * @param {Number} number1 the first number
+     * @param {Number} number2 the second number
+     * @returns 1 if number2 > number1, -1 if number1 > number2, 0 if equal
      */
-    var _topics = {};
-
-    /**
-     * Add an observer
-     * @param {String} topic the topic to observe
-     * @param {Function} callback the callback to execute
-     * @param {Object} scope the scope in which to execute the callback
-     * @returns handle
-     */
-    this.watch = function watch(topic, callback, scope) {
-        if (typeof callback == "function") {
-            var observers = _topics[topic] = _topics[topic] || [],
-            observer = [callback, scope];
-
-            observers.push(observer);
-            return [topic,observers.indexOf(observer)];
-
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Listen to an event just once before removing the handler
-     * @param {String} topic the topic to observe
-     * @param {Function} callback the callback to execute
-     * @param {Object} scope the scope in which to execute the callback
-     * @returns handle
-     */
-    this.once = function once(topic, callback, scope) {
-        var handle = this.watch(topic, function () {
-            callback.apply(scope, arguments);
-            this.unwatch(handle);
-        }, this);
-        return handle;
-    };
-
-    /**
-     * Remove an observer
-     * @param {Handle} handle returned by the watch method
-     * @returns {Boolean} true if there were subscribers
-     */
-    this.unwatch = function unwatch(handle) {
-        var topic = handle[0], idx = handle[1];
-        if (_topics[topic] && _topics[topic][idx]) {
-            // delete value so the indexes don't move
-            delete _topics[topic][idx];
-            // If the topic is only set with falsy values, delete it;
-            if (!_topics[topic].some(function (value) {
-                return !!value;
-            })) {
-                delete _topics[topic];
-            }
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Notifies observers that a topic has a new message
-     * @param {String} topic the name of the topic to publish to
-     * @param subject
-     * @returns {Boolean} true if there was subscribers
-     */
-    this.notify = function notify(topic) {
-        var observers = _topics[topic],
-            args = Tools.toArray(arguments).slice(1);
-
-        if (observers) {
-            Tools.loop(observers, function (value) {
-                try {
-                    if (value) {
-                        value[0].apply(value[1] || null, args);
-                    }
-                } catch (err) { }
-            });
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Check if topic has the described observer
-     * @param {Handle}
-     * @returns {Boolean} true if exists
-     */
-    this.hasObserver = function hasObserver(handle) {
-        return !!( handle && _topics[handle[0]] && _topics[handle[0]][handle[1]]);
-    };
-
-    /**
-     * Check if a topic has observers
-     * @param {String} topic the name of the topic
-     * @returns {Boolean} true if topic is listened
-     */
-    this.hasTopic = function hasTopic(topic) {
-        return !!_topics[topic];
-    };
-
-    /**
-     * Unwatch all or unwatch all from topic
-     * @param {String} topic optional unwatch all from topic
-     * @returns {Boolean} true if ok
-     */
-    this.unwatchAll = function unwatchAll(topic) {
-        if (_topics[topic]) {
-            delete _topics[topic];
-        } else {
-            _topics = {};
-        }
-        return true;
-    };
+    "desc": function desc(number1, number2) {
+      return compareNumbers(number2, number1);
+    }
 };
-},{"./Tools":18}],14:[function(require,module,exports){
+
+},{}],14:[function(require,module,exports){
 /**
-* Emily.js - http://flams.github.com/emily/
-* Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
-* MIT Licensed
+* @license get-closest https://github.com/cosmosio/get-closest
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
 */
 "use strict";
 
-var Observable = require("./Observable"),
-StateMachine = require("./StateMachine");
+var assert = require("assert");
 
 /**
-* @class
-* Create a promise/A+
-*/
-module.exports = function PromiseConstructor() {
+ * Get the closest number in an array
+ * @param {Number} item the base number
+ * @param {Array} array the array to search into
+ * @param {Function} getDiff returns the difference between the base number and
+ *   and the currently read item in the array. The item which returned the smallest difference wins.
+ * @private
+ */
+function _getClosest(item, array, getDiff) {
+    var closest,
+        diff;
 
-    /**
-     * The fulfilled value
-     * @private
-     */
-    var _value = null,
+    assert(Array.isArray(array), "Get closest expects an array as second argument");
 
-    /**
-     * The rejection reason
-     * @private
-     */
-    _reason = null,
+    array.forEach(function (comparedItem, comparedItemIndex) {
+        var thisDiff = getDiff(comparedItem, item);
 
-    /**
-     * The funky observable
-     * @private
-     */
-    _observable = new Observable(),
-
-    /**
-     * The state machine States & transitions
-     * @private
-     */
-    _states = {
-
-        // The promise is pending
-        "Pending": [
-
-            // It can only be fulfilled when pending
-            ["fulfill", function onFulfill(value) {
-                _value = value;
-                _observable.notify("fulfill", value);
-            // Then it transits to the fulfilled state
-            }, "Fulfilled"],
-
-            // it can only be rejected when pending
-            ["reject", function onReject(reason) {
-                _reason = reason;
-                _observable.notify("reject", reason);
-            // Then it transits to the rejected state
-            }, "Rejected"],
-
-            // When pending, add the resolver to an observable
-            ["toFulfill", function toFulfill(resolver) {
-                _observable.watch("fulfill", resolver);
-            }],
-
-            // When pending, add the resolver to an observable
-            ["toReject", function toReject(resolver) {
-                _observable.watch("reject", resolver);
-            }]],
-
-        // When fulfilled,
-        "Fulfilled": [
-            // We directly call the resolver with the value
-            ["toFulfill", function toFulfill(resolver) {
-                setTimeout(function () {
-                    resolver(_value);
-                }, 0);
-            }]],
-
-        // When rejected
-        "Rejected": [
-            // We directly call the resolver with the reason
-            ["toReject", function toReject(resolver) {
-                setTimeout(function () {
-                    resolver(_reason);
-                }, 0);
-            }]]
-    },
-
-    /**
-     * The stateMachine
-     * @private
-     */
-    _stateMachine = new StateMachine("Pending", _states);
-
-    /**
-     * Fulfilled the promise.
-     * A promise can be fulfilld only once.
-     * @param the fulfillment value
-     * @returns the promise
-     */
-    this.fulfill = function fulfill(value) {
-        _stateMachine.event("fulfill", value);
-        return this;
-    };
-
-    /**
-     * Reject the promise.
-     * A promise can be rejected only once.
-     * @param the rejection value
-     * @returns true if the rejection function was called
-     */
-    this.reject = function reject(reason) {
-        _stateMachine.event("reject", reason);
-        return this;
-    };
-
-    /**
-     * The callbacks to call after fulfillment or rejection
-     * @param {Function} fulfillmentCallback the first parameter is a success function, it can be followed by a scope
-     * @param {Function} the second, or third parameter is the rejection callback, it can also be followed by a scope
-     * @examples:
-     *
-     * then(fulfillment)
-     * then(fulfillment, scope, rejection, scope)
-     * then(fulfillment, rejection)
-     * then(fulfillment, rejection, scope)
-     * then(null, rejection, scope)
-     * @returns {Promise} the new promise
-     */
-    this.then = function then() {
-        var promise = new PromiseConstructor();
-
-        // If a fulfillment callback is given
-        if (arguments[0] instanceof Function) {
-            // If the second argument is also a function, then no scope is given
-            if (arguments[1] instanceof Function) {
-                _stateMachine.event("toFulfill", this.makeResolver(promise, arguments[0]));
-            } else {
-                // If the second argument is not a function, it's the scope
-                _stateMachine.event("toFulfill", this.makeResolver(promise, arguments[0], arguments[1]));
-            }
-        } else {
-            // If no fulfillment callback given, give a default one
-            _stateMachine.event("toFulfill", this.makeResolver(promise, function () {
-                promise.fulfill(_value);
-            }));
+        if (thisDiff >= 0 && (typeof diff == "undefined" || thisDiff < diff)) {
+            diff = thisDiff;
+            closest = comparedItemIndex;
         }
+    });
 
-        // if the second arguments is a callback, it's the rejection one, and the next argument is the scope
-        if (arguments[1] instanceof Function) {
-            _stateMachine.event("toReject", this.makeResolver(promise, arguments[1], arguments[2]));
-        }
+    return closest;
+}
 
-        // if the third arguments is a callback, it's the rejection one, and the next arguments is the sopce
-        if (arguments[2] instanceof Function) {
-            _stateMachine.event("toReject", this.makeResolver(promise, arguments[2], arguments[3]));
-        }
+module.exports = {
 
-        // If no rejection callback is given, give a default one
-        if (!(arguments[1] instanceof Function) &&
-            !(arguments[2] instanceof Function)) {
-            _stateMachine.event("toReject", this.makeResolver(promise, function () {
-                promise.reject(_reason);
-            }));
-        }
+  /**
+   * Get the closest number in an array given a base number
+   * Example: closest(30, [20, 0, 50, 29]) will return 3 as 29 is the closest item
+   * @param {Number} item the base number
+   * @param {Array} array the array of numbers to search into
+   * @returns {Number} the index of the closest item in the array
+   */
+  number: function closestNumber(item, array) {
+      return _getClosest(item, array, function (comparedItem, item) {
+          return Math.abs(comparedItem - item);
+      });
+  },
 
-        return promise;
-    };
+  /**
+   * Get the closest greater number in an array given a base number
+   * Example: closest(30, [20, 0, 50, 29]) will return 2 as 50 is the closest greater item
+   * @param {Number} item the base number
+   * @param {Array} array the array of numbers to search into
+   * @returns {Number} the index of the closest item in the array
+   */
+  greaterNumber: function closestGreaterNumber(item, array) {
+      return _getClosest(item, array, function (comparedItem, item) {
+          return comparedItem - item;
+      });
+  },
 
-    /**
-     * Synchronize this promise with a thenable
-     * @returns {Boolean} false if the given sync is not a thenable
-     */
-    this.sync = function sync(syncWith) {
-        if (syncWith instanceof Object && syncWith.then) {
+  /**
+   * Get the closest lower number in an array given a base number
+   * Example: closest(30, [20, 0, 50, 29]) will return 0 as 20 is the closest lower item
+   * @param {Number} item the base number
+   * @param {Array} array the array of numbers to search into
+   * @returns {Number} the index of the closest item in the array
+   */
+  lowerNumber: function closestLowerNumber(item, array) {
+    return _getClosest(item, array, function (comparedItem, item) {
+        return item - comparedItem;
+    });
+  },
 
-            var onFulfilled = function onFulfilled(value) {
-                this.fulfill(value);
-            },
-            onRejected = function onRejected(reason) {
-                this.reject(reason);
-            };
+  /**
+   * Get the closest item in an array given a base item and a comparator function
+   * Example (closest("lundi", ["mundi", "mardi"], getLevenshteinDistance)) will return 0 for "lundi"
+   * @param {*} item the base item
+   * @param {Array} array an array of items
+   * @param {Function} comparator a comparatof function to compare the items
+   *
+   * The function looks like:
+   *
+   * // comparedItem comes from the array
+   * // baseItem is the item to compare the others to
+   * // It returns a number
+   * function comparator(comparedItem, baseItem) {
+   *     return comparedItem - baseItem;
+   * }
+   */
+  custom: function closestCustom(item, array, comparator) {
+    return _getClosest(item, array, comparator);
+  }
 
-            syncWith.then(onFulfilled.bind(this),
-                    onRejected.bind(this));
-
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Make a resolver
-     * for debugging only
-     * @private
-     * @returns {Function} a closure
-     */
-    this.makeResolver = function makeResolver(promise, func, scope) {
-        return function resolver(value) {
-            var returnedPromise;
-
-            try {
-                returnedPromise = func.call(scope, value);
-                if (!promise.sync(returnedPromise)) {
-                    promise.fulfill(returnedPromise);
-                }
-            } catch (err) {
-                promise.reject(err);
-            }
-
-        };
-    };
-
-    /**
-     * Returns the reason
-     * for debugging only
-     * @private
-     */
-    this.getReason = function getReason() {
-        return _reason;
-    };
-
-    /**
-     * Returns the reason
-     * for debugging only
-     * @private
-     */
-    this.getValue = function getValue() {
-        return _value;
-    };
-
-    /**
-     * Get the promise's observable
-     * for debugging only
-     * @private
-     * @returns {Observable}
-     */
-    this.getObservable = function getObservable() {
-        return _observable;
-    };
-
-    /**
-     * Get the promise's stateMachine
-     * for debugging only
-     * @private
-     * @returns {StateMachine}
-     */
-    this.getStateMachine = function getStateMachine() {
-        return _stateMachine;
-    };
-
-    /**
-     * Get the statesMachine's states
-     * for debugging only
-     * @private
-     * @returns {Object}
-     */
-    this.getStates = function getStates() {
-        return _states;
-    };
 };
-},{"./Observable":13,"./StateMachine":16}],15:[function(require,module,exports){
+
+},{"assert":108}],15:[function(require,module,exports){
 /**
- * Emily.js - http://flams.github.com/emily/
- * Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
- * MIT Licensed
+ * @license get-global https://github.com/cosmosio/get-global
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
  */
 "use strict";
 
-var Observable = require("./Observable"),
-    Store = require("./Store"),
-    Tools = require("./Tools");
+/**
+ * Return the global object, whatever the runtime is.
+ * As we're in use strict mode, we can't just call a function and return this. Instead, we spawn a new
+ * function via eval that won't be affected by 'use strict'.
+ * Strict mode is enforced so it allows this code to work when packed in another 'strict mode' module.
+ */
+module.exports = function getGlobal() {
+    return Function('return this')();
+};
+
+},{}],16:[function(require,module,exports){
+/**
+* @license highway https://github.com/cosmosio/highway
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var Observable = require("watch-notify"),
+    toArray = require("to-array");
 
 /**
  * @class
@@ -1218,7 +987,7 @@ module.exports = function RouterConstructor() {
      * The routing history
      * @private
      */
-    _history = new Store([]),
+    _history = [],
 
     /**
      * For navigating through the history, remembers the current position
@@ -1300,13 +1069,13 @@ module.exports = function RouterConstructor() {
      * @param {*} *params
      * @returns
      */
-    this.navigate = function get(route, params) {
+    this.navigate = function get(route) {
         if (this.load.apply(this, arguments)) {
             // Before adding a new route to the history, we must clear the forward history
-            _history.proxy("splice", _currentPos +1, _history.count());
-            _history.proxy("push", Tools.toArray(arguments));
+            _history.splice(_currentPos +1, _history.length);
+            _history.push(toArray(arguments));
             this.ensureMaxHistory(_history);
-            _currentPos = _history.count() -1;
+            _currentPos = _history.length -1;
             return true;
         } else {
             return false;
@@ -1320,12 +1089,12 @@ module.exports = function RouterConstructor() {
      * @private
      */
     this.ensureMaxHistory = function ensureMaxHistory(history) {
-        var count = history.count(),
+        var count = history.length,
             max = this.getMaxHistory(),
             excess = count - max;
 
         if (excess > 0) {
-            history.proxy("splice", 0, excess);
+            history.splice(0, excess);
         }
     };
 
@@ -1334,7 +1103,7 @@ module.exports = function RouterConstructor() {
      * @private
      */
     this.load = function load() {
-        var copy = Tools.toArray(arguments);
+        var copy = toArray(arguments);
 
         if (_routes.notify.apply(_routes, copy)) {
             copy.unshift("route");
@@ -1377,14 +1146,14 @@ module.exports = function RouterConstructor() {
      * @returns {Number} the length of history
      */
     this.getHistoryCount = function getHistoryCount() {
-        return _history.count();
+        return _history.length;
     };
 
     /**
      * Flush the entire history
      */
     this.clearHistory = function clearHistory() {
-        _history.reset([]);
+        _history.length = 0;
     };
 
     /**
@@ -1393,7 +1162,7 @@ module.exports = function RouterConstructor() {
      * @returns true if history exists
      */
     this.go = function go(nb) {
-        var history = _history.get(_currentPos + nb);
+        var history = _history[_currentPos + nb];
         if (history) {
             _currentPos += nb;
             this.load.apply(this, history);
@@ -1420,15 +1189,801 @@ module.exports = function RouterConstructor() {
     };
 
 };
-},{"./Observable":13,"./Store":17,"./Tools":18}],16:[function(require,module,exports){
+
+},{"to-array":30,"watch-notify":32}],17:[function(require,module,exports){
 /**
- * Emily.js - http://flams.github.com/emily/
- * Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
- * MIT Licensed
- */
+* @license nested-property https://github.com/cosmosio/nested-property
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
 "use strict";
 
-var Tools = require("./Tools");
+var assert = require("assert");
+
+module.exports = {
+  set: setNestedProperty,
+  get: getNestedProperty
+}
+
+/**
+ * Get the property of an object nested in one or more objects
+ * given an object such as a.b.c.d = 5, getNestedProperty(a, "b.c.d") will return 5.
+ * @param {Object} object the object to get the property from
+ * @param {String} property the path to the property as a string
+ * @returns the object or the the property value if found
+ */
+function getNestedProperty(object, property) {
+    if (object && typeof object == "object") {
+        if (typeof property == "string" && property !== "") {
+            var split = property.split(".");
+            return split.reduce(function (obj, prop) {
+                return obj && obj[prop];
+            }, object);
+        } else if (typeof property == "number") {
+            return object[property];
+        } else {
+            return object;
+        }
+    } else {
+        return object;
+    }
+}
+
+/**
+ * Set the property of an object nested in one or more objects
+ * If the property doesn't exist, it gets created.
+ * @param {Object} object
+ * @param {String} property
+ * @param value the value to set
+ * @returns object if no assignment was made or the value if the assignment was made
+ */
+function setNestedProperty(object, property, value) {
+    if (object && typeof object == "object") {
+        if (typeof property == "string" && property !== "") {
+            var split = property.split(".");
+            return split.reduce(function (obj, prop, idx) {
+                obj[prop] = obj[prop] || {};
+                if (split.length == (idx + 1)) {
+                    obj[prop] = value;
+                }
+                return obj[prop];
+            }, object);
+        } else if (typeof property == "number") {
+            object[property] = value;
+            return object[property];
+        } else {
+            return object;
+        }
+    } else {
+        return object;
+    }
+}
+
+},{"assert":108}],18:[function(require,module,exports){
+/**
+* @license object-count https://github.com/cosmosio/object-count
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var assert = require("assert");
+
+/**
+ * Count the number of properties in an object or the number or items
+ * in an array.
+ * It doesn't look up in the prototype chain
+ * @param {Object} object the object to get the number of items/properties from
+ * @returns {Number}
+ */
+module.exports = function count(object) {
+  assert(typeof object == "object", "object must be an array or an object");
+
+  if (Array.isArray(object)) {
+    return object.length;
+  } else {
+    return count(Object.keys(object));
+  }
+};
+
+},{"assert":108}],19:[function(require,module,exports){
+/**
+* @license observable-store https://github.com/flams/observable-store
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var Observable = require("watch-notify"),
+    diff = require("shallow-diff"),
+    clone = require("shallow-copy"),
+    compareNumbers = require("compare-numbers"),
+    count = require("object-count"),
+    nestedProperty = require("nested-property"),
+    simpleLoop = require("simple-loop");
+
+/**
+ * @class
+ * Store creates an observable structure based on a key/values object
+ * or on an array
+ * @param {Array/Object} the data to initialize the store with
+ * @returns
+ */
+module.exports = function StoreConstructor($data) {
+
+    /**
+     * Where the data is stored
+     * @private
+     */
+    var _data = clone($data) || {},
+
+    /**
+     * The observable for publishing changes on the store iself
+     * @private
+     */
+    _storeObservable = new Observable(),
+
+    /**
+     * The observable for publishing changes on a value
+     * @private
+     */
+    _valueObservable = new Observable(),
+
+    /**
+     * Saves the handles for the subscriptions of the computed properties
+     * @private
+     */
+    _computed = [],
+
+    /**
+     * Gets the difference between two objects and notifies them
+     * @private
+     * @param {Object} previousData
+     */
+    _notifyDiffs = function _notifyDiffs(previousData) {
+        var diffs = diff(previousData, _data);
+        ["updated",
+         "deleted",
+         "added"].forEach(function (value) {
+             diffs[value].forEach(function (dataIndex) {
+                    _storeObservable.notify(value, dataIndex, _data[dataIndex]);
+                    _valueObservable.notify(dataIndex, _data[dataIndex], value);
+             });
+        });
+    };
+
+   /**
+    * Get the number of items in the store
+    * @returns {Number} the number of items in the store
+    */
+    this.count = function() {
+        return count(_data);
+    };
+
+    /**
+     * Get a value from its index
+     * @param {String} name the name of the index
+     * @returns the value
+     */
+    this.get = function get(name) {
+        return _data[name];
+    };
+
+    /**
+     * Checks if the store has a given value
+     * @param {String} name the name of the index
+     * @returns {Boolean} true if the value exists
+     */
+    this.has = function has(name) {
+        return _data.hasOwnProperty(name);
+    };
+
+    /**
+     * Set a new value and overrides an existing one
+     * @param {String} name the name of the index
+     * @param value the value to assign
+     * @returns true if value is set
+     */
+    this.set = function set(name, value) {
+        var hasPrevious,
+            previousValue,
+            action;
+
+        if (typeof name != "undefined") {
+            hasPrevious = this.has(name);
+            previousValue = this.get(name);
+            _data[name] = value;
+            action = hasPrevious ? "updated" : "added";
+            _storeObservable.notify(action, name, _data[name], previousValue);
+            _valueObservable.notify(name, _data[name], action, previousValue);
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Update the property of an item.
+     * @param {String} name the name of the index
+     * @param {String} property the property to modify.
+     * @param value the value to assign
+     * @returns false if the Store has no name index
+     */
+    this.update = function update(name, property, value) {
+        var item;
+        if (this.has(name)) {
+            item = this.get(name);
+            nestedProperty.set(item, property, value);
+            _storeObservable.notify("updated", property, value);
+            _valueObservable.notify(name, item, "updated");
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Delete value from its index
+     * @param {String} name the name of the index from which to delete the value
+     * @returns true if successfully deleted.
+     */
+    this.del = function del(name) {
+        var previous;
+        if (this.has(name)) {
+            if (!this.alter("splice", name, 1)) {
+                previous = _data[name];
+                delete _data[name];
+                _storeObservable.notify("deleted", name, undefined, previous);
+                _valueObservable.notify(name, _data[name], "deleted", previous);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Delete multiple indexes. Prefer this one over multiple del calls.
+     * @param {Array}
+     * @returns false if param is not an array.
+     */
+    this.delAll = function delAll(indexes) {
+        if (Array.isArray(indexes)) {
+            // Indexes must be removed from the greatest to the lowest
+            // To avoid trying to remove indexes that don't exist.
+            // i.e: given [0, 1, 2], remove 1, then 2, 2 doesn't exist anymore
+            indexes.sort(compareNumbers.desc)
+                .forEach(this.del, this);
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Alter the data by calling one of it's method
+     * When the modifications are done, it notifies on changes.
+     * If the function called doesn't alter the data, consider using proxy instead
+     * which is much, much faster.
+     * @param {String} func the name of the method
+     * @params {*} any number of params to be given to the func
+     * @returns the result of the method call
+     */
+    this.alter = function alter(func) {
+        var apply,
+            previousData;
+
+        if (_data[func]) {
+            previousData = clone(_data);
+            apply = this.proxy.apply(this, arguments);
+            _notifyDiffs(previousData);
+            _storeObservable.notify("altered", _data, previousData);
+            return apply;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Proxy is similar to alter but doesn't trigger events.
+     * It's preferable to call proxy for functions that don't
+     * update the interal data source, like slice or filter.
+     * @param {String} func the name of the method
+     * @params {*} any number of params to be given to the func
+     * @returns the result of the method call
+     */
+    this.proxy = function proxy(func) {
+        if (_data[func]) {
+            return _data[func].apply(_data, Array.prototype.slice.call(arguments, 1));
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Watch the store's modifications
+     * @param {String} added/updated/deleted
+     * @param {Function} func the function to execute
+     * @param {Object} scope the scope in which to execute the function
+     * @returns {Handle} the subscribe's handler to use to stop watching
+     */
+    this.watch = function watch(name, func, scope) {
+        return _storeObservable.watch(name, func, scope);
+    };
+
+    /**
+     * Unwatch the store modifications
+     * @param {Handle} handle the handler returned by the watch function
+     * @returns
+     */
+    this.unwatch = function unwatch(handle) {
+        return _storeObservable.unwatch(handle);
+    };
+
+    /**
+     * Get the observable used for watching store's modifications
+     * Should be used only for debugging
+     * @returns {Observable} the Observable
+     */
+    this.getStoreObservable = function getStoreObservable() {
+        return _storeObservable;
+    };
+
+    /**
+     * Watch a value's modifications
+     * @param {String} name the name of the value to watch for
+     * @param {Function} func the function to execute
+     * @param {Object} scope the scope in which to execute the function
+     * @returns handler to pass to unwatchValue
+     */
+    this.watchValue = function watchValue(name, func, scope) {
+        return _valueObservable.watch(name, func, scope);
+    };
+
+    /**
+     * Unwatch the value's modifications
+     * @param {Handler} handler the handler returned by the watchValue function
+     * @private
+     * @returns true if unwatched
+     */
+    this.unwatchValue = function unwatchValue(handler) {
+        return _valueObservable.unwatch(handler);
+    };
+
+    /**
+     * Get the observable used for watching value's modifications
+     * Should be used only for debugging
+     * @private
+     * @returns {Observable} the Observable
+     */
+    this.getValueObservable = function getValueObservable() {
+        return _valueObservable;
+    };
+
+    /**
+     * Loop through the data
+     * @param {Function} func the function to execute on each data
+     * @param {Object} scope the scope in wich to run the callback
+     */
+    this.loop = function loop(func, scope) {
+        simpleLoop(_data, func, scope);
+    };
+
+    /**
+     * Reset all data and get notifications on changes
+     * @param {Arra/Object} data the new data
+     * @returns {Boolean}
+     */
+    this.reset = function reset(data) {
+        if (typeof data == "object") {
+            var previousData = clone(_data);
+            _data = clone(data) || {};
+            _notifyDiffs(previousData);
+            _storeObservable.notify("resetted", _data, previousData);
+            return true;
+        } else {
+            return false;
+        }
+
+    };
+
+    /**
+     * Compute a new property from other properties.
+     * The computed property will look exactly similar to any none
+     * computed property, it can be watched upon.
+     * @param {String} name the name of the computed property
+     * @param {Array} computeFrom a list of properties to compute from
+     * @param {Function} callback the callback to compute the property
+     * @param {Object} scope the scope in which to execute the callback
+     * @returns {Boolean} false if wrong params given to the function
+     */
+    this.compute = function compute(name, computeFrom, callback, scope) {
+        var args = [];
+
+        if (typeof name == "string" &&
+            typeof computeFrom == "object" &&
+            typeof callback == "function" &&
+            !this.isCompute(name)) {
+
+            _computed[name] = [];
+
+            simpleLoop(computeFrom, function (property) {
+                _computed[name].push(this.watchValue(property, function () {
+                    this.set(name, callback.call(scope));
+                }, this));
+            }, this);
+
+            this.set(name, callback.call(scope));
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Remove a computed property
+     * @param {String} name the name of the computed to remove
+     * @returns {Boolean} true if the property is removed
+     */
+    this.removeCompute = function removeCompute(name) {
+        if (this.isCompute(name)) {
+            simpleLoop(_computed[name], function (handle) {
+                this.unwatchValue(handle);
+            }, this);
+            this.del(name);
+
+            delete _computed[name];
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Tells if a property is a computed property
+     * @param {String} name the name of the property to test
+     * @returns {Boolean} true if it's a computed property
+     */
+    this.isCompute = function isCompute(name) {
+        return !!_computed[name];
+    };
+
+    /**
+     * Returns a JSON version of the data
+     * Use dump if you want all the data as a plain js object
+     * @returns {String} the JSON
+     */
+    this.toJSON = function toJSON() {
+        return JSON.stringify(_data);
+    };
+
+    /**
+     * Returns the store's data
+     * @returns {Object} the data
+     */
+    this.dump = function dump() {
+        return _data;
+    };
+};
+
+},{"compare-numbers":13,"nested-property":20,"object-count":18,"shallow-copy":22,"shallow-diff":23,"simple-loop":21,"watch-notify":32}],20:[function(require,module,exports){
+/**
+* @license nested-property https://github.com/cosmosio/nested-property
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var assert = require("assert");
+
+module.exports = {
+  set: setNestedProperty,
+  get: getNestedProperty
+}
+
+/**
+ * Get the property of an object nested in one or more objects
+ * given an object such as a.b.c.d = 5, getNestedProperty(a, "b.c.d") will return 5.
+ * @param {Object} object the object to get the property from
+ * @param {String} property the path to the property as a string
+ * @returns the object or the the property value if found
+ */
+function getNestedProperty(object, property) {
+    if (object && object instanceof Object) {
+        if (typeof property == "string" && property !== "") {
+            var split = property.split(".");
+            return split.reduce(function (obj, prop) {
+                return obj && obj[prop];
+            }, object);
+        } else if (typeof property == "number") {
+            return object[property];
+        } else {
+            return object;
+        }
+    } else {
+        return object;
+    }
+}
+
+/**
+ * Set the property of an object nested in one or more objects
+ * If the property doesn't exist, it gets created.
+ * @param {Object} object
+ * @param {String} property
+ * @param value the value to set
+ * @returns object if no assignment was made or the value if the assignment was made
+ */
+function setNestedProperty(object, property, value) {
+    if (object && object instanceof Object) {
+        if (typeof property == "string" && property !== "") {
+            var split = property.split(".");
+            return split.reduce(function (obj, prop, idx) {
+                obj[prop] = obj[prop] || {};
+                if (split.length == (idx + 1)) {
+                    obj[prop] = value;
+                }
+                return obj[prop];
+            }, object);
+        } else if (typeof property == "number") {
+            object[property] = value;
+            return object[property];
+        } else {
+            return object;
+        }
+    } else {
+        return object;
+    }
+}
+
+},{"assert":108}],21:[function(require,module,exports){
+/**
+* @license simple-loop https://github.com/flams/simple-loop
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var assert = require("assert");
+
+/**
+ * Small abstraction for looping over objects and arrays
+ * Warning: it's not meant to be used with nodeList
+ * To use with nodeList, convert to array first
+ * @param {Array/Object} iterated the array or object to loop through
+ * @param {Function} callback the function to execute for each iteration
+ * @param {Object} scope the scope in which to execute the callback
+ */
+module.exports = function loop(iterated, callback, scope) {
+  assert(typeof iterated == "object", "simple-loop: iterated must be an array/object");
+  assert(typeof callback == "function", "simple-loop: callback must be a function");
+
+  if (Array.isArray(iterated)) {
+      iterated.forEach(callback, scope);
+  } else {
+      for (var i in iterated) {
+          if (iterated.hasOwnProperty(i)) {
+              callback.call(scope, iterated[i], i, iterated);
+          }
+      }
+  }
+};
+
+},{"assert":108}],22:[function(require,module,exports){
+module.exports = function (obj) {
+    if (!obj || typeof obj !== 'object') return obj;
+    
+    var copy;
+    
+    if (isArray(obj)) {
+        var len = obj.length;
+        copy = Array(len);
+        for (var i = 0; i < len; i++) {
+            copy[i] = obj[i];
+        }
+    }
+    else {
+        var keys = objectKeys(obj);
+        copy = {};
+        
+        for (var i = 0, l = keys.length; i < l; i++) {
+            var key = keys[i];
+            copy[key] = obj[key];
+        }
+    }
+    return copy;
+};
+
+var objectKeys = Object.keys || function (obj) {
+    var keys = [];
+    for (var key in obj) {
+        if ({}.hasOwnProperty.call(obj, key)) keys.push(key);
+    }
+    return keys;
+};
+
+var isArray = Array.isArray || function (xs) {
+    return {}.toString.call(xs) === '[object Array]';
+};
+
+},{}],23:[function(require,module,exports){
+/**
+* @license shallow-diff https://github.com/cosmosio/shallow-diff
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var assert = require("assert"),
+  loop = require("simple-loop");
+
+/**
+ * Make a diff between two objects
+ * @param {Array/Object} base the base object
+ * @param {Array/Object} compared the object to compare the base with
+ * @example:
+ *  With objects:
+ *
+ *  base = {a:1, b:2, c:3, d:4, f:6}
+ *  compared = {a:1, b:20, d: 4, e: 5}
+ *  will return :
+ *  {
+ *      unchanged: ["a", "d"],
+ *      updated: ["b"],
+ *      deleted: ["f"],
+ *      added: ["e"]
+ *  }
+ *
+ * It also works with Arrays:
+ *
+ *  base = [10, 20, 30]
+ *  compared = [15, 20]
+ *  will return :
+ *  {
+ *      unchanged: [1],
+ *      updated: [0],
+ *      deleted: [2],
+ *      added: []
+ *  }
+ *
+ * @returns object
+ */
+module.exports = function shallowDiff(base, compared) {
+  assert(typeof base == "object", "the first object to compare with shallowDiff needs to be an object");
+  assert(typeof compared == "object", "the second object to compare with shallowDiff needs to be an object");
+
+  var unchanged = [],
+      updated = [],
+      deleted = [],
+      added = [];
+
+   // Loop through the compared object
+   loop(compared, function (value, idx) {
+
+       // To get the added
+       if (typeof base[idx] == "undefined") {
+           added.push(idx);
+
+       // The updated
+     } else if (value !== base[idx]) {
+           updated.push(idx);
+
+       // And the unchanged
+     } else if (value === base[idx]) {
+           unchanged.push(idx);
+       }
+
+   });
+
+   // Loop through the before object
+   loop(base, function (value, idx) {
+
+      // To get the deleted
+      if (typeof compared[idx] == "undefined") {
+          deleted.push(idx);
+      }
+   });
+
+  return {
+      updated: updated,
+      unchanged: unchanged,
+      added: added,
+      deleted: deleted
+  };
+};
+
+},{"assert":108,"simple-loop":24}],24:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],25:[function(require,module,exports){
+/**
+* @license simple-loop https://github.com/flams/simple-loop
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var assert = require("assert");
+
+/**
+ * Small abstraction for looping over objects and arrays
+ * Warning: it's not meant to be used with nodeList
+ * To use with nodeList, convert to array first
+ * @param {Array/Object} iterated the array or object to loop through
+ * @param {Function} callback the function to execute for each iteration
+ * @param {Object} scope the scope in which to execute the callback
+ */
+module.exports = function loop(iterated, callback, scope) {
+  assert(typeof iterated == "object", "simple-loop: iterated must be an array/object");
+  assert(typeof callback == "function", "simple-loop: callback must be a function");
+
+  if (Array.isArray(iterated)) {
+      for (var i=0; i<iterated.length; i++) {
+          callback.call(scope, iterated[i], i, iterated);
+      }
+  } else {
+      for (var i in iterated) {
+          if (iterated.hasOwnProperty(i)) {
+              callback.call(scope, iterated[i], i, iterated);
+          }
+      }
+  }
+};
+
+},{"assert":108}],26:[function(require,module,exports){
+/**
+* @license simple-mixin https://github.com/flams/simple-object-mixin
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var loop = require("simple-loop");
+
+/**
+ * Mixes an object into another
+ * @param {Object} source object to get values from
+ * @param {Object} destination object to mix values into
+ * @param {Boolean} optional, set to true to prevent overriding
+ * @returns {Object} the destination object
+ */
+module.exports = function mixin(source, destination, dontOverride) {
+    loop(source, function (value, idx) {
+        if (!destination[idx] || !dontOverride) {
+            destination[idx] = source[idx];
+        }
+    });
+    return destination;
+};
+
+},{"simple-loop":27}],27:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],28:[function(require,module,exports){
+/**
+* @license synchronous-fsm https://github.com/flams/synchronous-fsm
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var toArray = require("to-array"),
+    simpleLoop = require("simple-loop");
 
 /**
  * @class
@@ -1544,7 +2099,7 @@ module.exports = function StateMachineConstructor($initState, $diagram) {
     this.event = function event(name) {
         var nextState;
 
-        nextState = _states[_currentState].event.apply(_states[_currentState].event, Tools.toArray(arguments));
+        nextState = _states[_currentState].event.apply(_states[_currentState].event, toArray(arguments));
         // False means that there's no such event
         // But undefined means that the state doesn't change
         if (nextState === false) {
@@ -1565,12 +2120,14 @@ module.exports = function StateMachineConstructor($initState, $diagram) {
     /**
      * Initializes the StateMachine with the given diagram
      */
-    Tools.loop($diagram, function (transition, state) {
-        var myState = this.add(state);
-        transition.forEach(function (params){
-            myState.add.apply(null, params);
-        });
-    }, this);
+    if ($diagram) {
+        simpleLoop($diagram, function (transition, state) {
+            var myState = this.add(state);
+            transition.forEach(function (params){
+                myState.add.apply(null, params);
+            });
+        }, this);
+    }
 
     /**
      * Sets its initial state
@@ -1661,759 +2218,39 @@ function Transition() {
     this.event = function event(newEvent) {
         var _transition = _transitions[newEvent];
         if (_transition) {
-            _transition[0].apply(_transition[1], Tools.toArray(arguments).slice(1));
+            _transition[0].apply(_transition[1], toArray(arguments).slice(1));
             return _transition[2];
         } else {
             return false;
         }
     };
 }
-},{"./Tools":18}],17:[function(require,module,exports){
-/**
- * Emily.js - http://flams.github.com/emily/
- * Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
- * MIT Licensed
- */
-"use strict";
 
-var Observable = require("./Observable"),
-    Tools = require("./Tools");
+},{"simple-loop":29,"to-array":30}],29:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],30:[function(require,module,exports){
+module.exports = toArray
 
-/**
- * @class
- * Store creates an observable structure based on a key/values object
- * or on an array
- * @param {Array/Object} the data to initialize the store with
- * @returns
- */
-module.exports = function StoreConstructor($data) {
+function toArray(list, index) {
+    var array = []
 
-    /**
-     * Where the data is stored
-     * @private
-     */
-    var _data = Tools.clone($data) || {},
+    index = index || 0
 
-    /**
-     * The observable for publishing changes on the store iself
-     * @private
-     */
-    _storeObservable = new Observable(),
-
-    /**
-     * The observable for publishing changes on a value
-     * @private
-     */
-    _valueObservable = new Observable(),
-
-    /**
-     * Saves the handles for the subscriptions of the computed properties
-     * @private
-     */
-    _computed = [],
-
-    /**
-     * Gets the difference between two objects and notifies them
-     * @private
-     * @param {Object} previousData
-     */
-    _notifyDiffs = function _notifyDiffs(previousData) {
-        var diffs = Tools.objectsDiffs(previousData, _data);
-        ["updated",
-         "deleted",
-         "added"].forEach(function (value) {
-             diffs[value].forEach(function (dataIndex) {
-                    _storeObservable.notify(value, dataIndex, _data[dataIndex]);
-                    _valueObservable.notify(dataIndex, _data[dataIndex], value);
-             });
-        });
-    };
-
-    /**
-     * Get the number of items in the store
-     * @returns {Number} the number of items in the store
-     */
-    this.getNbItems = function() {
-        return _data instanceof Array ? _data.length : Tools.count(_data);
-    };
-
-    /**
-     * Count is an alias for getNbItems
-     * @returns {Number} the number of items in the store
-     */
-    this.count = this.getNbItems;
-
-    /**
-     * Get a value from its index
-     * @param {String} name the name of the index
-     * @returns the value
-     */
-    this.get = function get(name) {
-        return _data[name];
-    };
-
-    /**
-     * Checks if the store has a given value
-     * @param {String} name the name of the index
-     * @returns {Boolean} true if the value exists
-     */
-    this.has = function has(name) {
-        return _data.hasOwnProperty(name);
-    };
-
-    /**
-     * Set a new value and overrides an existing one
-     * @param {String} name the name of the index
-     * @param value the value to assign
-     * @returns true if value is set
-     */
-    this.set = function set(name, value) {
-        var hasPrevious,
-            previousValue,
-            action;
-
-        if (typeof name != "undefined") {
-            hasPrevious = this.has(name);
-            previousValue = this.get(name);
-            _data[name] = value;
-            action = hasPrevious ? "updated" : "added";
-            _storeObservable.notify(action, name, _data[name], previousValue);
-            _valueObservable.notify(name, _data[name], action, previousValue);
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Update the property of an item.
-     * @param {String} name the name of the index
-     * @param {String} property the property to modify.
-     * @param value the value to assign
-     * @returns false if the Store has no name index
-     */
-    this.update = function update(name, property, value) {
-        var item;
-        if (this.has(name)) {
-            item = this.get(name);
-            Tools.setNestedProperty(item, property, value);
-            _storeObservable.notify("updated", property, value);
-            _valueObservable.notify(name, item, "updated");
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Delete value from its index
-     * @param {String} name the name of the index from which to delete the value
-     * @returns true if successfully deleted.
-     */
-    this.del = function del(name) {
-        if (this.has(name)) {
-            if (!this.alter("splice", name, 1)) {
-                delete _data[name];
-                _storeObservable.notify("deleted", name);
-                _valueObservable.notify(name, _data[name], "deleted");
-            }
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Delete multiple indexes. Prefer this one over multiple del calls.
-     * @param {Array}
-     * @returns false if param is not an array.
-     */
-    this.delAll = function delAll(indexes) {
-        if (indexes instanceof Array) {
-            // Indexes must be removed from the greatest to the lowest
-            // To avoid trying to remove indexes that don't exist.
-            // i.e: given [0, 1, 2], remove 1, then 2, 2 doesn't exist anymore
-            indexes.sort(Tools.compareNumbers)
-                .reverse()
-                .forEach(this.del, this);
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Alter the data by calling one of it's method
-     * When the modifications are done, it notifies on changes.
-     * If the function called doesn't alter the data, consider using proxy instead
-     * which is much, much faster.
-     * @param {String} func the name of the method
-     * @params {*} any number of params to be given to the func
-     * @returns the result of the method call
-     */
-    this.alter = function alter(func) {
-        var apply,
-            previousData;
-
-        if (_data[func]) {
-            previousData = Tools.clone(_data);
-            apply = this.proxy.apply(this, arguments);
-            _notifyDiffs(previousData);
-            _storeObservable.notify("altered", _data, previousData);
-            return apply;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Proxy is similar to alter but doesn't trigger events.
-     * It's preferable to call proxy for functions that don't
-     * update the interal data source, like slice or filter.
-     * @param {String} func the name of the method
-     * @params {*} any number of params to be given to the func
-     * @returns the result of the method call
-     */
-    this.proxy = function proxy(func) {
-        if (_data[func]) {
-            return _data[func].apply(_data, Array.prototype.slice.call(arguments, 1));
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Watch the store's modifications
-     * @param {String} added/updated/deleted
-     * @param {Function} func the function to execute
-     * @param {Object} scope the scope in which to execute the function
-     * @returns {Handle} the subscribe's handler to use to stop watching
-     */
-    this.watch = function watch(name, func, scope) {
-        return _storeObservable.watch(name, func, scope);
-    };
-
-    /**
-     * Unwatch the store modifications
-     * @param {Handle} handle the handler returned by the watch function
-     * @returns
-     */
-    this.unwatch = function unwatch(handle) {
-        return _storeObservable.unwatch(handle);
-    };
-
-    /**
-     * Get the observable used for watching store's modifications
-     * Should be used only for debugging
-     * @returns {Observable} the Observable
-     */
-    this.getStoreObservable = function getStoreObservable() {
-        return _storeObservable;
-    };
-
-    /**
-     * Watch a value's modifications
-     * @param {String} name the name of the value to watch for
-     * @param {Function} func the function to execute
-     * @param {Object} scope the scope in which to execute the function
-     * @returns handler to pass to unwatchValue
-     */
-    this.watchValue = function watchValue(name, func, scope) {
-        return _valueObservable.watch(name, func, scope);
-    };
-
-    /**
-     * Unwatch the value's modifications
-     * @param {Handler} handler the handler returned by the watchValue function
-     * @private
-     * @returns true if unwatched
-     */
-    this.unwatchValue = function unwatchValue(handler) {
-        return _valueObservable.unwatch(handler);
-    };
-
-    /**
-     * Get the observable used for watching value's modifications
-     * Should be used only for debugging
-     * @private
-     * @returns {Observable} the Observable
-     */
-    this.getValueObservable = function getValueObservable() {
-        return _valueObservable;
-    };
-
-    /**
-     * Loop through the data
-     * @param {Function} func the function to execute on each data
-     * @param {Object} scope the scope in wich to run the callback
-     */
-    this.loop = function loop(func, scope) {
-        Tools.loop(_data, func, scope);
-    };
-
-    /**
-     * Reset all data and get notifications on changes
-     * @param {Arra/Object} data the new data
-     * @returns {Boolean}
-     */
-    this.reset = function reset(data) {
-        if (data instanceof Object) {
-            var previousData = Tools.clone(_data);
-            _data = Tools.clone(data) || {};
-            _notifyDiffs(previousData);
-            _storeObservable.notify("resetted", _data, previousData);
-            return true;
-        } else {
-            return false;
-        }
-
-    };
-
-    /**
-     * Compute a new property from other properties.
-     * The computed property will look exactly similar to any none
-     * computed property, it can be watched upon.
-     * @param {String} name the name of the computed property
-     * @param {Array} computeFrom a list of properties to compute from
-     * @param {Function} callback the callback to compute the property
-     * @param {Object} scope the scope in which to execute the callback
-     * @returns {Boolean} false if wrong params given to the function
-     */
-    this.compute = function compute(name, computeFrom, callback, scope) {
-        var args = [];
-
-        if (typeof name == "string" &&
-            typeof computeFrom == "object" &&
-            typeof callback == "function" &&
-            !this.isCompute(name)) {
-
-            _computed[name] = [];
-
-            Tools.loop(computeFrom, function (property) {
-                _computed[name].push(this.watchValue(property, function () {
-                    this.set(name, callback.call(scope));
-                }, this));
-            }, this);
-
-            this.set(name, callback.call(scope));
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Remove a computed property
-     * @param {String} name the name of the computed to remove
-     * @returns {Boolean} true if the property is removed
-     */
-    this.removeCompute = function removeCompute(name) {
-        if (this.isCompute(name)) {
-            Tools.loop(_computed[name], function (handle) {
-                this.unwatchValue(handle);
-            }, this);
-            this.del(name);
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Tells if a property is a computed property
-     * @param {String} name the name of the property to test
-     * @returns {Boolean} true if it's a computed property
-     */
-    this.isCompute = function isCompute(name) {
-        return !!_computed[name];
-    };
-
-    /**
-     * Returns a JSON version of the data
-     * Use dump if you want all the data as a plain js object
-     * @returns {String} the JSON
-     */
-    this.toJSON = function toJSON() {
-        return JSON.stringify(_data);
-    };
-
-    /**
-     * Returns the store's data
-     * @returns {Object} the data
-     */
-    this.dump = function dump() {
-        return _data;
-    };
-};
-},{"./Observable":13,"./Tools":18}],18:[function(require,module,exports){
-/**
- * Emily.js - http://flams.github.com/emily/
- * Copyright(c) 2012-2013 Olivier Scherrer <pode.fr@gmail.com>
- * MIT Licensed
- */
-"use strict";
-
-/**
- * Get the closest number in an array
- * @param {Number} item the base number
- * @param {Array} array the array to search into
- * @param {Function} getDiff returns the difference between the base number and
- *   and the currently read item in the array. The item which returned the smallest difference wins.
- * @private
- */
-function _getClosest(item, array, getDiff) {
-    var closest,
-        diff;
-
-    if (!array) {
-        return;
+    for (var i = index || 0; i < list.length; i++) {
+        array[i - index] = list[i]
     }
 
-    array.forEach(function (comparedItem, comparedItemIndex) {
-        var thisDiff = getDiff(comparedItem, item);
-
-        if (thisDiff >= 0 && (typeof diff == "undefined" || thisDiff < diff)) {
-            diff = thisDiff;
-            closest = comparedItemIndex;
-        }
-    });
-
-    return closest;
+    return array
 }
 
+},{}],31:[function(require,module,exports){
 /**
-* @class
-* Tools is a collection of tools
+* @license transport https://github.com/cosmosio/transport
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
 */
-module.exports = {
-    /**
-     * For applications that don't run in a browser, window is not the global object.
-     * This function returns the global object wherever the application runs.
-     * @returns {Object} the global object
-     */
-    getGlobal: function getGlobal() {
-        return Function('return this')();
-    },
-
-    /**
-     * Mixes an object into another
-     * @param {Object} source object to get values from
-     * @param {Object} destination object to mix values into
-     * @param {Boolean} optional, set to true to prevent overriding
-     * @returns {Object} the destination object
-     */
-    mixin: function mixin(source, destination, dontOverride) {
-        this.loop(source, function (value, idx) {
-            if (!destination[idx] || !dontOverride) {
-                destination[idx] = source[idx];
-            }
-        });
-        return destination;
-    },
-
-    /**
-     * Count the number of properties in an object
-     * It doesn't look up in the prototype chain
-     * @param {Object} object the object to count
-     * @returns {Number}
-     */
-    count: function count(object) {
-        var nbItems = 0;
-        this.loop(object, function () {
-            nbItems++;
-        });
-
-        return nbItems;
-    },
-
-    /**
-     * Compares the properties of two objects and returns true if they're the same
-     * It's doesn't do it recursively
-     * @param {Object} first object
-     * @param {Object} second object
-     * @returns {Boolean} true if the two objets have the same properties
-     */
-    compareObjects: function compareObjects(object1, object2) {
-        var getOwnProperties = function (object) {
-            return Object.getOwnPropertyNames(object).sort().join("");
-        };
-        return getOwnProperties(object1) == getOwnProperties(object2);
-    },
-
-    /**
-     * Compares two numbers and tells if the first one is bigger (1), smaller (-1) or equal (0)
-     * @param {Number} number1 the first number
-     * @param {Number} number2 the second number
-     * @returns 1 if number1>number2, -1 if number2>number1, 0 if equal
-     */
-    compareNumbers: function compareNumbers(number1, number2) {
-          if (number1>number2) {
-            return 1;
-          } else if (number1<number2) {
-            return -1;
-          } else {
-             return 0;
-          }
-    },
-
-    /**
-     * Transform array-like objects to array, such as nodeLists or arguments
-     * @param {Array-like object}
-     * @returns {Array}
-     */
-    toArray: function toArray(array) {
-        return [].slice.call(array);
-    },
-
-    /**
-     * Small adapter for looping over objects and arrays
-     * Warning: it's not meant to be used with nodeList
-     * To use with nodeList, convert to array first
-     * @param {Array/Object} iterated the array or object to loop through
-     * @param {Function} callback the function to execute for each iteration
-     * @param {Object} scope the scope in which to execute the callback
-     * @returns {Boolean} true if executed
-     */
-    loop: function loop(iterated, callback, scope) {
-        var i,
-            length;
-
-        if (iterated instanceof Object && callback instanceof Function) {
-            if (iterated instanceof Array) {
-                for (i=0; i<iterated.length; i++) {
-                    callback.call(scope, iterated[i], i, iterated);
-                }
-            } else {
-                for (i in iterated) {
-                    if (iterated.hasOwnProperty(i)) {
-                        callback.call(scope, iterated[i], i, iterated);
-                    }
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
-    },
-
-    /**
-     * Make a diff between two objects
-     * @param {Array/Object} before is the object as it was before
-     * @param {Array/Object} after is what it is now
-     * @example:
-     *  With objects:
-     *
-     *  before = {a:1, b:2, c:3, d:4, f:6}
-     *  after = {a:1, b:20, d: 4, e: 5}
-     *  will return :
-     *  {
-     *      unchanged: ["a", "d"],
-     *      updated: ["b"],
-     *      deleted: ["f"],
-     *      added: ["e"]
-     *  }
-     *
-     * It also works with Arrays:
-     *
-     *  before = [10, 20, 30]
-     *  after = [15, 20]
-     *  will return :
-     *  {
-     *      unchanged: [1],
-     *      updated: [0],
-     *      deleted: [2],
-     *      added: []
-     *  }
-     *
-     * @returns object
-     */
-    objectsDiffs : function objectsDiffs(before, after) {
-        if (before instanceof Object && after instanceof Object) {
-            var unchanged = [],
-                updated = [],
-                deleted = [],
-                added = [];
-
-             // Look through the after object
-             this.loop(after, function (value, idx) {
-
-                 // To get the added
-                 if (typeof before[idx] == "undefined") {
-                     added.push(idx);
-
-                 // The updated
-                 } else if (value !== before[idx]) {
-                     updated.push(idx);
-
-                 // And the unchanged
-                 } else if (value === before[idx]) {
-                     unchanged.push(idx);
-                 }
-
-             });
-
-             // Loop through the before object
-             this.loop(before, function (value, idx) {
-
-                // To get the deleted
-                if (typeof after[idx] == "undefined") {
-                    deleted.push(idx);
-                }
-             });
-
-            return {
-                updated: updated,
-                unchanged: unchanged,
-                added: added,
-                deleted: deleted
-            };
-
-        } else {
-            return false;
-        }
-    },
-
-    /**
-     * Transforms Arrays and Objects into valid JSON
-     * @param {Object/Array} object the object to JSONify
-     * @returns the JSONified object or false if failed
-     */
-    jsonify: function jsonify(object) {
-        if (object instanceof Object) {
-            return JSON.parse(JSON.stringify(object));
-        } else {
-            return false;
-        }
-    },
-
-    /**
-     * Clone an Array or an Object
-     * @param {Array/Object} object the object to clone
-     * @returns {Array/Object} the cloned object
-     */
-    clone: function clone(object) {
-        if (object instanceof Array) {
-            return object.slice(0);
-        } else if (typeof object == "object" && object !== null && !(object instanceof RegExp)) {
-            return this.mixin(object, {});
-        } else {
-            return false;
-        }
-    },
-
-
-    /**
-     *
-     *
-     *
-     *
-     * Refactoring needed for the following
-     *
-     *
-     *
-     *
-     *
-     */
-
-    /**
-     * Get the property of an object nested in one or more objects
-     * given an object such as a.b.c.d = 5, getNestedProperty(a, "b.c.d") will return 5.
-     * @param {Object} object the object to get the property from
-     * @param {String} property the path to the property as a string
-     * @returns the object or the the property value if found
-     */
-    getNestedProperty: function getNestedProperty(object, property) {
-        if (object && object instanceof Object) {
-            if (typeof property == "string" && property !== "") {
-                var split = property.split(".");
-                return split.reduce(function (obj, prop) {
-                    return obj && obj[prop];
-                }, object);
-            } else if (typeof property == "number") {
-                return object[property];
-            } else {
-                return object;
-            }
-        } else {
-            return object;
-        }
-    },
-
-    /**
-     * Set the property of an object nested in one or more objects
-     * If the property doesn't exist, it gets created.
-     * @param {Object} object
-     * @param {String} property
-     * @param value the value to set
-     * @returns object if no assignment was made or the value if the assignment was made
-     */
-    setNestedProperty: function setNestedProperty(object, property, value) {
-        if (object && object instanceof Object) {
-            if (typeof property == "string" && property !== "") {
-                var split = property.split(".");
-                return split.reduce(function (obj, prop, idx) {
-                    obj[prop] = obj[prop] || {};
-                    if (split.length == (idx + 1)) {
-                        obj[prop] = value;
-                    }
-                    return obj[prop];
-                }, object);
-            } else if (typeof property == "number") {
-                object[property] = value;
-                return object[property];
-            } else {
-                return object;
-            }
-        } else {
-            return object;
-        }
-    },
-
-    /**
-     * Get the closest number in an array given a base number
-     * Example: closest(30, [20, 0, 50, 29]) will return 3 as 29 is the closest item
-     * @param {Number} item the base number
-     * @param {Array} array the array of numbers to search into
-     * @returns {Number} the index of the closest item in the array
-     */
-    closest: function closest(item, array) {
-        return _getClosest(item, array, function (comparedItem, item) {
-            return Math.abs(comparedItem - item);
-        });
-    },
-
-    /**
-     * Get the closest greater number in an array given a base number
-     * Example: closest(30, [20, 0, 50, 29]) will return 2 as 50 is the closest greater item
-     * @param {Number} item the base number
-     * @param {Array} array the array of numbers to search into
-     * @returns {Number} the index of the closest item in the array
-     */
-    closestGreater: function closestGreater(item, array) {
-        return _getClosest(item, array, function (comparedItem, item) {
-            return comparedItem - item;
-        });
-    },
-
-    /**
-     * Get the closest lower number in an array given a base number
-     * Example: closest(30, [20, 0, 50, 29]) will return 0 as 20 is the closest lower item
-     * @param {Number} item the base number
-     * @param {Array} array the array of numbers to search into
-     * @returns {Number} the index of the closest item in the array
-     */
-    closestLower: function closestLower(item, array) {
-        return _getClosest(item, array, function (comparedItem, item) {
-            return item - comparedItem;
-        });
-    }
-};
-},{}],19:[function(require,module,exports){
-/**
- * Emily.js - http://flams.github.com/emily/
- * Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
- * MIT Licensed
- */
 "use strict";
 
 /**
@@ -2438,7 +2275,7 @@ module.exports = function TransportConstructor($reqHandlers) {
      * @returns
      */
     this.setReqHandlers = function setReqHandlers(reqHandlers) {
-        if (reqHandlers instanceof Object) {
+        if (typeof reqHandlers == "object") {
             _reqHandlers = reqHandlers;
             return true;
         } else {
@@ -2487,16 +2324,16 @@ module.exports = function TransportConstructor($reqHandlers) {
      * @returns {Function} the abort function to call to stop listening
      */
     this.listen = function listen(reqHandler, data, callback, scope) {
+        var func,
+            abort;
+
         if (_reqHandlers.has(reqHandler) &&
             typeof data != "undefined" &&
             typeof callback == "function") {
 
-            var func = function () {
-                callback.apply(scope, arguments);
-            },
-            abort;
-
+            func = callback.bind(scope);
             abort = _reqHandlers.get(reqHandler)(data, func, func);
+
             return function () {
                 if (typeof abort == "function") {
                     abort();
@@ -2512,59 +2349,523 @@ module.exports = function TransportConstructor($reqHandlers) {
     this.setReqHandlers($reqHandlers);
 
 };
-},{}],20:[function(require,module,exports){
+
+},{}],32:[function(require,module,exports){
+/**
+* @license watch-notify https://github.com/flams/watch-notify
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var assert = require("assert");
+
+var loop = require("simple-loop"),
+  toArray = require("to-array");
+
+/**
+* @class
+* Observable is an implementation of the Observer design pattern,
+* which is also known as publish/subscribe.
+*
+* This service creates an Observable to which you can add subscribers.
+*
+* @returns {Observable}
+*/
+module.exports = function WatchNotifyConstructor() {
+
+    /**
+     * The list of topics
+     * @private
+     */
+    var _topics = {};
+
+    /**
+     * Add an observer
+     * @param {String} topic the topic to observe
+     * @param {Function} callback the callback to execute
+     * @param {Object} scope the scope in which to execute the callback
+     * @returns handle
+     */
+    this.watch = function watch(topic, callback, scope) {
+        if (typeof callback == "function") {
+            var observers = _topics[topic] = _topics[topic] || [],
+            observer = [callback, scope];
+
+            observers.push(observer);
+            return [topic,observers.indexOf(observer)];
+
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Listen to an event just once before removing the handler
+     * @param {String} topic the topic to observe
+     * @param {Function} callback the callback to execute
+     * @param {Object} scope the scope in which to execute the callback
+     * @returns handle
+     */
+    this.once = function once(topic, callback, scope) {
+        var handle = this.watch(topic, function () {
+            callback.apply(scope, arguments);
+            this.unwatch(handle);
+        }, this);
+        return handle;
+    };
+
+    /**
+     * Remove an observer
+     * @param {Handle} handle returned by the watch method
+     * @returns {Boolean} true if there were subscribers
+     */
+    this.unwatch = function unwatch(handle) {
+        var topic = handle[0], idx = handle[1];
+        if (_topics[topic] && _topics[topic][idx]) {
+            // delete value so the indexes don't move
+            delete _topics[topic][idx];
+            // If the topic is only set with falsy values, delete it;
+            if (!_topics[topic].some(function (value) {
+                return !!value;
+            })) {
+                delete _topics[topic];
+            }
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Notifies observers that a topic has a new message
+     * @param {String} topic the name of the topic to publish to
+     * @param subject
+     * @returns {Boolean} true if there was subscribers
+     */
+    this.notify = function notify(topic) {
+        var observers = _topics[topic],
+            args = toArray(arguments).slice(1);
+
+        if (observers) {
+            loop(observers, function (value) {
+                try {
+                    if (value) {
+                        value[0].apply(value[1] || null, args);
+                    }
+                } catch (err) { }
+            });
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Check if topic has the described observer
+     * @param {Handle}
+     * @returns {Boolean} true if exists
+     */
+    this.hasObserver = function hasObserver(handle) {
+        return !!( handle && _topics[handle[0]] && _topics[handle[0]][handle[1]]);
+    };
+
+    /**
+     * Check if a topic has observers
+     * @param {String} topic the name of the topic
+     * @returns {Boolean} true if topic is listened
+     */
+    this.hasTopic = function hasTopic(topic) {
+        return !!_topics[topic];
+    };
+
+    /**
+     * Unwatch all or unwatch all from topic
+     * @param {String} topic optional unwatch all from topic
+     * @returns {Boolean} true if ok
+     */
+    this.unwatchAll = function unwatchAll(topic) {
+        if (_topics[topic]) {
+            delete _topics[topic];
+        } else {
+            _topics = {};
+        }
+        return true;
+    };
+};
+
+},{"assert":108,"simple-loop":33,"to-array":30}],33:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],34:[function(require,module,exports){
 /**
  * Emily.js - http://flams.github.com/emily/
  * Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
  * MIT Licensed
  */
+ var compareNumbers = require("compare-numbers"),
+     nestedProperty = require("nested-property"),
+     getClosest = require("get-closest");
+
 module.exports = {
-    Observable: require("./Observable"),
+    Observable: require("watch-notify"),
     Promise: require("./Promise"),
-    Router: require("./Router"),
-    StateMachine: require("./StateMachine"),
-    Store: require("./Store"),
-    Tools: require("./Tools"),
-    Transport: require("./Transport")
+    Router: require("highway"),
+    StateMachine: require("synchronous-fsm"),
+    Store: require("observable-store"),
+    Tools: {
+         getGlobal: require("get-global"),
+         mixin: require("simple-object-mixin"),
+         count: require("object-count"),
+         compareNumbers: compareNumbers.asc,
+         toArray: require("to-array"),
+         loop: require("simple-loop"),
+         objectsDiffs : require("shallow-diff"),
+         clone: require("shallow-copy"),
+         getNestedProperty: nestedProperty.get,
+         setNestedProperty: nestedProperty.set,
+         closest: getClosest.number,
+         closestGreater: getClosest.greaterNumber,
+         closestLower: getClosest.lowerNumber
+     },
+    Transport: require("transport")
 };
-},{"./Observable":13,"./Promise":14,"./Router":15,"./StateMachine":16,"./Store":17,"./Tools":18,"./Transport":19}],21:[function(require,module,exports){
+
+},{"./Promise":35,"compare-numbers":13,"get-closest":14,"get-global":15,"highway":16,"nested-property":17,"object-count":18,"observable-store":19,"shallow-copy":22,"shallow-diff":23,"simple-loop":25,"simple-object-mixin":26,"synchronous-fsm":28,"to-array":30,"transport":31,"watch-notify":32}],35:[function(require,module,exports){
+/**
+* Emily.js - http://flams.github.com/emily/
+* Copyright(c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com>
+* MIT Licensed
+*/
+"use strict";
+
+var Observable = require("watch-notify"),
+StateMachine = require("synchronous-fsm");
+
+/**
+* @class
+* Create a promise/A+
+*/
+module.exports = function PromiseConstructor() {
+
+    /**
+     * The fulfilled value
+     * @private
+     */
+    var _value = null,
+
+    /**
+     * The rejection reason
+     * @private
+     */
+    _reason = null,
+
+    /**
+     * The funky observable
+     * @private
+     */
+    _observable = new Observable(),
+
+    /**
+     * The stateMachine
+     * @private
+     */
+    _stateMachine = new StateMachine("Pending", {
+
+        // The promise is pending
+        "Pending": [
+
+            // It can only be fulfilled when pending
+            ["fulfill", function onFulfill(value) {
+                _value = value;
+                _observable.notify("fulfill", value);
+            // Then it transits to the fulfilled state
+            }, "Fulfilled"],
+
+            // it can only be rejected when pending
+            ["reject", function onReject(reason) {
+                _reason = reason;
+                _observable.notify("reject", reason);
+            // Then it transits to the rejected state
+            }, "Rejected"],
+
+            // When pending, add the resolver to an observable
+            ["toFulfill", function toFulfill(resolver) {
+                _observable.watch("fulfill", resolver);
+            }],
+
+            // When pending, add the resolver to an observable
+            ["toReject", function toReject(resolver) {
+                _observable.watch("reject", resolver);
+            }]],
+
+        // When fulfilled,
+        "Fulfilled": [
+            // We directly call the resolver with the value
+            ["toFulfill", function toFulfill(resolver) {
+                   resolver(_value);
+            }]],
+
+        // When rejected
+        "Rejected": [
+            // We directly call the resolver with the reason
+            ["toReject", function toReject(resolver) {
+                   resolver(_reason);
+            }]]
+    });
+
+    /**
+     * Fulfilled the promise.
+     * A promise can be fulfilld only once.
+     * @param the fulfillment value
+     * @returns the promise
+     */
+    this.fulfill = function fulfill(value) {
+        setTimeout(function () {
+            _stateMachine.event("fulfill", value);
+        }, 0);
+        return this;
+
+    };
+
+    /**
+     * Reject the promise.
+     * A promise can be rejected only once.
+     * @param the rejection value
+     * @returns true if the rejection function was called
+     */
+    this.reject = function reject(reason) {
+        setTimeout(function () {
+            _stateMachine.event("reject", reason);
+        }, 0);
+        return this;
+    };
+
+    /**
+     * The callbacks to call after fulfillment or rejection
+     * @param {Function} fulfillmentCallback the first parameter is a success function, it can be followed by a scope
+     * @param {Function} the second, or third parameter is the rejection callback, it can also be followed by a scope
+     * @examples:
+     *
+     * then(fulfillment)
+     * then(fulfillment, scope, rejection, scope)
+     * then(fulfillment, rejection)
+     * then(fulfillment, rejection, scope)
+     * then(null, rejection, scope)
+     * @returns {Promise} the new promise
+     */
+    this.then = function then() {
+        var promise = new PromiseConstructor();
+
+        // If a fulfillment callback is given
+        if (arguments[0] instanceof Function) {
+            // If the second argument is also a function, then no scope is given
+            if (arguments[1] instanceof Function) {
+                _stateMachine.event("toFulfill", this.makeResolver(promise, arguments[0]));
+            } else {
+                // If the second argument is not a function, it's the scope
+                _stateMachine.event("toFulfill", this.makeResolver(promise, arguments[0], arguments[1]));
+            }
+        } else {
+            // If no fulfillment callback given, give a default one
+            _stateMachine.event("toFulfill", this.makeResolver(promise, function () {
+                promise.fulfill(_value);
+            }));
+        }
+
+        // if the second arguments is a callback, it's the rejection one, and the next argument is the scope
+        if (arguments[1] instanceof Function) {
+            _stateMachine.event("toReject", this.makeResolver(promise, arguments[1], arguments[2]));
+        }
+
+        // if the third arguments is a callback, it's the rejection one, and the next arguments is the sopce
+        if (arguments[2] instanceof Function) {
+            _stateMachine.event("toReject", this.makeResolver(promise, arguments[2], arguments[3]));
+        }
+
+        // If no rejection callback is given, give a default one
+        if (!(arguments[1] instanceof Function) &&
+            !(arguments[2] instanceof Function)) {
+            _stateMachine.event("toReject", this.makeResolver(promise, function () {
+                promise.reject(_reason);
+            }));
+        }
+
+        return promise;
+    };
+
+    /**
+     * Cast a thenable into an Emily promise
+     * @returns {Boolean} false if the given promise is not a thenable
+     */
+    this.cast = function cast(thenable) {
+        if (thenable instanceof PromiseConstructor ||
+            typeof thenable == "object" ||
+            typeof thenable == "function") {
+
+            thenable.then(this.fulfill.bind(this),
+                    this.reject.bind(this));
+
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    /**
+     * Make a resolver
+     * for debugging only
+     * @private
+     * @returns {Function} a closure
+     */
+    this.makeResolver = function makeResolver(promise, func, scope) {
+        return function resolver(value) {
+            var returnedPromise;
+
+            try {
+                returnedPromise = func.call(scope, value);
+                if (returnedPromise === promise) {
+                    throw new TypeError("Promise A+ 2.3.1: If `promise` and `x` refer to the same object, reject `promise` with a `TypeError' as the reason.");
+                }
+                if (!promise.cast(returnedPromise)) {
+                    promise.fulfill(returnedPromise);
+                }
+            } catch (err) {
+                promise.reject(err);
+            }
+
+        };
+    };
+
+    /**
+     * Returns the reason
+     * for debugging only
+     * @private
+     */
+    this.getReason = function getReason() {
+        return _reason;
+    };
+
+    /**
+     * Returns the reason
+     * for debugging only
+     * @private
+     */
+    this.getValue = function getValue() {
+        return _value;
+    };
+
+    /**
+     * Get the promise's observable
+     * for debugging only
+     * @private
+     * @returns {Observable}
+     */
+    this.getObservable = function getObservable() {
+        return _observable;
+    };
+
+    /**
+     * Get the promise's stateMachine
+     * for debugging only
+     * @private
+     * @returns {StateMachine}
+     */
+    this.getStateMachine = function getStateMachine() {
+        return _stateMachine;
+    };
+
+    /**
+     * Get the statesMachine's states
+     * for debugging only
+     * @private
+     * @returns {Object}
+     */
+    this.getStates = function getStates() {
+        return _states;
+    };
+};
+
+},{"synchronous-fsm":28,"watch-notify":32}],36:[function(require,module,exports){
 module.exports=require(13)
-},{"./Tools":26}],22:[function(require,module,exports){
-arguments[4][14][0].apply(exports,arguments)
-},{"./Observable":21,"./StateMachine":24}],23:[function(require,module,exports){
-arguments[4][15][0].apply(exports,arguments)
-},{"./Observable":21,"./Store":25,"./Tools":26}],24:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
+module.exports=require(14)
+},{"assert":108}],38:[function(require,module,exports){
+module.exports=require(15)
+},{}],39:[function(require,module,exports){
 module.exports=require(16)
-},{"./Tools":26}],25:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"./Observable":21,"./Tools":26}],26:[function(require,module,exports){
+},{"to-array":53,"watch-notify":55}],40:[function(require,module,exports){
+module.exports=require(17)
+},{"assert":108}],41:[function(require,module,exports){
 module.exports=require(18)
-},{}],27:[function(require,module,exports){
-module.exports=require(19)
-},{}],28:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./Observable":21,"./Promise":22,"./Router":23,"./StateMachine":24,"./Store":25,"./Tools":26,"./Transport":27}],29:[function(require,module,exports){
+},{"assert":108}],42:[function(require,module,exports){
+arguments[4][19][0].apply(exports,arguments)
+},{"compare-numbers":36,"nested-property":43,"object-count":41,"shallow-copy":45,"shallow-diff":46,"simple-loop":44,"watch-notify":55}],43:[function(require,module,exports){
+module.exports=require(20)
+},{"assert":108}],44:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],45:[function(require,module,exports){
+module.exports=require(22)
+},{}],46:[function(require,module,exports){
+module.exports=require(23)
+},{"assert":108,"simple-loop":47}],47:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],48:[function(require,module,exports){
+module.exports=require(25)
+},{"assert":108}],49:[function(require,module,exports){
+module.exports=require(26)
+},{"simple-loop":50}],50:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],51:[function(require,module,exports){
+module.exports=require(28)
+},{"simple-loop":52,"to-array":53}],52:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],53:[function(require,module,exports){
+module.exports=require(30)
+},{}],54:[function(require,module,exports){
+module.exports=require(31)
+},{}],55:[function(require,module,exports){
+module.exports=require(32)
+},{"assert":108,"simple-loop":56,"to-array":53}],56:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],57:[function(require,module,exports){
+arguments[4][34][0].apply(exports,arguments)
+},{"./Promise":58,"compare-numbers":36,"get-closest":37,"get-global":38,"highway":39,"nested-property":40,"object-count":41,"observable-store":42,"shallow-copy":45,"shallow-diff":46,"simple-loop":48,"simple-object-mixin":49,"synchronous-fsm":51,"to-array":53,"transport":54,"watch-notify":55}],58:[function(require,module,exports){
+arguments[4][35][0].apply(exports,arguments)
+},{"synchronous-fsm":51,"watch-notify":55}],59:[function(require,module,exports){
 /**
  * jsonp-flickr.js - https://github.com/podefr/jsonp-flickr
  * Copyright(c) 2014 Olivier Scherrer <pode.fr@gmail.com>
  * MIT Licensed
  */
-"use strict";var DEFAULT_URL="http://ycpi.api.flickr.com/services/rest/";var DEFAULT_CALLBACKNAME="jsoncallback";var Jsonp=require("jsonp-utils");module.exports=new Jsonp({url:DEFAULT_URL,callbackName:DEFAULT_CALLBACKNAME});
-},{"jsonp-utils":30}],30:[function(require,module,exports){
+"use strict";
+
+var DEFAULT_URL = "https://api.flickr.com/services/rest/";
+var DEFAULT_CALLBACKNAME = "jsoncallback";
+
+var Jsonp = require("jsonp-utils");
+
+module.exports = new Jsonp({
+	url: DEFAULT_URL,
+	callbackName: DEFAULT_CALLBACKNAME
+});
+
+},{"jsonp-utils":60}],60:[function(require,module,exports){
 /**
  * jsonp.js - https://github.com/podefr/jsonp
  * Copyright(c) 2013 Olivier Scherrer <pode.fr@gmail.com>
  * MIT Licensed
  */
 "use strict";var scriptUtils=require("script-utils"),uuidGenerator=require("uuid"),querystring=require("querystring"),vow=require("vow");module.exports=function Jsonp(params){params=params||{};var _timeout=params.timeout||15e3,_callbackName=params.callbackName||"callback",_url=params.url||"",_timers={};this.getTimeout=function getTimeout(){return _timeout};this.setTimeout=function setTimeout(timeout){_timeout=timeout};this.setCallbackName=function setCallbackName(callbackName){_callbackName=callbackName};this.getCallbackName=function getCallbackName(){return _callbackName};this.setUrl=function setUrl(url){_url=url};this.getUrl=function getUrl(){return _url};this.get=function get(options,callback,scope){var uuid=getUniqueId(),deferred=vow.defer(),serializedOptions=serializeOptions(addCallbackName(options,uuid)),script=scriptUtils.create(prepareUrl(_url,serializedOptions),function(){scriptUtils.remove(script)});createUniqueCallback(uuid,callback,scope,deferred);scriptUtils.append(script);startTimer(uuid,script,callback,scope,deferred);return deferred.promise()};function startTimer(uuid,script,callback,scope,deferred){_timers[uuid]=setTimeout(function(){var error=new Error("Timeout after "+_timeout+" ms");callback&&callback.call(scope,error);deferred.reject(error);delete window[uuid];scriptUtils.remove(script)},_timeout)}function clearTimer(uuid){clearTimeout(_timers[uuid])}function getUniqueId(){return"_jsonp_"+uuidGenerator.v4().replace(/-/g,"")}function addCallbackName(options,uuid){options[_callbackName]=uuid;return options}function serializeOptions(options){return querystring.stringify(options)}function prepareUrl(url,options){return url+"?"+options}function createUniqueCallback(uuid,callback,scope,deferred){window[uuid]=function(){callback&&callback.apply(scope,[null].concat([].slice.call(arguments)));deferred.resolve.apply(deferred,arguments);clearTimer(uuid);delete window[uuid]}}};
-},{"querystring":51,"script-utils":31,"uuid":33,"vow":34}],31:[function(require,module,exports){
+},{"querystring":114,"script-utils":61,"uuid":63,"vow":64}],61:[function(require,module,exports){
 /**
  * script.js - https://github.com/podefr/script
  * Copyright(c) 2013 Olivier Scherrer <pode.fr@gmail.com>
  * MIT Licensed
  */
 "use strict";module.exports={append:function append(script){document.querySelector("head").appendChild(script)},remove:function remove(script){script.parentElement.removeChild(script)},create:function create(src,callback,scope){var script=document.createElement("script");script.src=src;script.addEventListener("load",function(){callback.apply(scope,arguments)},true);return script}};
-},{}],32:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};
 var rng;
 
@@ -2597,7 +2898,7 @@ if (!rng) {
 module.exports = rng;
 
 
-},{}],33:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var Buffer=require("__browserify_Buffer");//     uuid.js
 //
 //     Copyright (c) 2010-2012 Robert Kieffer
@@ -2786,11 +3087,11 @@ uuid.BufferClass = BufferClass;
 
 module.exports = uuid;
 
-},{"./rng":32,"__browserify_Buffer":47}],34:[function(require,module,exports){
+},{"./rng":62,"__browserify_Buffer":110}],64:[function(require,module,exports){
 var process=require("__browserify_process");/**
  * @module vow
  * @author Filatov Dmitry <dfilatov@yandex-team.ru>
- * @version 0.4.0
+ * @version 0.4.5
  * @license
  * Dual licensed under the MIT and GPL licenses:
  *   * http://www.opensource.org/licenses/mit-license.php
@@ -2894,8 +3195,9 @@ Deferred.prototype = /** @lends Deferred.prototype */{
 
 var PROMISE_STATUS = {
     PENDING   : 0,
-    FULFILLED : 1,
-    REJECTED  : -1
+    RESOLVED  : 1,
+    FULFILLED : 2,
+    REJECTED  : 3
 };
 
 /**
@@ -3193,8 +3495,10 @@ Promise.prototype = /** @lends Promise.prototype */ {
         return defer.promise();
     },
 
+    _vow : true,
+
     _resolve : function(val) {
-        if(this._status !== PROMISE_STATUS.PENDING) {
+        if(this._status > PROMISE_STATUS.RESOLVED) {
             return;
         }
 
@@ -3203,12 +3507,18 @@ Promise.prototype = /** @lends Promise.prototype */ {
             return;
         }
 
-        if(isVowPromise(val)) { // shortpath for vow.Promise
-            val.then(
-                this._resolve,
-                this._reject,
-                this._notify,
-                this);
+        this._status = PROMISE_STATUS.RESOLVED;
+
+        if(val && !!val._vow) { // shortpath for vow.Promise
+            val.isFulfilled()?
+                this._fulfill(val.valueOf()) :
+                val.isRejected()?
+                    this._reject(val.valueOf()) :
+                    val.then(
+                        this._fulfill,
+                        this._reject,
+                        this._notify,
+                        this);
             return;
         }
 
@@ -3261,7 +3571,7 @@ Promise.prototype = /** @lends Promise.prototype */ {
     },
 
     _fulfill : function(val) {
-        if(this._status !== PROMISE_STATUS.PENDING) {
+        if(this._status > PROMISE_STATUS.RESOLVED) {
             return;
         }
 
@@ -3273,7 +3583,7 @@ Promise.prototype = /** @lends Promise.prototype */ {
     },
 
     _reject : function(reason) {
-        if(this._status !== PROMISE_STATUS.PENDING) {
+        if(this._status > PROMISE_STATUS.RESOLVED) {
             return;
         }
 
@@ -3314,7 +3624,7 @@ Promise.prototype = /** @lends Promise.prototype */ {
                 this._rejectedCallbacks.push(cb);
         }
 
-        if(this._status === PROMISE_STATUS.PENDING) {
+        if(this._status <= PROMISE_STATUS.RESOLVED) {
             this._progressCallbacks.push({ defer : defer, fn : onProgress, ctx : ctx });
         }
     },
@@ -3389,7 +3699,7 @@ var staticMethods = {
      * Returns a promise to be fulfilled only when any of the items in `iterable` are fulfilled,
      * or to be rejected when the first item is rejected.
      *
-     * @param {Array|Object} iterable
+     * @param {Array} iterable
      * @returns {vow:Promise}
      */
     race : function(iterable) {
@@ -3557,7 +3867,7 @@ var vow = /** @exports vow */ {
      * @returns {*}
      */
     valueOf : function(value) {
-        return isVowPromise(value)? value.valueOf() : value;
+        return value && isFunction(value.valueOf)? value.valueOf() : value;
     },
 
     /**
@@ -3568,7 +3878,7 @@ var vow = /** @exports vow */ {
      * @returns {Boolean}
      */
     isFulfilled : function(value) {
-        return isVowPromise(value)? value.isFulfilled() : true;
+        return value && isFunction(value.isFulfilled)? value.isFulfilled() : true;
     },
 
     /**
@@ -3579,7 +3889,7 @@ var vow = /** @exports vow */ {
      * @returns {Boolean}
      */
     isRejected : function(value) {
-        return isVowPromise(value)? value.isRejected() : false;
+        return value && isFunction(value.isRejected)? value.isRejected() : false;
     },
 
     /**
@@ -3590,7 +3900,7 @@ var vow = /** @exports vow */ {
      * @returns {Boolean}
      */
     isResolved : function(value) {
-        return isVowPromise(value)? value.isResolved() : true;
+        return value && isFunction(value.isResolved)? value.isResolved() : true;
     },
 
     /**
@@ -3614,9 +3924,16 @@ var vow = /** @exports vow */ {
      * @returns {vow:Promise}
      */
     fulfill : function(value) {
-        return vow.when(value, null, function(reason) {
-            return reason;
-        });
+        var defer = vow.defer(),
+            promise = defer.promise();
+
+        defer.resolve(value);
+
+        return promise.isFulfilled()?
+            promise :
+            promise.then(null, function(reason) {
+                return reason;
+            });
     },
 
     /**
@@ -3627,9 +3944,17 @@ var vow = /** @exports vow */ {
      * @returns {vow:Promise}
      */
     reject : function(reason) {
-        return vow.when(reason, function(val) {
-            throw val;
-        });
+        if(vow.isPromise(reason)) {
+            return reason.then(function(val) {
+                var defer = vow.defer();
+                defer.reject(val);
+                return defer.promise();
+            });
+        }
+
+        var defer = vow.defer();
+        defer.reject(reason);
+        return defer.promise();
     },
 
     /**
@@ -3655,8 +3980,20 @@ var vow = /** @exports vow */ {
      * ```
      */
     invoke : function(fn, args) {
+        var len = Math.max(arguments.length - 1, 0),
+            callArgs;
+        if(len) { // optimization for V8
+            callArgs = Array(len);
+            var i = 0;
+            while(i < len) {
+                callArgs[i++] = arguments[i];
+            }
+        }
+
         try {
-            return vow.resolve(fn.apply(global, slice.call(arguments, 1)));
+            return vow.resolve(callArgs?
+                fn.apply(global, callArgs) :
+                fn.call(global));
         }
         catch(e) {
             return vow.reject(e);
@@ -3714,8 +4051,10 @@ var vow = /** @exports vow */ {
             return defer.promise();
         }
 
-        var i = len,
-            onFulfilled = function() {
+        var i = len;
+        vow._forEach(
+            iterable,
+            function() {
                 if(!--i) {
                     var j = 0;
                     while(j < len) {
@@ -3724,11 +4063,10 @@ var vow = /** @exports vow */ {
                     defer.resolve(res);
                 }
             },
-            onRejected = function(reason) {
-                defer.reject(reason);
-            };
-
-        vow._forEach(iterable, onFulfilled, onRejected, keys);
+            defer.reject,
+            defer.notify,
+            defer,
+            keys);
 
         return defer.promise();
     },
@@ -3769,11 +4107,17 @@ var vow = /** @exports vow */ {
             return defer.promise();
         }
 
-        var onProgress = function() {
+        var onResolved = function() {
                 --i || defer.resolve(iterable);
             };
 
-        vow._forEach(iterable, onProgress, onProgress, keys);
+        vow._forEach(
+            iterable,
+            onResolved,
+            onResolved,
+            defer.notify,
+            defer,
+            keys);
 
         return defer.promise();
     },
@@ -3829,16 +4173,16 @@ var vow = /** @exports vow */ {
             return defer.promise();
         }
 
-        var i = 0, reason,
-            onFulfilled = function(val) {
-                defer.resolve(val);
-            },
-            onRejected = function(e) {
+        var i = 0, reason;
+        vow._forEach(
+            iterable,
+            defer.resolve,
+            function(e) {
                 i || (reason = e);
                 ++i === len && defer.reject(reason);
-            };
-
-        vow._forEach(iterable, onFulfilled, onRejected);
+            },
+            defer.notify,
+            defer);
 
         return defer.promise();
     },
@@ -3861,12 +4205,10 @@ var vow = /** @exports vow */ {
 
         vow._forEach(
             iterable,
-            function(val) {
-                defer.resolve(val);
-            },
-            function(reason) {
-                defer.reject(reason);
-            });
+            defer.resolve,
+            defer.reject,
+            defer.notify,
+            defer);
 
         return defer.promise();
     },
@@ -3895,11 +4237,11 @@ var vow = /** @exports vow */ {
         return vow.resolve(value).timeout(timeout);
     },
 
-    _forEach : function(promises, onFulfilled, onRejected, keys) {
+    _forEach : function(promises, onFulfilled, onRejected, onProgress, ctx, keys) {
         var len = keys? keys.length : promises.length,
             i = 0;
         while(i < len) {
-            vow.when(promises[keys? keys[i] : i], onFulfilled, onRejected);
+            vow.when(promises[keys? keys[i] : i], onFulfilled, onRejected, onProgress, ctx);
             ++i;
         }
     }
@@ -3993,10 +4335,6 @@ var undef,
     isObject = function(obj) {
         return obj !== null && typeof obj === 'object';
     },
-    isVowPromise = function(obj) {
-        return obj instanceof Promise;
-    },
-    slice = Array.prototype.slice,
     toStr = Object.prototype.toString,
     isArray = Array.isArray || function(obj) {
         return toStr.call(obj) === '[object Array]';
@@ -4041,85 +4379,40 @@ defineAsGlobal && (global.vow = vow);
 
 })(this);
 
-},{"__browserify_process":48}],35:[function(require,module,exports){
+},{"__browserify_process":111}],65:[function(require,module,exports){
 /**
- * @license Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2013 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
-var olives = require("./src/olives"),
-	isConnected = false;
-
-olives.registerSocketIO = function (io, handlers) {
-
-	if (isConnected) {
-		return false;
-	} else {
-
-		// On connection we'll reference the handlers in socket.io
-		io.sockets.on("connection", function (socket) {
-
-			var connectHandler = function (func, handler) {
-				// When a handler is called
-				socket.on(handler, function (reqData) {
-
-					// Add socket.io's handshake for session management
-					reqData.data.handshake = socket.handshake;
-
-					// pass it the requests data
-					var stop = func(reqData.data,
-						// The function to handle the result
-						function onEnd(body) {
-							socket.emit(reqData.eventId, body);
-						},
-						// The function to handle chunks for a kept alive socket
-						function onData(chunk) {
-							reqData.keepAlive && socket.emit(reqData.eventId, ""+chunk);
-						});
-
-					// If func returned a stop function
-					if (typeof stop == "function") {
-						// Subscribe to disconnect-eventId event
-						socket.on("disconnect-"+reqData.eventId, stop);
-					}
-
-				});
-
-			};
-
-			// for each handler, described in Emily as they can be used from node.js as well
-			handlers.loop(connectHandler);
-			// Also connect on new handlers
-			handlers.watch("added", connectHandler);
-
-		});
-
-		isConnected = true;
-	}
-};
-
-module.exports = olives;
-
-
-
-},{"./src/olives":46}],36:[function(require,module,exports){
-/**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
+* @license data-binding-plugin https://github.com/flams/data-binding-plugin
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
 "use strict";
 
+var Observable = require("watch-notify"),
+    compareNumbers = require("compare-numbers"),
+    simpleLoop = require("simple-loop"),
+    toArray = require("to-array"),
+    getClosest = require("get-closest"),
+    nestedProperty = require("nested-property"),
+    getNodes = require("get-nodes"),
+    getDataset =  require("get-dataset");
 
-var Store = require("emily").Store,
-    Observable = require("emily").Observable,
-    Tools = require("emily").Tools,
-    DomUtils = require("./DomUtils");
+function setAttribute(node, property, value) {
+    if ('ownerSVGElement' in node) {
+        node.setAttribute(property, value);
+        return true;
+    } else if ('ownerDocument' in node) {
+        node[property] = value;
+        return true;
+    } else {
+        throw new Error("invalid element type");
+    }
+}
 
 /**
  * @class
  * This plugin links dom nodes to a model
- * @requires Store, Observable, Tools, DomUtils
  */
 module.exports = function BindPluginConstructor($model, $bindings) {
 
@@ -4169,13 +4462,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
      * @returns {Boolean} true if the model was set
      */
     this.setModel = function setModel(model) {
-        if (model instanceof Store) {
-            // Set the model
-            _model = model;
-            return true;
-        } else {
-            return false;
-        }
+        _model = model;
     };
 
     /**
@@ -4251,16 +4538,11 @@ module.exports = function BindPluginConstructor($model, $bindings) {
          */
         this.setRootNode = function setRootNode(rootNode) {
             var renderer;
-            if (DomUtils.isAcceptedType(rootNode)) {
-                _rootNode = rootNode;
-                renderer = _rootNode.querySelector("*");
-                this.setRenderer(renderer);
-                if (renderer) {
-                    _rootNode.removeChild(renderer);
-                }
-                return true;
-            } else {
-                return false;
+            _rootNode = rootNode;
+            renderer = _rootNode.querySelector("*");
+            this.setRenderer(renderer);
+            if (renderer) {
+                _rootNode.removeChild(renderer);
             }
         };
 
@@ -4378,7 +4660,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
             var keys = Object.keys(this.items).map(function (string) {
                     return Number(string);
                 }),
-                closest = Tools.closestGreater(id, keys),
+                closest = getClosest.greaterNumber(id, keys),
                 closestId = keys[closest];
 
             // Only return if different
@@ -4418,9 +4700,9 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         this.create = function create(id) {
             if (_model.has(id)) {
                 var newNode = _node.cloneNode(true),
-                nodes = DomUtils.getNodes(newNode);
+                nodes = getNodes(newNode);
 
-                Tools.toArray(nodes).forEach(function (child) {
+                toArray(nodes).forEach(function (child) {
                     child.setAttribute("data-" + _plugins.name+"_id", id);
                 });
 
@@ -4439,7 +4721,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         this.render = function render() {
             // If the number of items to render is all (*)
             // Then get the number of items
-            var _tmpNb = _nb == "*" ? _model.getNbItems() : _nb;
+            var _tmpNb = _nb == "*" ? _model.count() : _nb;
 
             // This will store the items to remove
             var marked = [];
@@ -4448,7 +4730,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
             if (_nb !== null && _start !== null) {
 
                 // Loop through the existing items
-                Tools.loop(this.items, function (value, idx) {
+                simpleLoop(this.items, function (value, idx) {
                     // If an item is out of the boundary
                     idx = Number(idx);
 
@@ -4461,7 +4743,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
                 // Remove the marked item from the highest id to the lowest
                 // Doing this will avoid the id change during removal
                 // (removing id 2 will make id 3 becoming 2)
-                marked.sort(Tools.compareNumbers).reverse().forEach(this.removeItem, this);
+                marked.sort(compareNumbers.desc).forEach(this.removeItem, this);
 
                 // Now that we have removed the old nodes
                 // Add the missing one
@@ -4474,8 +4756,12 @@ module.exports = function BindPluginConstructor($model, $bindings) {
             }
         };
 
-        this.setPlugins($plugins);
-        this.setRootNode($rootNode);
+        if ($plugins) {
+            this.setPlugins($plugins);
+        }
+        if ($rootNode) {
+            this.setRootNode($rootNode);
+        }
     };
 
     /**
@@ -4596,10 +4882,10 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         prop = id ? name : split.join("."),
 
         // Get the model's value
-        get =  Tools.getNestedProperty(_model.get(modelIdx), prop),
+        get = nestedProperty.get(_model.get(modelIdx), prop),
 
         // When calling bind like bind:newBinding,param1, param2... we need to get them
-        extraParam = Tools.toArray(arguments).slice(3);
+        extraParam = toArray(arguments).slice(3);
 
         // 0 and false are acceptable falsy values
         if (get || get === 0 || get === false) {
@@ -4610,7 +4896,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
                     .concat(extraParam))) {
                 // Execute the default one which is a simple assignation
                 //node[property] = get;
-                DomUtils.setAttribute(node, property, get);
+                setAttribute(node, property, get);
             }
         }
 
@@ -4633,11 +4919,11 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         this.observers[modelIdx] = this.observers[modelIdx] || [];
         this.observers[modelIdx].push(_model.watchValue(modelIdx, function (value) {
             if (!this.execBinding.apply(this,
-                    [node, property, Tools.getNestedProperty(value, prop)]
+                    [node, property, nestedProperty.get(value, prop)]
                     // passing extra params too
                     .concat(extraParam))) {
-                //node[property] = Tools.getNestedProperty(value, prop);
-                DomUtils.setAttribute(node, property, Tools.getNestedProperty(value, prop));
+
+                setAttribute(node, property, nestedProperty.get(value, prop));
             }
         }, this));
 
@@ -4650,7 +4936,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
      * @returns true if the property is added
      */
     this.set = function set(node) {
-        if (DomUtils.isAcceptedType(node) && node.name) {
+        if (node.name) {
             _model.set(node.name, node.value);
             return true;
         } else {
@@ -4659,7 +4945,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
     };
 
     this.getItemIndex = function getElementId(dom) {
-        var dataset = DomUtils.getDataset(dom);
+        var dataset = getDataset(dom);
 
         if (dataset && typeof dataset[this.plugins.name + "_id"] != "undefined") {
             return +dataset[this.plugins.name + "_id"];
@@ -4677,7 +4963,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
         if (DOMform && DOMform.nodeName == "FORM") {
             var that = this;
             DOMform.addEventListener("submit", function (event) {
-                Tools.toArray(DOMform.querySelectorAll("[name]")).forEach(that.set, that);
+                toArray(DOMform.querySelectorAll("[name]")).forEach(that.set, that);
                 event.preventDefault();
             }, true);
             return true;
@@ -4746,7 +5032,7 @@ module.exports = function BindPluginConstructor($model, $bindings) {
      * @returns
      */
     this.addBindings = function addBindings(list) {
-        return Tools.loop(list, function (binding, name) {
+        return simpleLoop(list, function (binding, name) {
             this.addBinding(name, binding);
         }, this);
     };
@@ -4754,124 +5040,395 @@ module.exports = function BindPluginConstructor($model, $bindings) {
     // Inits the model
     this.setModel($model);
     // Inits bindings
-    this.addBindings($bindings);
-};
 
-},{"./DomUtils":37,"emily":28}],37:[function(require,module,exports){
-/**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
-"use strict";
-
-var Tools = require("emily").Tools;
-
-module.exports = {
-    /**
-     * Returns a NodeList including the given dom node,
-     * its childNodes and its siblingNodes
-     * @param {HTMLElement|SVGElement} dom the dom node to start with
-     * @param {String} query an optional CSS selector to narrow down the query
-     * @returns the list of nodes
-     */
-    getNodes: function getNodes(dom, query) {
-        if (this.isAcceptedType(dom)) {
-            if (!dom.parentNode) {
-                document.createDocumentFragment().appendChild(dom);
-            }
-
-            return dom.parentNode.querySelectorAll(query || "*");
-        } else {
-            return false;
-        }
-    },
-
-    /**
-     * Get a domNode's dataset attribute. If dataset doesn't exist (IE)
-     * then the domNode is looped through to collect them.
-     * @param {HTMLElement|SVGElement} dom
-     * @returns {Object} dataset
-     */
-    getDataset: function getDataset(dom) {
-        var i=0,
-            l,
-            dataset={},
-            split,
-            join;
-
-        if (this.isAcceptedType(dom)) {
-            if (dom.hasOwnProperty("dataset")) {
-                return dom.dataset;
-            } else {
-                for (l=dom.attributes.length;i<l;i++) {
-                    split = dom.attributes[i].name.split("-");
-                    if (split.shift() == "data") {
-                        dataset[join = split.join("-")] = dom.getAttribute("data-"+join);
-                    }
-                }
-                return dataset;
-            }
-
-        } else {
-            return false;
-        }
-    },
-
-    /**
-     * Olives can manipulate HTMLElement and SVGElements
-     * This function tells if an element is one of them
-     * @param {Element} type
-     * @returns true if HTMLElement or SVGElement
-     */
-    isAcceptedType: function isAcceptedType(type) {
-        if (type instanceof HTMLElement ||
-            type instanceof SVGElement) {
-            return true;
-        } else {
-            return false;
-        }
-    },
-
-    /**
-     * Assign a new value to an Element's property. Works with HTMLElement and SVGElement.
-     * @param {HTMLElement|SVGElement} node the node which property should be changed
-     * @param {String} property the name of the property
-     * @param {any} value the value to set
-     * @returns true if assigned
-     */
-    setAttribute: function setAttribute(node, property, value) {
-            if (node instanceof HTMLElement) {
-                node[property] = value;
-                return true;
-            } else if (node instanceof SVGElement){
-                node.setAttribute(property, value);
-                return true;
-            } else {
-                return false;
-            }
-    },
-
-    /**
-     * Determine if an element matches a certain CSS selector.
-     * @param {Element} the parent node
-     * @param {String} CSS selector
-     * @param {Element} the node to check out
-     * @param true if matches
-     */
-    matches : function matches(parent, selector, node){
-        return Tools.toArray(this.getNodes(parent, selector)).indexOf(node) > -1;
+    if ($bindings) {
+        this.addBindings($bindings);
     }
 };
-},{"emily":28}],38:[function(require,module,exports){
+
+},{"compare-numbers":66,"get-closest":67,"get-dataset":68,"get-nodes":69,"nested-property":70,"simple-loop":71,"to-array":72,"watch-notify":73}],66:[function(require,module,exports){
+module.exports=require(13)
+},{}],67:[function(require,module,exports){
+module.exports=require(14)
+},{"assert":108}],68:[function(require,module,exports){
 /**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
+* @license get-dataset https://github.com/cosmios/get-dataset
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
 "use strict";
 
-var DomUtils = require("./DomUtils");
+/**
+ * Get a domNode's dataset attribute. If dataset doesn't exist (IE)
+ * then the domNode is looped through to collect them.
+ * @param {HTMLElement|SVGElement} dom
+ * @returns {Object} dataset
+ */
+ module.exports = function getDataset(dom) {
+    var dataset = {},
+        i, l, split,join;
+
+    if ("dataset" in dom) {
+        return dom.dataset;
+    } else {
+        for (i=0, l=dom.attributes.length; i<l; i++) {
+            split = dom.attributes[i].name.split("-");
+            if (split.shift() == "data") {
+                dataset[join = split.join("-")] = dom.getAttribute("data-"+join);
+            }
+        }
+        return dataset;
+    }
+};
+
+},{}],69:[function(require,module,exports){
+/**
+* @license get-nodes https://github.com/cosmios/get-nodes
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var toArray = require("to-array");
+
+module.exports = function getNodes(dom) {
+    var domElements = dom.querySelectorAll("*"),
+        arrayDomElements = toArray(domElements);
+
+    arrayDomElements.unshift(dom);
+
+    return arrayDomElements;
+};
+
+},{"to-array":72}],70:[function(require,module,exports){
+module.exports=require(17)
+},{"assert":108}],71:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],72:[function(require,module,exports){
+module.exports=require(30)
+},{}],73:[function(require,module,exports){
+module.exports=require(32)
+},{"assert":108,"simple-loop":71,"to-array":72}],74:[function(require,module,exports){
+/**
+* @license dom-stack https://github.com/cosmosio/dom-stack
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var toArray = require("to-array");
+
+/**
+ * @class
+ * A Stack is a tool for managing DOM elements as groups. Within a group, dom elements
+ * can be added, removed, moved around. The group can be moved to another parent node
+ * while keeping the DOM elements in the same order, excluding the parent dom elements's
+ * children that are not in the Stack.
+ */
+module.exports = function StackConstructor($parent) {
+
+	/**
+	 * The parent DOM element is a documentFragment by default
+	 * @private
+	 */
+	var _parent = document.createDocumentFragment(),
+
+	/**
+	 * The place where the dom elements hide
+	 * @private
+	 */
+	_hidePlace = document.createElement("div"),
+
+	/**
+	 * The list of dom elements that are part of the stack
+	 * Helps for excluding elements that are not part of it
+	 * @private
+	 */
+	_childNodes = [],
+
+	_lastTransit = null;
+
+	/**
+	 * Add a DOM element to the stack. It will be appended.
+	 * @param {HTMLElement} dom the DOM element to add
+	 * @returns {HTMLElement} dom
+	 */
+	this.add = function add(dom) {
+		if (!this.has(dom)) {
+			_parent.appendChild(dom);
+			_childNodes.push(dom);
+			return dom;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Remove a DOM element from the stack.
+	 * @param {HTMLElement} dom the DOM element to remove
+	 * @returns {HTMLElement} dom
+	 */
+	this.remove = function remove(dom) {
+		var index;
+		if (this.has(dom)) {
+			index = _childNodes.indexOf(dom);
+			_parent.removeChild(dom);
+			_childNodes.splice(index, 1);
+			return dom;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Place a stack by appending its DOM elements to a new parent
+	 * @param {HTMLElement} newParentDom the new DOM element to append the stack to
+	 * @returns {HTMLElement} newParentDom
+	 */
+	this.place = function place(newParentDom) {
+		[].slice.call(_parent.childNodes).forEach(function (childDom) {
+			if (this.has(childDom)) {
+				newParentDom.appendChild(childDom);
+			}
+		}, this);
+		return this._setParent(newParentDom);
+	};
+
+	/**
+	 * Move an element up in the stack
+	 * @param {HTMLElement} dom the dom element to move up
+	 * @returns {HTMLElement} dom
+	 */
+	this.up = function up(dom) {
+		if (this.has(dom)) {
+			var domPosition = this.getPosition(dom);
+			this.move(dom, domPosition + 1);
+			return dom;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Move an element down in the stack
+	 * @param {HTMLElement} dom the dom element to move down
+	 * @returns {HTMLElement} dom
+	 */
+	this.down = function down(dom) {
+		if (this.has(dom)) {
+			var domPosition = this.getPosition(dom);
+			this.move(dom, domPosition - 1);
+			return dom;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Move an element that is already in the stack to a new position
+	 * @param {HTMLElement} dom the dom element to move
+	 * @param {Number} position the position to which to move the DOM element
+	 * @returns {HTMLElement} dom
+	 */
+	this.move = function move(dom, position) {
+		if (this.has(dom)) {
+			var domIndex = _childNodes.indexOf(dom);
+			_childNodes.splice(domIndex, 1);
+			// Preventing a bug in IE when insertBefore is not given a valid
+			// second argument
+			var nextElement = getNextElementInDom(position);
+			if (nextElement) {
+				_parent.insertBefore(dom, nextElement);
+			} else {
+				_parent.appendChild(dom);
+			}
+			_childNodes.splice(position, 0, dom);
+			return dom;
+		} else {
+			return false;
+		}
+	};
+
+	function getNextElementInDom(position) {
+		if (position >= _childNodes.length) {
+			return;
+		}
+		var nextElement = _childNodes[position];
+		if (toArray(_parent.childNodes).indexOf(nextElement) == -1) {
+			return getNextElementInDom(position +1);
+		} else {
+			return nextElement;
+		}
+	}
+
+	/**
+	 * Insert a new element at a specific position in the stack
+	 * @param {HTMLElement} dom the dom element to insert
+	 * @param {Number} position the position to which to insert the DOM element
+	 * @returns {HTMLElement} dom
+	 */
+	this.insert = function insert(dom, position) {
+		if (!this.has(dom)) {
+			_childNodes.splice(position, 0, dom);
+			_parent.insertBefore(dom, _parent.childNodes[position]);
+			return dom;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Get the position of an element in the stack
+	 * @param {HTMLElement} dom the dom to get the position from
+	 * @returns {HTMLElement} dom
+	 */
+	this.getPosition = function getPosition(dom) {
+		return _childNodes.indexOf(dom);
+	};
+
+	/**
+	 * Count the number of elements in a stack
+	 * @returns {Number} the number of items
+	 */
+	this.count = function count() {
+		return _parent.childNodes.length;
+	};
+
+	/**
+	 * Tells if a DOM element is in the stack
+	 * @param {HTMLElement} dom the dom to tell if its in the stack
+	 * @returns {HTMLElement} dom
+	 */
+	this.has = function has(childDom) {
+		return this.getPosition(childDom) >= 0;
+	};
+
+	/**
+	 * Hide a dom element that was previously added to the stack
+	 * It will be taken out of the dom until displayed again
+	 * @param {HTMLElement} dom the dom to hide
+	 * @return {boolean} if dom element is in the stack
+	 */
+	this.hide = function hide(dom) {
+		if (this.has(dom)) {
+			_hidePlace.appendChild(dom);
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Show a dom element that was previously hidden
+	 * It will be added back to the dom
+	 * @param {HTMLElement} dom the dom to show
+	 * @return {boolean} if dom element is current hidden
+	 */
+	this.show = function show(dom) {
+		if (this.has(dom) && dom.parentNode === _hidePlace) {
+			this.move(dom, _childNodes.indexOf(dom));
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	/**
+	 * Helper function for hiding all the dom elements
+	 */
+	this.hideAll = function hideAll() {
+		_childNodes.forEach(this.hide, this);
+	};
+
+	/**
+	 * Helper function for showing all the dom elements
+	 */
+	this.showAll = function showAll() {
+		_childNodes.forEach(this.show, this);
+	};
+
+	/**
+	 * Get the parent node that a stack is currently attached to
+	 * @returns {HTMLElement} parent node
+	 */
+	this.getParent = function getParent() {
+		return _parent;
+	};
+
+	/**
+	 * Set the parent element (without appending the stacks dom elements to)
+	 * @private
+	 */
+	this._setParent = function _setParent(parent) {
+		_parent = parent;
+		return _parent;
+    };
+
+	/**
+	 * Get the place where the DOM elements are hidden
+	 * @private
+	 */
+	this.getHidePlace = function getHidePlace() {
+		return _hidePlace;
+	};
+
+	/**
+	 * Set the place where the DOM elements are hidden
+	 * @private
+	 */
+	this.setHidePlace = function setHidePlace(hidePlace) {
+		_hidePlace = hidePlace;
+	};
+
+	/**
+	 * Get the last dom element that the stack transitted to
+	 * @returns {HTMLElement} the last dom element
+	 */
+	this.getLastTransit = function getLastTransit() {
+		return _lastTransit;
+	};
+
+	/**
+	 * Transit between views, will show the new one and hide the previous
+	 * element that the stack transitted to, if any.
+	 * @param {HTMLElement} dom the element to transit to
+	 * @returns {Boolean} false if the element can't be shown
+	 */
+	this.transit = function transit(dom) {
+		if (_lastTransit) {
+			this.hide(_lastTransit);
+		}
+		if (this.show(dom)) {
+			_lastTransit = dom;
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+    if ($parent) {
+	    this._setParent($parent);
+    }
+
+};
+
+},{"to-array":75}],75:[function(require,module,exports){
+module.exports=require(30)
+},{}],76:[function(require,module,exports){
+/**
+* @license event-plugin https://github.com/flams/event-plugin
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
+*/
+"use strict";
 
 /**
 * @class
@@ -4890,6 +5447,12 @@ module.exports = function EventPluginConstructor($parent, $isMobile) {
      * @private
      */
     var _parent = null,
+
+    /**
+     * Load the tool at runtime so that it doesn't throw an error
+     * when not loaded in a browser
+     */
+    matchesSelector = require("matches-selector"),
 
     /**
      * The mapping object.
@@ -4938,7 +5501,7 @@ module.exports = function EventPluginConstructor($parent, $isMobile) {
      */
     this.delegate = function delegate(node, selector, name, listener, useCapture) {
         this.addEventListener(node, name, function(event){
-            if (DomUtils.matches(node, selector, event.target)) {
+            if (matchesSelector(event.target, selector)) {
                 _parent[listener].call(_parent, event, node);
             }
         }, !!useCapture);
@@ -4993,16 +5556,49 @@ module.exports = function EventPluginConstructor($parent, $isMobile) {
     //init
     this.setParent($parent);
 };
-},{"./DomUtils":37}],39:[function(require,module,exports){
+
+},{"matches-selector":77}],77:[function(require,module,exports){
+'use strict';
+
+var proto = Element.prototype;
+var vendor = proto.matches
+  || proto.matchesSelector
+  || proto.webkitMatchesSelector
+  || proto.mozMatchesSelector
+  || proto.msMatchesSelector
+  || proto.oMatchesSelector;
+
+module.exports = match;
+
 /**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
+ * Match `el` to `selector`.
+ *
+ * @param {Element} el
+ * @param {String} selector
+ * @return {Boolean}
+ * @api public
  */
+
+function match(el, selector) {
+  if (vendor) return vendor.call(el, selector);
+  var nodes = el.parentNode.querySelectorAll(selector);
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i] == el) return true;
+  }
+  return false;
+}
+},{}],78:[function(require,module,exports){
+/**
+* @license local-observable-store https://github.com/cosmosio/local-observable-store
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
 "use strict";
 
-var Store = require("emily").Store,
-    Tools = require("emily").Tools;
+var Store = require("observable-store"),
+    loop = require("simple-loop");
 
 /**
  * @class
@@ -5023,15 +5619,15 @@ function LocalStoreConstructor() {
      * The localStorage
      * @private
      */
-    _localStorage = localStorage,
+    _localStorage = localStorage;
 
     /**
      * Saves the current values in localStorage
      * @private
      */
-    setLocalStorage = function setLocalStorage() {
+    function persistLocalStorage() {
         _localStorage.setItem(_name, this.toJSON());
-    };
+    }
 
     /**
      * Override default localStorage with a new one
@@ -5040,7 +5636,7 @@ function LocalStoreConstructor() {
      * @private
      */
     this.setLocalStorage = function setLocalStorage(local$torage) {
-        if (local$torage && local$torage.setItem instanceof Function) {
+        if (local$torage && typeof local$torage.setItem == "function") {
             _localStorage = local$torage;
             return true;
         } else {
@@ -5069,18 +5665,18 @@ function LocalStoreConstructor() {
             _name = name;
             json = JSON.parse(_localStorage.getItem(name));
 
-            Tools.loop(json, function (value, idx) {
+            loop(json, function (value, idx) {
                 if (!this.has(idx)) {
                     this.set(idx, value);
                 }
             }, this);
 
-            setLocalStorage.call(this);
+            persistLocalStorage.call(this);
 
             // Watch for modifications to update localStorage
-            this.watch("added", setLocalStorage, this);
-            this.watch("updated", setLocalStorage, this);
-            this.watch("deleted", setLocalStorage, this);
+            this.watch("added", persistLocalStorage, this);
+            this.watch("updated", persistLocalStorage, this);
+            this.watch("deleted", persistLocalStorage, this);
             return true;
         } else {
             return false;
@@ -5092,64 +5688,86 @@ module.exports = function LocalStoreFactory(init) {
     LocalStoreConstructor.prototype = new Store(init);
     return new LocalStoreConstructor();
 };
-},{"emily":28}],40:[function(require,module,exports){
+
+},{"observable-store":79,"simple-loop":87}],79:[function(require,module,exports){
+arguments[4][19][0].apply(exports,arguments)
+},{"compare-numbers":80,"nested-property":81,"object-count":82,"shallow-copy":83,"shallow-diff":84,"simple-loop":87,"watch-notify":85}],80:[function(require,module,exports){
+module.exports=require(13)
+},{}],81:[function(require,module,exports){
+module.exports=require(20)
+},{"assert":108}],82:[function(require,module,exports){
+module.exports=require(18)
+},{"assert":108}],83:[function(require,module,exports){
+module.exports=require(22)
+},{}],84:[function(require,module,exports){
+module.exports=require(23)
+},{"assert":108,"simple-loop":87}],85:[function(require,module,exports){
+module.exports=require(32)
+},{"assert":108,"simple-loop":87,"to-array":86}],86:[function(require,module,exports){
+module.exports=require(30)
+},{}],87:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],88:[function(require,module,exports){
 /**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
+* @license place-plugin https://github.com/flams/place-plugin
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
 "use strict";
 
-var Router = require("emily").Router,
-    Tools = require("emily").Tools;
+var simpleLoop = require("simple-loop");
 
 /**
- * @class
- * A locationRouter is a router which navigates to the route defined in the URL and updates this URL
- * while navigating. It's a subtype of Emily's Router
+* @class
+* Place plugin places SeamViews in the DOM.
+*/
+function isSeamView(ui) {
+    return typeof ui == "object" &&
+        typeof ui.place == "function";
+}
+
+/**
+ * Intilialize a Place.plugin with a list of SeamViews
+ * @param {Object} $uis a list of SeamViews such as:
+ *   {
+ *      "header": new SeamView(),
+ *      "list": new SeamView()
+ *   }
+ * @Constructor
  */
-function LocationRouterConstructor() {
+module.exports = function PlacePluginConstructor($uis) {
 
     /**
-     * The handle on the watch
+     * The list of uis currently set in this place plugin
      * @private
      */
-    var _watchHandle,
+    var _uis = {};
 
     /**
-     * The default route to navigate to when nothing is supplied in the url
-     * @private
+     * Attach a SeamView to this DOM element
+     * @param {HTML|SVGElement} node the dom node where to attach the SeamView
+     * @param {String} the name of the SeamView to attach
+     * @throws {NoSuchSeamView} an error if there's no SeamView for the given name
      */
-    _defaultRoute = "",
-
-    /**
-     * The last route that was navigated to
-     * @private
-     */
-    _lastRoute = window.location.hash;
-
-    /**
-     * Navigates to the current hash or to the default route if none is supplied in the url
-     * @private
-     */
-     /*jshint validthis:true*/
-    function doNavigate() {
-        if (window.location.hash) {
-            var parsedHash = this.parse(window.location.hash);
-            this.navigate.apply(this, parsedHash);
+    this.place = function place(node, name) {
+        if (_uis[name]) {
+            _uis[name].place(node);
         } else {
-            this.navigate(_defaultRoute);
+            throw new Error(name + " is not a SeamView UI in place: " + name);
         }
-    }
+    };
 
     /**
-     * Set the default route to navigate to when nothing is defined in the url
-     * @param {String} defaultRoute the defaultRoute to navigate to
-     * @returns {Boolean} true if it's not an empty string
+     * Add an SeamView that can be attached to a dom element
+     * @param {String} the name of the SeamView to add to the list
+     * @param {SeamView} ui the SeamView to add the list
+     * @returns {Boolean} true if the SeamView was added
      */
-    this.setDefaultRoute = function setDefaultRoute(defaultRoute) {
-        if (defaultRoute && typeof defaultRoute == "string") {
-            _defaultRoute = defaultRoute;
+    this.set = function set(name, ui) {
+        if (typeof name == "string" && isSeamView(ui)) {
+            _uis[name] = ui;
             return true;
         } else {
             return false;
@@ -5157,131 +5775,53 @@ function LocationRouterConstructor() {
     };
 
     /**
-     * Get the currently set default route
-     * @returns {String} the default route
+     * Add multiple dom elements at once
+     * @param {Object} $uis a list of SeamViews such as:
+     *   {
+     *      "header": new SeamView(),
+     *      "list": new SeamView()
+     *   }
      */
-    this.getDefaultRoute = function getDefaultRoute() {
-        return _defaultRoute;
+    this.setAll = function setAll(uis) {
+        simpleLoop(uis, function (ui, name) {
+            this.set(name, ui);
+        }, this);
     };
 
     /**
-     * The function that parses the url to determine the route to navigate to.
-     * It has a default behavior explained below, but can be overriden as long as
-     * it has the same contract.
-     * @param {String} hash the hash coming from window.location.has
-     * @returns {Array} has to return an array with the list of arguments to call
-     *    navigate with. The first item of the array must be the name of the route.
-     *
-     * Example: #album/holiday/2013
-     *      will navigate to the route "album" and give two arguments "holiday" and "2013"
+     * Returns a SeamView from the list given its name
+     * @param {String} the name of the SeamView to get
+     * @returns {SeamView} SeamView for the given name
      */
-    this.parse = function parse(hash) {
-        return hash.split("#").pop().split("/");
+    this.get = function get(name) {
+        return _uis[name];
     };
 
-    /**
-     * The function that converts, or serialises the route and its arguments to a valid URL.
-     * It has a default behavior below, but can be overriden as long as it has the same contract.
-     * @param {Array} args the list of arguments to serialize
-     * @returns {String} the serialized arguments to add to the url hashmark
-     *
-     * Example:
-     *      ["album", "holiday", "2013"];
-     *      will give "album/holiday/2013"
-     *
-     */
-    this.toUrl = function toUrl(args) {
-        return args.join("/");
-    };
+    if ($uis) {
+        this.setAll($uis);
+    }
 
-    /**
-     * When all the routes and handlers have been defined, start the location router
-     * so it parses the URL and navigates to the corresponding route.
-     * It will also start listening to route changes and hashmark changes to navigate.
-     * While navigating, the hashmark itself will also change to reflect the current route state
-     */
-    this.start = function start(defaultRoute) {
-        this.setDefaultRoute(defaultRoute);
-        doNavigate.call(this);
-        this.bindOnHashChange();
-        this.bindOnRouteChange();
-    };
-
-    /**
-     * Remove the events handler for cleaning.
-     */
-    this.destroy = function destroy() {
-        this.unwatch(_watchHandle);
-        window.removeEventListener("hashchange", this.boundOnHashChange, true);
-    };
-
-    /**
-     * Parse the hash and navigate to the corresponding url
-     * @private
-     */
-    this.onHashChange  = function onHashChange() {
-        if (window.location.hash != _lastRoute) {
-            doNavigate.call(this);
-        }
-    };
-
-    /**
-     * The bound version of onHashChange for add/removeEventListener
-     * @private
-     */
-    this.boundOnHashChange = this.onHashChange.bind(this);
-
-    /**
-     * Add an event listener to hashchange to navigate to the corresponding route
-     * when it changes
-     * @private
-     */
-    this.bindOnHashChange = function bindOnHashChange() {
-        window.addEventListener("hashchange", this.boundOnHashChange, true);
-    };
-
-    /**
-     * Watch route change events from the router to update the location
-     * @private
-     */
-    this.bindOnRouteChange = function bindOnRouteChange() {
-        _watchHandle = this.watch(this.onRouteChange, this);
-    };
-
-    /**
-     * The handler for when the route changes
-     * It updates the location
-     * @private
-     */
-    this.onRouteChange = function onRouteChange() {
-        window.location.hash = this.toUrl(Tools.toArray(arguments));
-        _lastRoute = window.location.hash;
-    };
-
-    this.getLastRoute = function getLastRoute() {
-        return _lastRoute;
-    };
-
-}
-
-module.exports = function LocationRouterFactory() {
-    LocationRouterConstructor.prototype = new Router();
-    return new LocationRouterConstructor();
 };
 
-},{"emily":28}],41:[function(require,module,exports){
+},{"simple-loop":89}],89:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],90:[function(require,module,exports){
 /**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
+* @license seam-view https://github.com/flams/seam-view
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
 "use strict";
 
-var StateMachine = require("emily").StateMachine,
-    Store = require("emily").Store,
-    Plugins = require("./Plugins"),
-    DomUtils = require("./DomUtils"),
-    Tools = require("emily").Tools;
+var StateMachine = require("synchronous-fsm"),
+    Seam = require("seam"),
+    toArray = require("to-array");
+
+function isAcceptedType(dom) {
+    return dom.nodeType >= 1;
+}
 
 /**
 * @class
@@ -5289,7 +5829,7 @@ var StateMachine = require("emily").StateMachine,
 * the dom to additional plugins like Data binding
 * @requires StateMachine
 */
-module.exports = function OObjectConstructor(otherStore) {
+module.exports = function SeamViewConstructor() {
 
     /**
      * This function creates the dom of the UI from its template
@@ -5297,7 +5837,7 @@ module.exports = function OObjectConstructor(otherStore) {
      * It can't be executed if the template is not set
      * @private
      */
-    var render = function render(UI) {
+    function render(UI) {
 
         // The place where the template will be created
         // is either the currentPlace where the node is placed
@@ -5311,7 +5851,7 @@ module.exports = function OObjectConstructor(otherStore) {
             if (typeof UI.template == "string") {
                 // Let the browser do the parsing, can't be faster & easier.
                 baseNode.innerHTML = UI.template.trim();
-            } else if (DomUtils.isAcceptedType(UI.template)) {
+            } else if (isAcceptedType(UI.template)) {
                 // If it's already an HTML element
                 baseNode.appendChild(UI.template);
             }
@@ -5326,20 +5866,20 @@ module.exports = function OObjectConstructor(otherStore) {
                 UI.dom = baseNode.childNodes[0];
             }
 
-            UI.plugins.apply(UI.dom);
+            UI.seam.apply(UI.dom);
 
         } else {
             // An explicit message I hope
             throw new Error("UI.template must be set prior to render");
         }
-    },
+    }
 
     /**
      * This function appends the dom tree to the given dom node.
      * This dom node should be somewhere in the dom of the application
      * @private
      */
-    place = function place(UI, DOMplace, beforeNode) {
+    function place(UI, DOMplace, beforeNode) {
         if (DOMplace) {
             // IE (until 9) apparently fails to appendChild when insertBefore's second argument is null, hence this.
             if (beforeNode) {
@@ -5351,16 +5891,16 @@ module.exports = function OObjectConstructor(otherStore) {
             // will be made inside it
             _currentPlace = DOMplace;
         }
-    },
+    }
 
     /**
      * Does rendering & placing in one function
      * @private
      */
-    renderNPlace = function renderNPlace(UI, dom) {
+    function renderNPlace(UI, dom) {
         render(UI);
-        place.apply(null, Tools.toArray(arguments));
-    },
+        place.apply(null, toArray(arguments));
+    }
 
     /**
      * This stores the current place
@@ -5368,7 +5908,7 @@ module.exports = function OObjectConstructor(otherStore) {
      * will be appended
      * @private
      */
-    _currentPlace = null,
+    var _currentPlace = null,
 
     /**
      * The UI's stateMachine.
@@ -5384,17 +5924,10 @@ module.exports = function OObjectConstructor(otherStore) {
     });
 
     /**
-     * The UI's Store
-     * It has set/get/del/has/watch/unwatch methods
-     * @see Emily's doc for more info on how it works.
-     */
-    this.model = otherStore instanceof Store ? otherStore : new Store();
-
-    /**
      * The module that will manage the plugins for this UI
      * @see Olives/Plugins' doc for more info on how it works.
      */
-    this.plugins = new Plugins();
+    this.seam = new Seam();
 
     /**
      * Describes the template, can either be like "&lt;p&gt;&lt;/p&gt;" or HTMLElements
@@ -5430,7 +5963,7 @@ module.exports = function OObjectConstructor(otherStore) {
      * @returns true if dom is an HTMLElement|SVGElement
      */
     this.setTemplateFromDom = function setTemplateFromDom(dom) {
-        if (DomUtils.isAcceptedType(dom)) {
+        if (isAcceptedType(dom)) {
             this.template = dom;
             return true;
         } else {
@@ -5446,7 +5979,7 @@ module.exports = function OObjectConstructor(otherStore) {
      * @returns true if dom is an HTMLElement|SVGElement
      */
     this.alive = function alive(dom) {
-        if (DomUtils.isAcceptedType(dom)) {
+        if (isAcceptedType(dom)) {
             this.setTemplateFromDom(dom);
             this.place(dom.parentNode, dom.nextElementSibling);
             return true;
@@ -5467,116 +6000,35 @@ module.exports = function OObjectConstructor(otherStore) {
     };
 
 };
-},{"./DomUtils":37,"./Plugins":43,"emily":28}],42:[function(require,module,exports){
-/**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
-"use strict";
 
-var OObject = require("./OObject"),
-    Tools = require("emily").Tools;
-
+},{"seam":94,"synchronous-fsm":91,"to-array":93}],91:[function(require,module,exports){
+module.exports=require(28)
+},{"simple-loop":92,"to-array":93}],92:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],93:[function(require,module,exports){
+module.exports=require(30)
+},{}],94:[function(require,module,exports){
 /**
-* @class
-* Place plugin places OObject in the DOM.
-* @requires OObject, Tools
+* @license seam https://github.com/flams/seam
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
 */
-
-/**
- * Intilialize a Place.plugin with a list of OObjects
- * @param {Object} $uis a list of OObjects such as:
- *   {
- *      "header": new OObject(),
- *      "list": new OObject()
- *   }
- * @Constructor
- */
-module.exports = function PlacePluginConstructor($uis) {
-
-    /**
-     * The list of uis currently set in this place plugin
-     * @private
-     */
-    var _uis = {};
-
-    /**
-     * Attach an OObject to this DOM element
-     * @param {HTML|SVGElement} node the dom node where to attach the OObject
-     * @param {String} the name of the OObject to attach
-     * @throws {NoSuchOObject} an error if there's no OObject for the given name
-     */
-    this.place = function place(node, name) {
-        if (_uis[name] instanceof OObject) {
-            _uis[name].place(node);
-        } else {
-            throw new Error(name + " is not an OObject UI in place:"+name);
-        }
-    };
-
-    /**
-     * Add an OObject that can be attached to a dom element
-     * @param {String} the name of the OObject to add to the list
-     * @param {OObject} ui the OObject to add the list
-     * @returns {Boolean} true if the OObject was added
-     */
-    this.set = function set(name, ui) {
-        if (typeof name == "string" && ui instanceof OObject) {
-            _uis[name] = ui;
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    /**
-     * Add multiple dom elements at once
-     * @param {Object} $uis a list of OObjects such as:
-     *   {
-     *      "header": new OObject(),
-     *      "list": new OObject()
-     *   }
-     */
-    this.setAll = function setAll(uis) {
-        Tools.loop(uis, function (ui, name) {
-            this.set(name, ui);
-        }, this);
-    };
-
-    /**
-     * Returns an OObject from the list given its name
-     * @param {String} the name of the OObject to get
-     * @returns {OObject} OObject for the given name
-     */
-    this.get = function get(name) {
-        return _uis[name];
-    };
-
-    this.setAll($uis);
-
-};
-},{"./OObject":41,"emily":28}],43:[function(require,module,exports){
-/**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
 "use strict";
 
-var Tools = require("emily").Tools,
-    DomUtils = require("./DomUtils");
+var toArray = require("to-array"),
+    simpleLoop = require("simple-loop"),
+    getNodes = require("get-nodes"),
+    getDataset = require("get-dataset");
 
 /**
- * @class
- * Plugins is the link between the UI and your plugins.
- * You can design your own plugin, declare them in your UI, and call them
- * from the template, like :
- * <tag data-yourPlugin="method: param"></tag>
- * @see Model-Plugin for instance
- * @requires Tools
+ * Seam makes it easy to attach JS behavior to your HTML/SVG via the data- attribute.
+ * <div data-plugin="method: param, param, ..."></tag>
+ *
+ * JS behaviors are defined in plugins, which are plain JS objects with data and methods.
  */
-module.exports = function PluginsConstructor($plugins) {
+module.exports = function Seam($plugins) {
 
     /**
      * The list of plugins
@@ -5636,8 +6088,7 @@ module.exports = function PluginsConstructor($plugins) {
      * @returns true if plugin successfully added.
      */
     this.add = function add(name, plugin) {
-        var that = this,
-            propertyName = "plugins";
+        var propertyName = "plugins";
 
         if (typeof name == "string" && typeof plugin == "object" && plugin) {
             _plugins[name] = plugin;
@@ -5645,8 +6096,8 @@ module.exports = function PluginsConstructor($plugins) {
             plugin[propertyName] = {
                     name: name,
                     apply: function apply() {
-                        return that.apply.apply(that, arguments);
-                    }
+                        return this.apply.apply(this, arguments);
+                    }.bind(this)
             };
             return true;
         } else {
@@ -5660,7 +6111,7 @@ module.exports = function PluginsConstructor($plugins) {
      * @returns true if correct param
      */
     this.addAll = function addAll(list) {
-        return Tools.loop(list, function (plugin, name) {
+        return simpleLoop(list, function (plugin, name) {
             this.add(name, plugin);
         }, this);
     };
@@ -5689,41 +6140,40 @@ module.exports = function PluginsConstructor($plugins) {
      * @returns {Boolean} true if the param is a dom node
      */
     this.apply = function apply(dom) {
+        var nodes = getNodes(dom);
 
-        var nodes;
-
-        if (DomUtils.isAcceptedType(dom)) {
-
-            nodes = DomUtils.getNodes(dom);
-            Tools.loop(Tools.toArray(nodes), function (node) {
-                Tools.loop(DomUtils.getDataset(node), function (phrase, plugin) {
-                    applyPlugin(node, phrase, plugin);
-                });
+        simpleLoop(toArray(nodes), function (node) {
+            simpleLoop(getDataset(node), function (phrase, plugin) {
+                applyPlugin(node, phrase, plugin);
             });
+        });
 
-            return dom;
-
-        } else {
-            return false;
-        }
+        return dom;
     };
 
-    this.addAll($plugins);
+    if ($plugins) {
+        this.addAll($plugins);
+    }
 
 };
-},{"./DomUtils":37,"emily":28}],44:[function(require,module,exports){
-/**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
-"use strict";
 
+},{"get-dataset":95,"get-nodes":96,"simple-loop":97,"to-array":98}],95:[function(require,module,exports){
+module.exports=require(68)
+},{}],96:[function(require,module,exports){
+module.exports=require(69)
+},{"to-array":98}],97:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],98:[function(require,module,exports){
+module.exports=require(30)
+},{}],99:[function(require,module,exports){
 /**
- * @class
- * SocketIOTransport allows for client-server eventing.
- * It's based on socket.io.
- */
+* @license socketio-transport https://github.com/cosmosio/socketio-transport
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
 
 /**
  * Defines the SocketIOTransport
@@ -5874,320 +6324,276 @@ module.exports = function SocketIOTransportConstructor($socket) {
 	 */
 	this.setSocket($socket);
 };
-},{}],45:[function(require,module,exports){
+
+},{}],100:[function(require,module,exports){
 /**
- * Olives http://flams.github.com/olives
- * The MIT License (MIT)
- * Copyright (c) 2012-2014 Olivier Scherrer <pode.fr@gmail.com> - Olivier Wietrich <olivier.wietrich@gmail.com>
- */
+* @license socketio-transport https://github.com/cosmosio/socketio-transport
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
 "use strict";
 
-var Tools = require("emily").Tools;
+module.exports = {
+    Client: require("./client/index"),
+    Server: require("./server/index")
+};
+
+},{"./client/index":99,"./server/index":101}],101:[function(require,module,exports){
+/**
+* @license socketio-transport https://github.com/cosmosio/socketio-transport
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+ */
+var isConnected = false;
+
+module.exports = function registerSocketIO(io, handlers) {
+
+    if (isConnected) {
+        return false;
+    } else {
+
+        // On connection we'll reference the handlers in socket.io
+        io.sockets.on("connection", function (socket) {
+
+            var connectHandler = function (func, handler) {
+                // When a handler is called
+                socket.on(handler, function (reqData) {
+
+                    // Add socket.io's handshake for session management
+                    reqData.data.handshake = socket.handshake;
+
+                    // pass it the requests data
+                    var stop = func(reqData.data,
+                        // The function to handle the result
+                        function onEnd(body) {
+                            socket.emit(reqData.eventId, body);
+                        },
+                        // The function to handle chunks for a kept alive socket
+                        function onData(chunk) {
+                            reqData.keepAlive && socket.emit(reqData.eventId, ""+chunk);
+                        });
+
+                    // If func returned a stop function
+                    if (typeof stop == "function") {
+                        // Subscribe to disconnect-eventId event
+                        socket.on("disconnect-"+reqData.eventId, stop);
+                    }
+
+                });
+
+            };
+
+            // for each handler, described in Emily as they can be used from node.js as well
+            handlers.loop(connectHandler);
+            // Also connect on new handlers
+            handlers.watch("added", connectHandler);
+
+        });
+
+        isConnected = true;
+    }
+};
+
+},{}],102:[function(require,module,exports){
+/**
+* @license url-highway https://github.com/cosmosio/url-highway
+*
+* The MIT License (MIT)
+*
+* Copyright (c) 2014 Olivier Scherrer <pode.fr@gmail.com>
+*/
+"use strict";
+
+var Highway = require("highway"),
+    toArray = require("to-array");
+
 /**
  * @class
- * A Stack is a tool for managing DOM elements as groups. Within a group, dom elements
- * can be added, removed, moved around. The group can be moved to another parent node
- * while keeping the DOM elements in the same order, excluding the parent dom elements's
- * children that are not in the Stack.
+ * UrlHighway is a router which navigates to the route defined in the URL and updates this URL
+ * while navigating. It's a subtype of Highway
  */
-module.exports = function StackConstructor($parent) {
+function UrlHighway() {
 
-	/**
-	 * The parent DOM element is a documentFragment by default
-	 * @private
-	 */
-	var _parent = document.createDocumentFragment(),
+    /**
+     * The handle on the watch
+     * @private
+     */
+    var _watchHandle,
 
-	/**
-	 * The place where the dom elements hide
-	 * @private
-	 */
-	_hidePlace = document.createElement("div"),
+    /**
+     * The default route to navigate to when nothing is supplied in the url
+     * @private
+     */
+    _defaultRoute = "",
 
-	/**
-	 * The list of dom elements that are part of the stack
-	 * Helps for excluding elements that are not part of it
-	 * @private
-	 */
-	_childNodes = [],
+    /**
+     * The last route that was navigated to
+     * @private
+     */
+    _lastRoute = window.location.hash;
 
-	_lastTransit = null;
+    /**
+     * Navigates to the current hash or to the default route if none is supplied in the url
+     * @private
+     */
+     /*jshint validthis:true*/
+    function doNavigate() {
+        if (!hashIsEmpty()) {
+            var parsedHash = this.parse(window.location.hash);
+            this.navigate.apply(this, parsedHash);
+        } else {
+            this.navigate(_defaultRoute);
+        }
+    }
 
-	/**
-	 * Add a DOM element to the stack. It will be appended.
-	 * @param {HTMLElement} dom the DOM element to add
-	 * @returns {HTMLElement} dom
-	 */
-	this.add = function add(dom) {
-		if (!this.has(dom) && dom instanceof HTMLElement) {
-			_parent.appendChild(dom);
-			_childNodes.push(dom);
-			return dom;
-		} else {
-			return false;
-		}
-	};
+    /**
+     * An empty string or # are both empty hashes
+     */
+    function hashIsEmpty() {
+        return !window.location.hash || window.location.hash == "#";
+    }
 
-	/**
-	 * Remove a DOM element from the stack.
-	 * @param {HTMLElement} dom the DOM element to remove
-	 * @returns {HTMLElement} dom
-	 */
-	this.remove = function remove(dom) {
-		var index;
-		if (this.has(dom)) {
-			index = _childNodes.indexOf(dom);
-			_parent.removeChild(dom);
-			_childNodes.splice(index, 1);
-			return dom;
-		} else {
-			return false;
-		}
-	};
+    /**
+     * Set the default route to navigate to when nothing is defined in the url
+     * @param {String} defaultRoute the defaultRoute to navigate to
+     * @returns {Boolean} true if it's not an empty string
+     */
+    this.setDefaultRoute = function setDefaultRoute(defaultRoute) {
+        if (defaultRoute && typeof defaultRoute == "string") {
+            _defaultRoute = defaultRoute;
+            return true;
+        } else {
+            return false;
+        }
+    };
 
-	/**
-	 * Place a stack by appending its DOM elements to a new parent
-	 * @param {HTMLElement} newParentDom the new DOM element to append the stack to
-	 * @returns {HTMLElement} newParentDom
-	 */
-	this.place = function place(newParentDom) {
-		if (newParentDom instanceof HTMLElement) {
-			[].slice.call(_parent.childNodes).forEach(function (childDom) {
-				if (this.has(childDom)) {
-					newParentDom.appendChild(childDom);
-				}
-			}, this);
-			return this._setParent(newParentDom);
-		} else {
-			return false;
-		}
-	};
+    /**
+     * Get the currently set default route
+     * @returns {String} the default route
+     */
+    this.getDefaultRoute = function getDefaultRoute() {
+        return _defaultRoute;
+    };
 
-	/**
-	 * Move an element up in the stack
-	 * @param {HTMLElement} dom the dom element to move up
-	 * @returns {HTMLElement} dom
-	 */
-	this.up = function up(dom) {
-		if (this.has(dom)) {
-			var domPosition = this.getPosition(dom);
-			this.move(dom, domPosition + 1);
-			return dom;
-		} else {
-			return false;
-		}
-	};
+    /**
+     * The function that parses the url to determine the route to navigate to.
+     * It has a default behavior explained below, but can be overriden as long as
+     * it has the same contract.
+     * @param {String} hash the hash coming from window.location.has
+     * @returns {Array} has to return an array with the list of arguments to call
+     *    navigate with. The first item of the array must be the name of the route.
+     *
+     * Example: #album/holiday/2013
+     *      will navigate to the route "album" and give two arguments "holiday" and "2013"
+     */
+    this.parse = function parse(hash) {
+        return hash.split("#").pop().split("/");
+    };
 
-	/**
-	 * Move an element down in the stack
-	 * @param {HTMLElement} dom the dom element to move down
-	 * @returns {HTMLElement} dom
-	 */
-	this.down = function down(dom) {
-		if (this.has(dom)) {
-			var domPosition = this.getPosition(dom);
-			this.move(dom, domPosition - 1);
-			return dom;
-		} else {
-			return false;
-		}
-	};
+    /**
+     * The function that converts, or serialises the route and its arguments to a valid URL.
+     * It has a default behavior below, but can be overriden as long as it has the same contract.
+     * @param {Array} args the list of arguments to serialize
+     * @returns {String} the serialized arguments to add to the url hashmark
+     *
+     * Example:
+     *      ["album", "holiday", "2013"];
+     *      will give "album/holiday/2013"
+     *
+     */
+    this.toUrl = function toUrl(args) {
+        return args.join("/");
+    };
 
-	/**
-	 * Move an element that is already in the stack to a new position
-	 * @param {HTMLElement} dom the dom element to move
-	 * @param {Number} position the position to which to move the DOM element
-	 * @returns {HTMLElement} dom
-	 */
-	this.move = function move(dom, position) {
-		if (this.has(dom)) {
-			var domIndex = _childNodes.indexOf(dom);
-			_childNodes.splice(domIndex, 1);
-			// Preventing a bug in IE when insertBefore is not given a valid
-			// second argument
-			var nextElement = getNextElementInDom(position);
-			if (nextElement) {
-				_parent.insertBefore(dom, nextElement);
-			} else {
-				_parent.appendChild(dom);
-			}
-			_childNodes.splice(position, 0, dom);
-			return dom;
-		} else {
-			return false;
-		}
-	};
+    /**
+     * When all the routes and handlers have been defined, start the location router
+     * so it parses the URL and navigates to the corresponding route.
+     * It will also start listening to route changes and hashmark changes to navigate.
+     * While navigating, the hashmark itself will also change to reflect the current route state
+     */
+    this.start = function start(defaultRoute) {
+        this.setDefaultRoute(defaultRoute);
+        doNavigate.call(this);
+        this.bindOnHashChange();
+        this.bindOnRouteChange();
+    };
 
-	function getNextElementInDom(position) {
-		if (position >= _childNodes.length) {
-			return;
-		}
-		var nextElement = _childNodes[position];
-		if (Tools.toArray(_parent.childNodes).indexOf(nextElement) == -1) {
-			return getNextElementInDom(position +1);
-		} else {
-			return nextElement;
-		}
-	}
+    /**
+     * Remove the events handler for cleaning.
+     */
+    this.destroy = function destroy() {
+        this.unwatch(_watchHandle);
+        window.removeEventListener("hashchange", this.boundOnHashChange, true);
+    };
 
-	/**
-	 * Insert a new element at a specific position in the stack
-	 * @param {HTMLElement} dom the dom element to insert
-	 * @param {Number} position the position to which to insert the DOM element
-	 * @returns {HTMLElement} dom
-	 */
-	this.insert = function insert(dom, position) {
-		if (!this.has(dom) && dom instanceof HTMLElement) {
-			_childNodes.splice(position, 0, dom);
-			_parent.insertBefore(dom, _parent.childNodes[position]);
-			return dom;
-		} else {
-			return false;
-		}
-	};
+    /**
+     * Parse the hash and navigate to the corresponding url
+     * @private
+     */
+    this.onHashChange  = function onHashChange() {
+        if (window.location.hash != _lastRoute) {
+            doNavigate.call(this);
+        }
+    };
 
-	/**
-	 * Get the position of an element in the stack
-	 * @param {HTMLElement} dom the dom to get the position from
-	 * @returns {HTMLElement} dom
-	 */
-	this.getPosition = function getPosition(dom) {
-		return _childNodes.indexOf(dom);
-	};
+    /**
+     * The bound version of onHashChange for add/removeEventListener
+     * @private
+     */
+    this.boundOnHashChange = this.onHashChange.bind(this);
 
-	/**
-	 * Count the number of elements in a stack
-	 * @returns {Number} the number of items
-	 */
-	this.count = function count() {
-		return _parent.childNodes.length;
-	};
+    /**
+     * Add an event listener to hashchange to navigate to the corresponding route
+     * when it changes
+     * @private
+     */
+    this.bindOnHashChange = function bindOnHashChange() {
+        window.addEventListener("hashchange", this.boundOnHashChange, true);
+    };
 
-	/**
-	 * Tells if a DOM element is in the stack
-	 * @param {HTMLElement} dom the dom to tell if its in the stack
-	 * @returns {HTMLElement} dom
-	 */
-	this.has = function has(childDom) {
-		return this.getPosition(childDom) >= 0;
-	};
+    /**
+     * Watch route change events from the router to update the location
+     * @private
+     */
+    this.bindOnRouteChange = function bindOnRouteChange() {
+        _watchHandle = this.watch(this.onRouteChange, this);
+    };
 
-	/**
-	 * Hide a dom element that was previously added to the stack
-	 * It will be taken out of the dom until displayed again
-	 * @param {HTMLElement} dom the dom to hide
-	 * @return {boolean} if dom element is in the stack
-	 */
-	this.hide = function hide(dom) {
-		if (this.has(dom)) {
-			_hidePlace.appendChild(dom);
-			return true;
-		} else {
-			return false;
-		}
-	};
+    /**
+     * The handler for when the route changes
+     * It updates the location
+     * @private
+     */
+    this.onRouteChange = function onRouteChange() {
+        window.location.hash = this.toUrl(toArray(arguments));
+        _lastRoute = window.location.hash;
+    };
 
-	/**
-	 * Show a dom element that was previously hidden
-	 * It will be added back to the dom
-	 * @param {HTMLElement} dom the dom to show
-	 * @return {boolean} if dom element is current hidden
-	 */
-	this.show = function show(dom) {
-		if (this.has(dom) && dom.parentNode === _hidePlace) {
-			this.move(dom, _childNodes.indexOf(dom));
-			return true;
-		} else {
-			return false;
-		}
-	};
+    this.getLastRoute = function getLastRoute() {
+        return _lastRoute;
+    };
 
-	/**
-	 * Helper function for hiding all the dom elements
-	 */
-	this.hideAll = function hideAll() {
-		_childNodes.forEach(this.hide, this);
-	};
+}
 
-	/**
-	 * Helper function for showing all the dom elements
-	 */
-	this.showAll = function showAll() {
-		_childNodes.forEach(this.show, this);
-	};
-
-	/**
-	 * Get the parent node that a stack is currently attached to
-	 * @returns {HTMLElement} parent node
-	 */
-	this.getParent = function _getParent() {
-			return _parent;
-	};
-
-	/**
-	 * Set the parent element (without appending the stacks dom elements to)
-	 * @private
-	 */
-	this._setParent = function _setParent(parent) {
-		if (parent instanceof HTMLElement) {
-			_parent = parent;
-			return _parent;
-		} else {
-			return false;
-		}
-	};
-
-	/**
-	 * Get the place where the DOM elements are hidden
-	 * @private
-	 */
-	this.getHidePlace = function getHidePlace() {
-		return _hidePlace;
-	};
-
-	/**
-	 * Set the place where the DOM elements are hidden
-	 * @private
-	 */
-	this.setHidePlace = function setHidePlace(hidePlace) {
-		if (hidePlace instanceof HTMLElement) {
-			_hidePlace = hidePlace;
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	/**
-	 * Get the last dom element that the stack transitted to
-	 * @returns {HTMLElement} the last dom element
-	 */
-	this.getLastTransit = function getLastTransit() {
-		return _lastTransit;
-	};
-
-	/**
-	 * Transit between views, will show the new one and hide the previous
-	 * element that the stack transitted to, if any.
-	 * @param {HTMLElement} dom the element to transit to
-	 * @returns {Boolean} false if the element can't be shown
-	 */
-	this.transit = function transit(dom) {
-		if (_lastTransit) {
-			this.hide(_lastTransit);
-		}
-		if (this.show(dom)) {
-			_lastTransit = dom;
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	this._setParent($parent);
-
+module.exports = function UrlHighwayFactory() {
+    UrlHighway.prototype = new Highway();
+    UrlHighway.constructor = Highway;
+    return new UrlHighway();
 };
-},{"emily":28}],46:[function(require,module,exports){
+
+},{"highway":103,"to-array":106}],103:[function(require,module,exports){
+arguments[4][16][0].apply(exports,arguments)
+},{"to-array":106,"watch-notify":104}],104:[function(require,module,exports){
+module.exports=require(32)
+},{"assert":108,"simple-loop":105,"to-array":106}],105:[function(require,module,exports){
+module.exports=require(21)
+},{"assert":108}],106:[function(require,module,exports){
+module.exports=require(30)
+},{}],107:[function(require,module,exports){
 /**
  * Olives http://flams.github.com/olives
  * The MIT License (MIT)
@@ -6196,18 +6602,386 @@ module.exports = function StackConstructor($parent) {
  "use strict";
 
 module.exports = {
-	"Bind.plugin": require("./Bind.plugin"),
-	"DomUtils": require("./DomUtils"),
-	"Event.plugin": require("./Event.plugin"),
-	"LocalStore": require("./LocalStore"),
-	"LocationRouter": require("./LocationRouter"),
-	"OObject": require("./OObject"),
-	"Place.plugin": require("./Place.plugin"),
-	"Plugins": require("./Plugins"),
-	"SocketIOTransport": require("./SocketIOTransport"),
-	"Stack": require("./Stack")
+    "Bind.plugin": require("data-binding-plugin"),
+    "LocalStore": require("local-observable-store"),
+    "LocationRouter": require("url-highway"),
+    "OObject": require("seam-view"),
+    "Event.plugin": require("event-plugin"),
+    "Place.plugin": require("place-plugin"),
+    "Plugins": require("seam"),
+    "SocketIOTransport": require("socketio-transport"),
+    "Stack": require("dom-stack")
 };
-},{"./Bind.plugin":36,"./DomUtils":37,"./Event.plugin":38,"./LocalStore":39,"./LocationRouter":40,"./OObject":41,"./Place.plugin":42,"./Plugins":43,"./SocketIOTransport":44,"./Stack":45}],47:[function(require,module,exports){
+
+},{"data-binding-plugin":65,"dom-stack":74,"event-plugin":76,"local-observable-store":78,"place-plugin":88,"seam":94,"seam-view":90,"socketio-transport":100,"url-highway":102}],108:[function(require,module,exports){
+// http://wiki.commonjs.org/wiki/Unit_Testing/1.0
+//
+// THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
+//
+// Originally from narwhal.js (http://narwhaljs.org)
+// Copyright (c) 2009 Thomas Robinson <280north.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the 'Software'), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+// ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// when used in node, this will actually load the util module we depend on
+// versus loading the builtin util module as happens otherwise
+// this is a bug in node module loading as far as I am concerned
+var util = require('util/');
+
+var pSlice = Array.prototype.slice;
+var hasOwn = Object.prototype.hasOwnProperty;
+
+// 1. The assert module provides functions that throw
+// AssertionError's when particular conditions are not met. The
+// assert module must conform to the following interface.
+
+var assert = module.exports = ok;
+
+// 2. The AssertionError is defined in assert.
+// new assert.AssertionError({ message: message,
+//                             actual: actual,
+//                             expected: expected })
+
+assert.AssertionError = function AssertionError(options) {
+  this.name = 'AssertionError';
+  this.actual = options.actual;
+  this.expected = options.expected;
+  this.operator = options.operator;
+  if (options.message) {
+    this.message = options.message;
+    this.generatedMessage = false;
+  } else {
+    this.message = getMessage(this);
+    this.generatedMessage = true;
+  }
+  var stackStartFunction = options.stackStartFunction || fail;
+
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, stackStartFunction);
+  }
+};
+
+// assert.AssertionError instanceof Error
+util.inherits(assert.AssertionError, Error);
+
+function replacer(key, value) {
+  if (util.isUndefined(value)) {
+    return '' + value;
+  }
+  if (util.isNumber(value) && (isNaN(value) || !isFinite(value))) {
+    return value.toString();
+  }
+  if (util.isFunction(value) || util.isRegExp(value)) {
+    return value.toString();
+  }
+  return value;
+}
+
+function truncate(s, n) {
+  if (util.isString(s)) {
+    return s.length < n ? s : s.slice(0, n);
+  } else {
+    return s;
+  }
+}
+
+function getMessage(self) {
+  return truncate(JSON.stringify(self.actual, replacer), 128) + ' ' +
+         self.operator + ' ' +
+         truncate(JSON.stringify(self.expected, replacer), 128);
+}
+
+// At present only the three keys mentioned above are used and
+// understood by the spec. Implementations or sub modules can pass
+// other keys to the AssertionError's constructor - they will be
+// ignored.
+
+// 3. All of the following functions must throw an AssertionError
+// when a corresponding condition is not met, with a message that
+// may be undefined if not provided.  All assertion methods provide
+// both the actual and expected values to the assertion error for
+// display purposes.
+
+function fail(actual, expected, message, operator, stackStartFunction) {
+  throw new assert.AssertionError({
+    message: message,
+    actual: actual,
+    expected: expected,
+    operator: operator,
+    stackStartFunction: stackStartFunction
+  });
+}
+
+// EXTENSION! allows for well behaved errors defined elsewhere.
+assert.fail = fail;
+
+// 4. Pure assertion tests whether a value is truthy, as determined
+// by !!guard.
+// assert.ok(guard, message_opt);
+// This statement is equivalent to assert.equal(true, !!guard,
+// message_opt);. To test strictly for the value true, use
+// assert.strictEqual(true, guard, message_opt);.
+
+function ok(value, message) {
+  if (!value) fail(value, true, message, '==', assert.ok);
+}
+assert.ok = ok;
+
+// 5. The equality assertion tests shallow, coercive equality with
+// ==.
+// assert.equal(actual, expected, message_opt);
+
+assert.equal = function equal(actual, expected, message) {
+  if (actual != expected) fail(actual, expected, message, '==', assert.equal);
+};
+
+// 6. The non-equality assertion tests for whether two objects are not equal
+// with != assert.notEqual(actual, expected, message_opt);
+
+assert.notEqual = function notEqual(actual, expected, message) {
+  if (actual == expected) {
+    fail(actual, expected, message, '!=', assert.notEqual);
+  }
+};
+
+// 7. The equivalence assertion tests a deep equality relation.
+// assert.deepEqual(actual, expected, message_opt);
+
+assert.deepEqual = function deepEqual(actual, expected, message) {
+  if (!_deepEqual(actual, expected)) {
+    fail(actual, expected, message, 'deepEqual', assert.deepEqual);
+  }
+};
+
+function _deepEqual(actual, expected) {
+  // 7.1. All identical values are equivalent, as determined by ===.
+  if (actual === expected) {
+    return true;
+
+  } else if (util.isBuffer(actual) && util.isBuffer(expected)) {
+    if (actual.length != expected.length) return false;
+
+    for (var i = 0; i < actual.length; i++) {
+      if (actual[i] !== expected[i]) return false;
+    }
+
+    return true;
+
+  // 7.2. If the expected value is a Date object, the actual value is
+  // equivalent if it is also a Date object that refers to the same time.
+  } else if (util.isDate(actual) && util.isDate(expected)) {
+    return actual.getTime() === expected.getTime();
+
+  // 7.3 If the expected value is a RegExp object, the actual value is
+  // equivalent if it is also a RegExp object with the same source and
+  // properties (`global`, `multiline`, `lastIndex`, `ignoreCase`).
+  } else if (util.isRegExp(actual) && util.isRegExp(expected)) {
+    return actual.source === expected.source &&
+           actual.global === expected.global &&
+           actual.multiline === expected.multiline &&
+           actual.lastIndex === expected.lastIndex &&
+           actual.ignoreCase === expected.ignoreCase;
+
+  // 7.4. Other pairs that do not both pass typeof value == 'object',
+  // equivalence is determined by ==.
+  } else if (!util.isObject(actual) && !util.isObject(expected)) {
+    return actual == expected;
+
+  // 7.5 For all other Object pairs, including Array objects, equivalence is
+  // determined by having the same number of owned properties (as verified
+  // with Object.prototype.hasOwnProperty.call), the same set of keys
+  // (although not necessarily the same order), equivalent values for every
+  // corresponding key, and an identical 'prototype' property. Note: this
+  // accounts for both named and indexed properties on Arrays.
+  } else {
+    return objEquiv(actual, expected);
+  }
+}
+
+function isArguments(object) {
+  return Object.prototype.toString.call(object) == '[object Arguments]';
+}
+
+function objEquiv(a, b) {
+  if (util.isNullOrUndefined(a) || util.isNullOrUndefined(b))
+    return false;
+  // an identical 'prototype' property.
+  if (a.prototype !== b.prototype) return false;
+  //~~~I've managed to break Object.keys through screwy arguments passing.
+  //   Converting to array solves the problem.
+  if (isArguments(a)) {
+    if (!isArguments(b)) {
+      return false;
+    }
+    a = pSlice.call(a);
+    b = pSlice.call(b);
+    return _deepEqual(a, b);
+  }
+  try {
+    var ka = objectKeys(a),
+        kb = objectKeys(b),
+        key, i;
+  } catch (e) {//happens when one is a string literal and the other isn't
+    return false;
+  }
+  // having the same number of owned properties (keys incorporates
+  // hasOwnProperty)
+  if (ka.length != kb.length)
+    return false;
+  //the same set of keys (although not necessarily the same order),
+  ka.sort();
+  kb.sort();
+  //~~~cheap key test
+  for (i = ka.length - 1; i >= 0; i--) {
+    if (ka[i] != kb[i])
+      return false;
+  }
+  //equivalent values for every corresponding key, and
+  //~~~possibly expensive deep test
+  for (i = ka.length - 1; i >= 0; i--) {
+    key = ka[i];
+    if (!_deepEqual(a[key], b[key])) return false;
+  }
+  return true;
+}
+
+// 8. The non-equivalence assertion tests for any deep inequality.
+// assert.notDeepEqual(actual, expected, message_opt);
+
+assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
+  if (_deepEqual(actual, expected)) {
+    fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
+  }
+};
+
+// 9. The strict equality assertion tests strict equality, as determined by ===.
+// assert.strictEqual(actual, expected, message_opt);
+
+assert.strictEqual = function strictEqual(actual, expected, message) {
+  if (actual !== expected) {
+    fail(actual, expected, message, '===', assert.strictEqual);
+  }
+};
+
+// 10. The strict non-equality assertion tests for strict inequality, as
+// determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
+
+assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
+  if (actual === expected) {
+    fail(actual, expected, message, '!==', assert.notStrictEqual);
+  }
+};
+
+function expectedException(actual, expected) {
+  if (!actual || !expected) {
+    return false;
+  }
+
+  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
+    return expected.test(actual);
+  } else if (actual instanceof expected) {
+    return true;
+  } else if (expected.call({}, actual) === true) {
+    return true;
+  }
+
+  return false;
+}
+
+function _throws(shouldThrow, block, expected, message) {
+  var actual;
+
+  if (util.isString(expected)) {
+    message = expected;
+    expected = null;
+  }
+
+  try {
+    block();
+  } catch (e) {
+    actual = e;
+  }
+
+  message = (expected && expected.name ? ' (' + expected.name + ').' : '.') +
+            (message ? ' ' + message : '.');
+
+  if (shouldThrow && !actual) {
+    fail(actual, expected, 'Missing expected exception' + message);
+  }
+
+  if (!shouldThrow && expectedException(actual, expected)) {
+    fail(actual, expected, 'Got unwanted exception' + message);
+  }
+
+  if ((shouldThrow && actual && expected &&
+      !expectedException(actual, expected)) || (!shouldThrow && actual)) {
+    throw actual;
+  }
+}
+
+// 11. Expected to throw an error:
+// assert.throws(block, Error_opt, message_opt);
+
+assert.throws = function(block, /*optional*/error, /*optional*/message) {
+  _throws.apply(this, [true].concat(pSlice.call(arguments)));
+};
+
+// EXTENSION! This is annoying to write outside this module.
+assert.doesNotThrow = function(block, /*optional*/message) {
+  _throws.apply(this, [false].concat(pSlice.call(arguments)));
+};
+
+assert.ifError = function(err) { if (err) {throw err;}};
+
+var objectKeys = Object.keys || function (obj) {
+  var keys = [];
+  for (var key in obj) {
+    if (hasOwn.call(obj, key)) keys.push(key);
+  }
+  return keys;
+};
+
+},{"util/":116}],109:[function(require,module,exports){
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    ctor.super_ = superCtor
+    var TempCtor = function () {}
+    TempCtor.prototype = superCtor.prototype
+    ctor.prototype = new TempCtor()
+    ctor.prototype.constructor = ctor
+  }
+}
+
+},{}],110:[function(require,module,exports){
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"PcZj9L":[function(require,module,exports){
 var TA = require('typedarray')
 var xDataView = typeof DataView === 'undefined'
@@ -8052,7 +8826,7 @@ function packF32(v) { return packIEEE754(v, 8, 23); }
 },{}]},{},[])
 ;;module.exports=require("native-buffer-browserify").Buffer
 
-},{}],48:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -8106,7 +8880,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],49:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -8192,7 +8966,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],50:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -8279,10 +9053,605 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],51:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":49,"./encode":50}]},{},[])
+},{"./decode":112,"./encode":113}],115:[function(require,module,exports){
+module.exports = function isBuffer(arg) {
+  return arg && typeof arg === 'object'
+    && typeof arg.copy === 'function'
+    && typeof arg.fill === 'function'
+    && typeof arg.readUInt8 === 'function';
+}
+},{}],116:[function(require,module,exports){
+var process=require("__browserify_process"),global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+var formatRegExp = /%[sdj%]/g;
+exports.format = function(f) {
+  if (!isString(f)) {
+    var objects = [];
+    for (var i = 0; i < arguments.length; i++) {
+      objects.push(inspect(arguments[i]));
+    }
+    return objects.join(' ');
+  }
+
+  var i = 1;
+  var args = arguments;
+  var len = args.length;
+  var str = String(f).replace(formatRegExp, function(x) {
+    if (x === '%%') return '%';
+    if (i >= len) return x;
+    switch (x) {
+      case '%s': return String(args[i++]);
+      case '%d': return Number(args[i++]);
+      case '%j':
+        try {
+          return JSON.stringify(args[i++]);
+        } catch (_) {
+          return '[Circular]';
+        }
+      default:
+        return x;
+    }
+  });
+  for (var x = args[i]; i < len; x = args[++i]) {
+    if (isNull(x) || !isObject(x)) {
+      str += ' ' + x;
+    } else {
+      str += ' ' + inspect(x);
+    }
+  }
+  return str;
+};
+
+
+// Mark that a method should not be used.
+// Returns a modified function which warns once by default.
+// If --no-deprecation is set, then it is a no-op.
+exports.deprecate = function(fn, msg) {
+  // Allow for deprecating things in the process of starting up.
+  if (isUndefined(global.process)) {
+    return function() {
+      return exports.deprecate(fn, msg).apply(this, arguments);
+    };
+  }
+
+  if (process.noDeprecation === true) {
+    return fn;
+  }
+
+  var warned = false;
+  function deprecated() {
+    if (!warned) {
+      if (process.throwDeprecation) {
+        throw new Error(msg);
+      } else if (process.traceDeprecation) {
+        console.trace(msg);
+      } else {
+        console.error(msg);
+      }
+      warned = true;
+    }
+    return fn.apply(this, arguments);
+  }
+
+  return deprecated;
+};
+
+
+var debugs = {};
+var debugEnviron;
+exports.debuglog = function(set) {
+  if (isUndefined(debugEnviron))
+    debugEnviron = process.env.NODE_DEBUG || '';
+  set = set.toUpperCase();
+  if (!debugs[set]) {
+    if (new RegExp('\\b' + set + '\\b', 'i').test(debugEnviron)) {
+      var pid = process.pid;
+      debugs[set] = function() {
+        var msg = exports.format.apply(exports, arguments);
+        console.error('%s %d: %s', set, pid, msg);
+      };
+    } else {
+      debugs[set] = function() {};
+    }
+  }
+  return debugs[set];
+};
+
+
+/**
+ * Echos the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
+/* legacy: obj, showHidden, depth, colors*/
+function inspect(obj, opts) {
+  // default options
+  var ctx = {
+    seen: [],
+    stylize: stylizeNoColor
+  };
+  // legacy...
+  if (arguments.length >= 3) ctx.depth = arguments[2];
+  if (arguments.length >= 4) ctx.colors = arguments[3];
+  if (isBoolean(opts)) {
+    // legacy...
+    ctx.showHidden = opts;
+  } else if (opts) {
+    // got an "options" object
+    exports._extend(ctx, opts);
+  }
+  // set default options
+  if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+  if (isUndefined(ctx.depth)) ctx.depth = 2;
+  if (isUndefined(ctx.colors)) ctx.colors = false;
+  if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+  if (ctx.colors) ctx.stylize = stylizeWithColor;
+  return formatValue(ctx, obj, ctx.depth);
+}
+exports.inspect = inspect;
+
+
+// http://en.wikipedia.org/wiki/ANSI_escape_code#graphics
+inspect.colors = {
+  'bold' : [1, 22],
+  'italic' : [3, 23],
+  'underline' : [4, 24],
+  'inverse' : [7, 27],
+  'white' : [37, 39],
+  'grey' : [90, 39],
+  'black' : [30, 39],
+  'blue' : [34, 39],
+  'cyan' : [36, 39],
+  'green' : [32, 39],
+  'magenta' : [35, 39],
+  'red' : [31, 39],
+  'yellow' : [33, 39]
+};
+
+// Don't use 'blue' not visible on cmd.exe
+inspect.styles = {
+  'special': 'cyan',
+  'number': 'yellow',
+  'boolean': 'yellow',
+  'undefined': 'grey',
+  'null': 'bold',
+  'string': 'green',
+  'date': 'magenta',
+  // "name": intentionally not styling
+  'regexp': 'red'
+};
+
+
+function stylizeWithColor(str, styleType) {
+  var style = inspect.styles[styleType];
+
+  if (style) {
+    return '\u001b[' + inspect.colors[style][0] + 'm' + str +
+           '\u001b[' + inspect.colors[style][1] + 'm';
+  } else {
+    return str;
+  }
+}
+
+
+function stylizeNoColor(str, styleType) {
+  return str;
+}
+
+
+function arrayToHash(array) {
+  var hash = {};
+
+  array.forEach(function(val, idx) {
+    hash[val] = true;
+  });
+
+  return hash;
+}
+
+
+function formatValue(ctx, value, recurseTimes) {
+  // Provide a hook for user-specified inspect functions.
+  // Check that value is an object with an inspect function on it
+  if (ctx.customInspect &&
+      value &&
+      isFunction(value.inspect) &&
+      // Filter out the util module, it's inspect function is special
+      value.inspect !== exports.inspect &&
+      // Also filter out any prototype objects using the circular check.
+      !(value.constructor && value.constructor.prototype === value)) {
+    var ret = value.inspect(recurseTimes, ctx);
+    if (!isString(ret)) {
+      ret = formatValue(ctx, ret, recurseTimes);
+    }
+    return ret;
+  }
+
+  // Primitive types cannot have properties
+  var primitive = formatPrimitive(ctx, value);
+  if (primitive) {
+    return primitive;
+  }
+
+  // Look up the keys of the object.
+  var keys = Object.keys(value);
+  var visibleKeys = arrayToHash(keys);
+
+  if (ctx.showHidden) {
+    keys = Object.getOwnPropertyNames(value);
+  }
+
+  // IE doesn't make error fields non-enumerable
+  // http://msdn.microsoft.com/en-us/library/ie/dww52sbt(v=vs.94).aspx
+  if (isError(value)
+      && (keys.indexOf('message') >= 0 || keys.indexOf('description') >= 0)) {
+    return formatError(value);
+  }
+
+  // Some type of object without properties can be shortcutted.
+  if (keys.length === 0) {
+    if (isFunction(value)) {
+      var name = value.name ? ': ' + value.name : '';
+      return ctx.stylize('[Function' + name + ']', 'special');
+    }
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    }
+    if (isDate(value)) {
+      return ctx.stylize(Date.prototype.toString.call(value), 'date');
+    }
+    if (isError(value)) {
+      return formatError(value);
+    }
+  }
+
+  var base = '', array = false, braces = ['{', '}'];
+
+  // Make Array say that they are Array
+  if (isArray(value)) {
+    array = true;
+    braces = ['[', ']'];
+  }
+
+  // Make functions say that they are functions
+  if (isFunction(value)) {
+    var n = value.name ? ': ' + value.name : '';
+    base = ' [Function' + n + ']';
+  }
+
+  // Make RegExps say that they are RegExps
+  if (isRegExp(value)) {
+    base = ' ' + RegExp.prototype.toString.call(value);
+  }
+
+  // Make dates with properties first say the date
+  if (isDate(value)) {
+    base = ' ' + Date.prototype.toUTCString.call(value);
+  }
+
+  // Make error with message first say the error
+  if (isError(value)) {
+    base = ' ' + formatError(value);
+  }
+
+  if (keys.length === 0 && (!array || value.length == 0)) {
+    return braces[0] + base + braces[1];
+  }
+
+  if (recurseTimes < 0) {
+    if (isRegExp(value)) {
+      return ctx.stylize(RegExp.prototype.toString.call(value), 'regexp');
+    } else {
+      return ctx.stylize('[Object]', 'special');
+    }
+  }
+
+  ctx.seen.push(value);
+
+  var output;
+  if (array) {
+    output = formatArray(ctx, value, recurseTimes, visibleKeys, keys);
+  } else {
+    output = keys.map(function(key) {
+      return formatProperty(ctx, value, recurseTimes, visibleKeys, key, array);
+    });
+  }
+
+  ctx.seen.pop();
+
+  return reduceToSingleString(output, base, braces);
+}
+
+
+function formatPrimitive(ctx, value) {
+  if (isUndefined(value))
+    return ctx.stylize('undefined', 'undefined');
+  if (isString(value)) {
+    var simple = '\'' + JSON.stringify(value).replace(/^"|"$/g, '')
+                                             .replace(/'/g, "\\'")
+                                             .replace(/\\"/g, '"') + '\'';
+    return ctx.stylize(simple, 'string');
+  }
+  if (isNumber(value))
+    return ctx.stylize('' + value, 'number');
+  if (isBoolean(value))
+    return ctx.stylize('' + value, 'boolean');
+  // For some reason typeof null is "object", so special case here.
+  if (isNull(value))
+    return ctx.stylize('null', 'null');
+}
+
+
+function formatError(value) {
+  return '[' + Error.prototype.toString.call(value) + ']';
+}
+
+
+function formatArray(ctx, value, recurseTimes, visibleKeys, keys) {
+  var output = [];
+  for (var i = 0, l = value.length; i < l; ++i) {
+    if (hasOwnProperty(value, String(i))) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          String(i), true));
+    } else {
+      output.push('');
+    }
+  }
+  keys.forEach(function(key) {
+    if (!key.match(/^\d+$/)) {
+      output.push(formatProperty(ctx, value, recurseTimes, visibleKeys,
+          key, true));
+    }
+  });
+  return output;
+}
+
+
+function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
+  var name, str, desc;
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
+  if (desc.get) {
+    if (desc.set) {
+      str = ctx.stylize('[Getter/Setter]', 'special');
+    } else {
+      str = ctx.stylize('[Getter]', 'special');
+    }
+  } else {
+    if (desc.set) {
+      str = ctx.stylize('[Setter]', 'special');
+    }
+  }
+  if (!hasOwnProperty(visibleKeys, key)) {
+    name = '[' + key + ']';
+  }
+  if (!str) {
+    if (ctx.seen.indexOf(desc.value) < 0) {
+      if (isNull(recurseTimes)) {
+        str = formatValue(ctx, desc.value, null);
+      } else {
+        str = formatValue(ctx, desc.value, recurseTimes - 1);
+      }
+      if (str.indexOf('\n') > -1) {
+        if (array) {
+          str = str.split('\n').map(function(line) {
+            return '  ' + line;
+          }).join('\n').substr(2);
+        } else {
+          str = '\n' + str.split('\n').map(function(line) {
+            return '   ' + line;
+          }).join('\n');
+        }
+      }
+    } else {
+      str = ctx.stylize('[Circular]', 'special');
+    }
+  }
+  if (isUndefined(name)) {
+    if (array && key.match(/^\d+$/)) {
+      return str;
+    }
+    name = JSON.stringify('' + key);
+    if (name.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+      name = name.substr(1, name.length - 2);
+      name = ctx.stylize(name, 'name');
+    } else {
+      name = name.replace(/'/g, "\\'")
+                 .replace(/\\"/g, '"')
+                 .replace(/(^"|"$)/g, "'");
+      name = ctx.stylize(name, 'string');
+    }
+  }
+
+  return name + ': ' + str;
+}
+
+
+function reduceToSingleString(output, base, braces) {
+  var numLinesEst = 0;
+  var length = output.reduce(function(prev, cur) {
+    numLinesEst++;
+    if (cur.indexOf('\n') >= 0) numLinesEst++;
+    return prev + cur.replace(/\u001b\[\d\d?m/g, '').length + 1;
+  }, 0);
+
+  if (length > 60) {
+    return braces[0] +
+           (base === '' ? '' : base + '\n ') +
+           ' ' +
+           output.join(',\n  ') +
+           ' ' +
+           braces[1];
+  }
+
+  return braces[0] + base + ' ' + output.join(', ') + ' ' + braces[1];
+}
+
+
+// NOTE: These type checking functions intentionally don't use `instanceof`
+// because it is fragile and can be easily faked with `Object.create()`.
+function isArray(ar) {
+  return Array.isArray(ar);
+}
+exports.isArray = isArray;
+
+function isBoolean(arg) {
+  return typeof arg === 'boolean';
+}
+exports.isBoolean = isBoolean;
+
+function isNull(arg) {
+  return arg === null;
+}
+exports.isNull = isNull;
+
+function isNullOrUndefined(arg) {
+  return arg == null;
+}
+exports.isNullOrUndefined = isNullOrUndefined;
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+exports.isNumber = isNumber;
+
+function isString(arg) {
+  return typeof arg === 'string';
+}
+exports.isString = isString;
+
+function isSymbol(arg) {
+  return typeof arg === 'symbol';
+}
+exports.isSymbol = isSymbol;
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+exports.isUndefined = isUndefined;
+
+function isRegExp(re) {
+  return isObject(re) && objectToString(re) === '[object RegExp]';
+}
+exports.isRegExp = isRegExp;
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+exports.isObject = isObject;
+
+function isDate(d) {
+  return isObject(d) && objectToString(d) === '[object Date]';
+}
+exports.isDate = isDate;
+
+function isError(e) {
+  return isObject(e) &&
+      (objectToString(e) === '[object Error]' || e instanceof Error);
+}
+exports.isError = isError;
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+exports.isFunction = isFunction;
+
+function isPrimitive(arg) {
+  return arg === null ||
+         typeof arg === 'boolean' ||
+         typeof arg === 'number' ||
+         typeof arg === 'string' ||
+         typeof arg === 'symbol' ||  // ES6 symbol
+         typeof arg === 'undefined';
+}
+exports.isPrimitive = isPrimitive;
+
+exports.isBuffer = require('./support/isBuffer');
+
+function objectToString(o) {
+  return Object.prototype.toString.call(o);
+}
+
+
+function pad(n) {
+  return n < 10 ? '0' + n.toString(10) : n.toString(10);
+}
+
+
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+              'Oct', 'Nov', 'Dec'];
+
+// 26 Feb 16:19:34
+function timestamp() {
+  var d = new Date();
+  var time = [pad(d.getHours()),
+              pad(d.getMinutes()),
+              pad(d.getSeconds())].join(':');
+  return [d.getDate(), months[d.getMonth()], time].join(' ');
+}
+
+
+// log is just a thin wrapper to console.log that prepends a timestamp
+exports.log = function() {
+  console.log('%s - %s', timestamp(), exports.format.apply(exports, arguments));
+};
+
+
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
+exports.inherits = require('inherits');
+
+exports._extend = function(origin, add) {
+  // Don't do anything if add isn't an object
+  if (!add || !isObject(add)) return origin;
+
+  var keys = Object.keys(add);
+  var i = keys.length;
+  while (i--) {
+    origin[keys[i]] = add[keys[i]];
+  }
+  return origin;
+};
+
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+},{"./support/isBuffer":115,"__browserify_process":111,"inherits":109}]},{},[])
