@@ -1,7 +1,7 @@
 {
  "name": "exhibition",
  "description": "Create a gallery with your pictures and videos hosted on Flickr. Doesn't use any backend so you can host this gallery wherever you want.",
- "version": "0.0.1-alpha",
+ "version": "0.0.2-alpha",
  "homepage": "http://podefr.github.com/exhibition/",
  "licenses": [{
   "type":"MIT",
@@ -14,7 +14,7 @@
  "dependencies": {
     "emily": ">=2.0.0-beta",
     "olives": ">=2.0.0-beta",
-    "jsonp-flickr": ">=0.0.1"
+    "jsonp-flickr": ">=0.1.0"
  },
  "devDependencies": {
     "chai": ">=1.8.1",
